@@ -1,3 +1,4 @@
+package modele;
 public class Annee {
     private int annee;
     private double tauxInflation;

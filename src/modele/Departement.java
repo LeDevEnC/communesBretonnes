@@ -1,3 +1,4 @@
+package modele;
 public class Departement {
     private int idDep;
     private String nomDep;

@@ -1,3 +1,4 @@
+package modele;
 public class CommunesInfoParAnnee {
     private int nbMaison;
     private int nbAppart;

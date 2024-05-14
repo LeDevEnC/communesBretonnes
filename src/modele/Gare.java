@@ -1,3 +1,4 @@
+package modele;
 public class Gare {
     private int codeGare;
     private String nomGare;
