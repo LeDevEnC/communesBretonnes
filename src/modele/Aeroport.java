@@ -16,6 +16,7 @@ public class Aeroport {
      * Constructeur de la classe Aeroport
      * @param nom le nom de l'aéroport
      * @param adresse l'adresse de l'aéroport
+     * @throws IllegalArgumentException si le nom ou l'adresse de l'aéroport est null
      */
     public Aeroport(String nom, String adresse) throws IllegalArgumentException{
         if (nom == null || adresse == null){
@@ -43,6 +44,7 @@ public class Aeroport {
     /**
      * Setter du nom de l'aéroport
      * @param nom le nom de l'aéroport
+     * @throws IllegalArgumentException si le nom de l'aéroport est null
      */
     public void setNom(String nom) throws IllegalArgumentException{
         if (nom == null){
@@ -54,6 +56,7 @@ public class Aeroport {
     /**
      * Setter de l'adresse de l'aéroport
      * @param adresse l'adresse de l'aéroport
+     * @throws IllegalArgumentException si l'adresse de l'aéroport est null
      */
     public void setAdresse(String adresse) throws IllegalArgumentException{
         if (adresse == null){
@@ -66,6 +69,7 @@ public class Aeroport {
      * Méthode permettant de comparer deux aéroports
      * @param autreAero l'aéroport à comparer
      * @return true si les deux aéroports sont les mêmes, false sinon
+     * @throws IllegalArgumentException si l'aéroport à comparer est null
      */
     public boolean isSameAero(Aeroport autreAero) throws IllegalArgumentException{
         boolean isSame = false;
