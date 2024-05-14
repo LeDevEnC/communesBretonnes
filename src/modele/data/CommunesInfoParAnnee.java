@@ -5,41 +5,50 @@ package modele.data;
  */
 public class CommunesInfoParAnnee {
     /**
-     * Nombre de maisons
+     * Nombre de maisons (en unité)
      */
     private int nbMaison;
+
     /**
-     * Nombre d'appartements
+     * Nombre d'appartements (en unité)
      */
     private int nbAppart;
+
     /**
-     * Prix moyen
+     * Prix moyen (en €)
      */
     private double prixMoyen;
+
     /**
-     * Prix au mètre carré moyen
+     * Prix au mètre carré moyen (en €)
      */
     private double prixMCarreMoyen;
+
     /**
-     * Surface moyenne
+     * Surface moyenne (en m²)
      */
     private double surfaceMoy;
+
     /**
-     * Dépenses culturelles totales
+     * Dépenses culturelles totales (en €)
      */
     private double depCulturellesTotales;
+
     /**
-     * Budget total
+     * Budget total (en €)
      */
     private double budgetTotal;
+
     /**
-     * Population
+     * Population (en unité)
      */
     private double population;
+
     /**
      * Informations de la commune de base
      */
     private CommuneBase laCommune;
+
     /**
      * Année des informations
      */
@@ -47,7 +56,7 @@ public class CommunesInfoParAnnee {
 
     /**
      * Constructeur de la classe CommunesInfoParAnnee
-     * 
+     *
      * @param laCommune             la commune de base
      * @param lAnnee                l'année
      * @param nbMaison              le nombre de maisons
@@ -65,7 +74,7 @@ public class CommunesInfoParAnnee {
         if (laCommune == null || lAnnee == null || nbMaison < 0 || nbAppart < 0 || prixMoyen < 0 || prixMCarreMoyen < 0
                 || surfaceMoy < 0 || depCulturellesTotales < 0 || budgetTotal < 0 || population < 0) {
             throw new IllegalArgumentException(
-                    "La commune, l'année, le nombre de maisons, le nombre d'appartements, le prix moyen, le prix au mètre carré moyen, la surface moyenne, les dépenses culturelles totales, le budget total ou la population est négatif ou null");
+                    "La commune, l'année, le nombre de maisons, le nombre d'appartements, le prix moyen, le prix au mètre carré moyen, la surface moyenne, les dépenses culturelles totales, le budget total ou la population sont négatif ou null");
         } else {
             this.laCommune = laCommune;
             this.lAnnee = lAnnee;
@@ -287,21 +296,24 @@ public class CommunesInfoParAnnee {
      * Fait un affichage des informations de la commune pour une année donnée
      */
     public String toString() {
-        return "Commune : " + this.laCommune.getNomCommune() + "\nAnnée : " + this.lAnnee.getAnnee() + "\nNombre de maisons : "
+        return "Commune : " + this.laCommune.getNomCommune() + "\nAnnée : " + this.lAnnee.getAnnee()
+                + "\nNombre de maisons : "
                 + this.nbMaison + "\nNombre d'appartements : " + this.nbAppart + "\nPrix moyen : " + this.prixMoyen
                 + "\nPrix moyen par mètre carré : " + this.prixMCarreMoyen + "\nSurface moyenne : " + this.surfaceMoy
-                + "\nDépenses culturelles totales : " + this.depCulturellesTotales + "\nBudget total : " + this.budgetTotal
+                + "\nDépenses culturelles totales : " + this.depCulturellesTotales + "\nBudget total : "
+                + this.budgetTotal
                 + "\nPopulation : " + this.population;
     }
 
     /**
      * Compare le nombre d'habitants de la commune avec une autre commune
-     * 
+     *
      * @param uneAutreCommune l'autre commune à comparer
-     * @return 1 si la commune courante a plus d'habitants, -1 si elle en a moins et 0 si elles
+     * @return 1 si la commune courante a plus d'habitants, -1 si elle en a moins et
+     *         0 si elles
      * @throws IllegalArgumentException si la commune à comparer est null
      */
-    public double compareNbHabitants(CommunesInfoParAnnee uneAutreCommune) throws IllegalArgumentException{
+    public double compareNbHabitants(CommunesInfoParAnnee uneAutreCommune) throws IllegalArgumentException {
         double ret = 0;
         if (uneAutreCommune == null) {
             throw new IllegalArgumentException("La commune à comparer est null");
@@ -310,7 +322,7 @@ public class CommunesInfoParAnnee {
                 return 1;
             } else if (this.population < uneAutreCommune.getPopulation()) {
                 return -1;
-            }  
+            }
         }
         return ret;
     }
