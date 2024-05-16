@@ -70,6 +70,15 @@ public class Gare {
      *
      * @return si la gare est un gare de fret
      */
+    public boolean getEstFret() {
+        return this.estFret;
+    }
+
+    /**
+     * Getter si la gare est un gare de 
+     *
+     * @return si la gare est un gare de fret
+     */
     public boolean getEstVoyageur() {
         return this.estVoyageur;
     }
