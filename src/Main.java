@@ -1,3 +1,4 @@
+import controller.ControllerMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -13,9 +14,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("views/main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("views/main.fxml"));
+        Parent root = loader.load();
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight() - 40);
+        ControllerMenu controller = loader.getController();
+        controller.setApp(this);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -5,14 +5,13 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: D0C9C9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane fx:id="window" dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: D0C9C9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerMenu">
    <items>
-      <VBox fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="200.0" prefWidth="300.0">
+      <VBox fx:id="mainVBox" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="200.0" prefWidth="300.0">
          <children>
             <Button fx:id="mainButtonBoard" mnemonicParsing="false" prefHeight="156.0" prefWidth="300.0" text="Tableau de bord">
                <font>
@@ -39,7 +38,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <ImageView fx:id="mainBzhImg" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="mainBzhImg" fitHeight="300.0" fitWidth="300.0" onMouseClicked="#openImgLink" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../ressources/images/region_bretagne.png" />
                </image>
@@ -56,7 +55,7 @@
                   <Image url="@../ressources/images/logo.png" />
                </image>
             </ImageView>
-            <Pane prefHeight="200.0" prefWidth="200.0" />
+            <StackPane fx:id="appView" />
          </children>
       </StackPane>
    </items>
