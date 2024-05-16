@@ -1,4 +1,4 @@
-package modele.data;
+package model.data;
 
 /**
  * Classe représentant les informations d'une commune pour une année donnée
