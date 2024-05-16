@@ -16,7 +16,7 @@ public abstract class DAO<T> {
      */
     public DAO() {
     }
-    
+
     /**
      * Nom de la classe du pilote
      */
@@ -36,6 +36,7 @@ public abstract class DAO<T> {
 
     /**
      * Obtenir la connection
+     * 
      * @return la connection
      * @throws SQLException si une erreur survient
      */
@@ -53,12 +54,14 @@ public abstract class DAO<T> {
 
     /**
      * Trouver tous les objets
+     * 
      * @return la liste des objets
      */
     public abstract List<T> findAll();
 
     /**
      * Trouver un objet par son identifiant
+     * 
      * @param id l'identifiant
      * @return l'objet
      */
@@ -73,6 +76,7 @@ public abstract class DAO<T> {
 
     /**
      * Mettre à jour un objet
+     * 
      * @param user l'objet
      * @return le nombre de lignes mises à jour
      */
@@ -80,6 +84,7 @@ public abstract class DAO<T> {
 
     /**
      * Supprimer un objet
+     * 
      * @param user l'objet
      * @return le nombre de lignes supprimées
      */
@@ -87,6 +92,7 @@ public abstract class DAO<T> {
 
     /**
      * Créer un objet
+     * 
      * @param user l'objet
      * @return l'identifiant de l'objet créé
      */
