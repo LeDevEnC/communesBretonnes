@@ -13,27 +13,27 @@
    <items>
       <VBox fx:id="mainVBox" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="200.0" prefWidth="300.0">
          <children>
-            <Button fx:id="mainButtonBoard" mnemonicParsing="false" prefHeight="156.0" prefWidth="300.0" text="Tableau de bord">
+            <Button fx:id="mainButtonBoard" mnemonicParsing="false" onMouseClicked="#buttonBoardPressed" prefHeight="156.0" prefWidth="300.0" text="Tableau de bord">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="mainButtonDataSee" mnemonicParsing="false" prefHeight="156.0" prefWidth="300.0" text="Voir les données">
+            <Button fx:id="mainButtonDataSee" mnemonicParsing="false" onMouseClicked="#buttonDataSeePressed" prefHeight="156.0" prefWidth="300.0" text="Voir les données">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="mainButtonStats" mnemonicParsing="false" prefHeight="156.0" prefWidth="300.0" text="Croiser facteurs">
+            <Button fx:id="mainButtonStats" mnemonicParsing="false" onMouseClicked="#buttonStatsPressed" prefHeight="156.0" prefWidth="300.0" text="Croiser facteurs">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="mainButtonEdit" mnemonicParsing="false" prefHeight="156.0" prefWidth="300.0" text="Modifier données">
+            <Button fx:id="mainButtonEdit" mnemonicParsing="false" onMouseClicked="#buttonEditPressed" prefHeight="156.0" prefWidth="300.0" text="Modifier données">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="mainButtonSettings" mnemonicParsing="false" prefHeight="156.0" prefWidth="300.0" text="Paramètres">
+            <Button fx:id="mainButtonSettings" mnemonicParsing="false" onMouseClicked="#buttonSettingsPressed" prefHeight="156.0" prefWidth="300.0" text="Paramètres">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

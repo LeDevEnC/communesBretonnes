@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 public class ControllerMenu {
 
     Application app;
+    String currentMenu = "board";
 
     @FXML
     private VBox mainVBox;
@@ -80,13 +81,30 @@ public class ControllerMenu {
 
         mainVBox.prefWidthProperty().bind(autoResize);
 
-        mainButtonSettings.styleProperty()
-                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
-        mainButtonEdit.styleProperty().bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
-        mainButtonStats.styleProperty().bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
+        String settings = "";
+        String edit = "";
+        String stats = "";
+        String dataSee = "";
+        String board = "";
+
+        if (currentMenu.equals("settings")) {
+            settings = "-fx-background-color: #d3d3d3;";
+        } else if (currentMenu.equals("edit")) {
+            edit = "-fx-background-color: #d3d3d3;";
+        } else if (currentMenu.equals("stats")) {
+            stats = "-fx-background-color: #d3d3d3;";
+        } else if (currentMenu.equals("dataSee")) {
+            dataSee = "-fx-background-color: #d3d3d3;";
+        } else if (currentMenu.equals("board")) {
+            board = "-fx-background-color: #d3d3d3;";
+        }
+        mainButtonEdit.styleProperty().bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + edit, fontSize));
+        mainButtonStats.styleProperty().bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + stats, fontSize));
         mainButtonDataSee.styleProperty()
-                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
-        mainButtonBoard.styleProperty().bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
+                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + dataSee, fontSize));
+        mainButtonBoard.styleProperty().bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + board, fontSize));
+        mainButtonSettings.styleProperty()
+                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + settings, fontSize));
     }
 
     public void initialize() {
@@ -99,7 +117,49 @@ public class ControllerMenu {
         }
     }
 
+    @FXML
+    private void buttonSettingsPressed(){
+        this.currentMenu = "settings";
+        System.out.println("fefe");
+        menuResize();
+    }
+
+    @FXML
+    private void buttonEditPressed() {
+        this.currentMenu = "edit";
+        menuResize(); // reset
+    }
+
+    @FXML
+    private void buttonStatsPressed() {
+        this.currentMenu = "stats";
+        menuResize();
+    }
+
+    @FXML
+    private void buttonDataSeePressed() {
+        this.currentMenu = "dataSee";
+        menuResize();
+    }
+
+    @FXML
+    private void buttonBoardPressed() {
+        this.currentMenu = "board";
+        menuResize();
+    }
+
     public void setApp(Application app) {
         this.app = app;
     }
+
+    //private void resetButtonsColor(){
+    //    BackgroundFill backgroundFill = new BackgroundFill(Color.web("#d3d3d3"), CornerRadii.EMPTY, Insets.EMPTY);
+    //    Background background = new Background(backgroundFill);
+//
+    //    mainButtonSettings.setStyle("-fx-background-color: #f0f0f0;");
+    //    mainButtonEdit.setStyle("-fx-background-color: #f0f0f0;");
+    //    mainButtonStats.setStyle("-fx-background-color: #f0f0f0;");
+    //    mainButtonDataSee.setStyle("-fx-background-color: #f0f0f0;");
+    //    mainButtonBoard.setStyle("-fx-background-color: #f0f0f0;");
+    //}
 }
