@@ -25,3 +25,5 @@ replay_pid*
 
 /javaDoc
 /src/lib
+lib/
+bin/

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: D0C9C9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <items>
+      <VBox fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="200.0" prefWidth="300.0">
+         <children>
+            <Button fx:id="mainButtonBoard" mnemonicParsing="false" prefHeight="156.0" prefWidth="300.0" text="Tableau de bord">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="mainButtonDataSee" mnemonicParsing="false" prefHeight="156.0" prefWidth="300.0" text="Voir les données">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="mainButtonStats" mnemonicParsing="false" prefHeight="156.0" prefWidth="300.0" text="Croiser facteurs">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="mainButtonEdit" mnemonicParsing="false" prefHeight="156.0" prefWidth="300.0" text="Modifier données">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="mainButtonSettings" mnemonicParsing="false" prefHeight="156.0" prefWidth="300.0" text="Paramètres">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="mainBzhImg" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ressources/images/region_bretagne.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+         </children>
+      </VBox>
+      <StackPane prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="520.0" fitWidth="400.0" opacity="0.1" preserveRatio="true">
+               <image>
+                  <Image url="@../ressources/images/logo.png" />
+               </image>
+            </ImageView>
+            <Pane prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </StackPane>
+   </items>
+</SplitPane>
