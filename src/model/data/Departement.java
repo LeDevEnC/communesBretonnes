@@ -1,6 +1,6 @@
 package model.data;
 
-import java.util.ArrayList;
+
 
 /**
  * Classe Departement représentant les informations d'un département
@@ -21,10 +21,6 @@ public class Departement {
      */
     private final long INVESCULTUREL2019;
 
-    /**
-     * Liste des aéroports du département
-     */
-    private ArrayList<Aeroport> aeroports;
 
     /**
      * Constructeur de la classe Departement
@@ -37,16 +33,15 @@ public class Departement {
      *                                  du département, l'investissement culturel ou
      *                                  la liste des aéroports est null
      */
-    public Departement(int idDep, DepPossibles nomDep, long invesCulturel, ArrayList<Aeroport> aeroports)
+    public Departement(int idDep, String nomDep, long invesCulturel)
             throws IllegalArgumentException {
-        if (idDep < 0 || nomDep == null || invesCulturel < 0 || aeroports == null) {
+        if (idDep < 0 || nomDep == null || invesCulturel < 0 ) {
             throw new IllegalArgumentException(
-                    "L'identifiant du département est négatif ou le nom du département, l'investissement culturel ou la liste des aéroports est null");
+                    "L'identifiant du département est négatif ou le nom du département, l'investissement culturel est null");
         } else {
             this.idDep = idDep;
             this.nomDep = nomDep.toString();
             this.INVESCULTUREL2019 = invesCulturel;
-            this.aeroports = aeroports;
         }
     }
 
@@ -69,36 +64,12 @@ public class Departement {
     }
 
     /**
-     * Getter de la liste des aéroports du département
-     *
-     * @return la liste des aéroports du département
-     */
-    public ArrayList<Aeroport> getAeroports() {
-        return this.aeroports;
-    }
-
-    /**
      * Getter de l'investissement culturel du département
      *
      * @return l'investissement culturel du département
      */
-    public double getInvestCulturel2019() {
+    public long getInvestCulturel2019() {
         return this.INVESCULTUREL2019;
-    }
-
-    /**
-     * Setter de la liste des aéroports du département
-     *
-     * @param aeroport la liste des aéroports du département
-     * @throws IllegalArgumentException si la liste des aéroports est null
-     */
-    public void addAeroport(Aeroport aeroport) throws IllegalArgumentException {
-        if (aeroport == null) {
-            throw new IllegalArgumentException("L'aéroport à ajouter est null");
-        } else {
-            this.aeroports.add(aeroport);
-        }
-
     }
 
     /**

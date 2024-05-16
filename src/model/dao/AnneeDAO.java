@@ -119,5 +119,11 @@ public class AnneeDAO extends DAO<Annee>{
         return result;
     }
 
+    @Override
+    public Annee findByName(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByName'");
+    }
+
     
 }

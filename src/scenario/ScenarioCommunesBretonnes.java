@@ -1,18 +1,28 @@
 package scenario;
-import model.dao.AnneeDAO;
-import model.data.*;
+import model.dao.DepartementDAO;
+import model.data.Aeroport;
+import model.data.Departement;
+
+import java.util.ArrayList;
+
+import model.dao.AeroportDAO;
+
 
 public class ScenarioCommunesBretonnes {
     public static void main(String[] args){
-
-        AnneeDAO anneeDAO = new AnneeDAO();
-        Annee annee1 = new Annee(2050, 40);
-        anneeDAO.delete(annee1);
-
-        System.out.println("Liste des années : ");
-        for (Annee annee : anneeDAO.findAll()) {
-            System.out.println(annee.getAnnee() + " : " + annee.getTauxInflation());
+        DepartementDAO departementDAO = new DepartementDAO();
+        AeroportDAO aeroportDAO = new AeroportDAO();
+        ArrayList<Departement> departements = departementDAO.findAll();
+        for (Departement departement : departements) {
+            System.out.println(departement.getIdDep() + " " + departement.getNomDep() + " " + departement.getNomDep() + " " + departement.getIdDep());
         }
+
+        ArrayList<Aeroport> aeroports = aeroportDAO.findAll();
+        for (Aeroport aeroport : aeroports) {
+            System.out.println(aeroport.getNom() + " " + aeroport.getAdresse() + " " + aeroport.getDepartement().getNomDep() + " " + aeroport.getDepartement().getIdDep());
+        }
+
+        
 
     }
 }
