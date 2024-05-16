@@ -59,12 +59,13 @@ public class ControllerMenu {
     }
 
     @FXML
-    private void openImgLink(){
+    private void openImgLink() {
         app.getHostServices().showDocument("https://www.bretagne.bzh/");
     }
 
     private void menuResize() {
-        DoubleBinding scale = Bindings.createDoubleBinding(this::calculateScale, window.widthProperty(), window.heightProperty());
+        DoubleBinding scale = Bindings.createDoubleBinding(this::calculateScale, window.widthProperty(),
+                window.heightProperty());
 
         DoubleBinding autoResize = scale.multiply(300);
         DoubleBinding fontSize = scale.multiply(30);
@@ -98,11 +99,14 @@ public class ControllerMenu {
         } else if (currentMenu.equals("board")) {
             board = "-fx-background-color: #d3d3d3;";
         }
-        mainButtonEdit.styleProperty().bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + edit, fontSize));
-        mainButtonStats.styleProperty().bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + stats, fontSize));
+        mainButtonEdit.styleProperty()
+                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + edit, fontSize));
+        mainButtonStats.styleProperty()
+                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + stats, fontSize));
         mainButtonDataSee.styleProperty()
                 .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + dataSee, fontSize));
-        mainButtonBoard.styleProperty().bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + board, fontSize));
+        mainButtonBoard.styleProperty()
+                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + board, fontSize));
         mainButtonSettings.styleProperty()
                 .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + settings, fontSize));
     }
@@ -111,14 +115,13 @@ public class ControllerMenu {
         menuResize();
         try {
             changeAppView("/views/template.fxml");
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void buttonSettingsPressed(){
+    private void buttonSettingsPressed() {
         this.currentMenu = "settings";
         System.out.println("fefe");
         menuResize();
@@ -151,15 +154,4 @@ public class ControllerMenu {
     public void setApp(Application app) {
         this.app = app;
     }
-
-    //private void resetButtonsColor(){
-    //    BackgroundFill backgroundFill = new BackgroundFill(Color.web("#d3d3d3"), CornerRadii.EMPTY, Insets.EMPTY);
-    //    Background background = new Background(backgroundFill);
-//
-    //    mainButtonSettings.setStyle("-fx-background-color: #f0f0f0;");
-    //    mainButtonEdit.setStyle("-fx-background-color: #f0f0f0;");
-    //    mainButtonStats.setStyle("-fx-background-color: #f0f0f0;");
-    //    mainButtonDataSee.setStyle("-fx-background-color: #f0f0f0;");
-    //    mainButtonBoard.setStyle("-fx-background-color: #f0f0f0;");
-    //}
 }

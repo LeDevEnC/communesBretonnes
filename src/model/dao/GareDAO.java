@@ -1,12 +1,14 @@
 package model.dao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util .*;
-import model.data.Gare;
+import java.util.ArrayList;
+import java.util.List;
 
+import model.data.Gare;
 
 /**
  * Classe DAO pour les gares
@@ -20,16 +22,18 @@ public class GareDAO extends DAO<Gare> {
 
     /**
      * Trouver toutes les gares
+     * 
      * @return la liste des gares
      */
     @Override
     public List<Gare> findAll() {
         List<Gare> gares = new ArrayList<>();
         try (Connection connection = getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM Gare")) {
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM Gare")) {
             while (resultSet.next()) {
-                gares.add(new Gare(resultSet.getInt("codeGare"), resultSet.getString("nomGare"), resultSet.getBoolean("estFret"), resultSet.getBoolean("estVoyageur")));
+                gares.add(new Gare(resultSet.getInt("codeGare"), resultSet.getString("nomGare"),
+                        resultSet.getBoolean("estFret"), resultSet.getBoolean("estVoyageur")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,6 +43,7 @@ public class GareDAO extends DAO<Gare> {
 
     /**
      * Trouver une gare par son identifiant
+     * 
      * @param codeGare un code de gare
      * @return la gare
      */
@@ -46,11 +51,12 @@ public class GareDAO extends DAO<Gare> {
     public Gare findByID(Long codeGare) {
         Gare gareRet = null;
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Gare WHERE codeGare = ?")) {
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Gare WHERE codeGare = ?")) {
             statement.setLong(1, codeGare);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    gareRet = new Gare(resultSet.getInt("codeGare"), resultSet.getString("nomGare"), resultSet.getBoolean("estFret"), resultSet.getBoolean("estVoyageur"));
+                    gareRet = new Gare(resultSet.getInt("codeGare"), resultSet.getString("nomGare"),
+                            resultSet.getBoolean("estFret"), resultSet.getBoolean("estVoyageur"));
                 }
             }
         } catch (SQLException e) {
@@ -62,17 +68,19 @@ public class GareDAO extends DAO<Gare> {
 
     /**
      * Trouver une gare par son nom
+     * 
      * @param nomGare un nom de gare
      * @return la gare
      */
     public Gare findByNom(String nomGare) {
         Gare gareRet = null;
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Gare WHERE nomGare = ?")) {
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Gare WHERE nomGare = ?")) {
             statement.setString(1, nomGare);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    gareRet = new Gare(resultSet.getInt("codeGare"), resultSet.getString("nomGare"), resultSet.getBoolean("estFret"), resultSet.getBoolean("estVoyageur"));
+                    gareRet = new Gare(resultSet.getInt("codeGare"), resultSet.getString("nomGare"),
+                            resultSet.getBoolean("estFret"), resultSet.getBoolean("estVoyageur"));
                 }
             }
         } catch (SQLException e) {
@@ -84,13 +92,15 @@ public class GareDAO extends DAO<Gare> {
 
     /**
      * Mettre à jour une gare
+     * 
      * @param gare la gare
      */
     @Override
     public int update(Gare gare) {
         int result = 0;
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement("UPDATE Gare SET nomGare = ?, estFret = ?, estVoyageur = ? WHERE codeGare = ?")) {
+                PreparedStatement statement = connection.prepareStatement(
+                        "UPDATE Gare SET nomGare = ?, estFret = ?, estVoyageur = ? WHERE codeGare = ?")) {
             statement.setString(1, gare.getNomGare());
             statement.setBoolean(2, gare.getEstFret());
             statement.setBoolean(3, gare.getEstVoyageur());
@@ -99,18 +109,19 @@ public class GareDAO extends DAO<Gare> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result;  
+        return result;
     }
 
     /**
      * Supprimer une gare
+     * 
      * @param gare la gare
      */
     @Override
     public int delete(Gare gare) {
         int result = 0;
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM Gare WHERE codeGare = ?")) {
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM Gare WHERE codeGare = ?")) {
             statement.setInt(1, gare.getCodeGare());
             result = statement.executeUpdate();
         } catch (SQLException e) {
@@ -121,13 +132,15 @@ public class GareDAO extends DAO<Gare> {
 
     /**
      * Créer une gare
+     * 
      * @param gare la gare
      */
     @Override
     public int create(Gare gare) {
         int result = 0;
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO Gare (codeGare, nomGare, estFret, estVoyageur) VALUES (?, ?, ?, ?)")) {
+                PreparedStatement statement = connection.prepareStatement(
+                        "INSERT INTO Gare (codeGare, nomGare, estFret, estVoyageur) VALUES (?, ?, ?, ?)")) {
             statement.setInt(1, gare.getCodeGare());
             statement.setString(2, gare.getNomGare());
             statement.setBoolean(3, gare.getEstFret());

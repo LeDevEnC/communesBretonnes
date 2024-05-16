@@ -19,7 +19,7 @@ public class Gare {
      */
 
     private boolean estFret;
-    
+
     /**
      * Si la gare est un gare de voyageur
      */
@@ -75,7 +75,7 @@ public class Gare {
     }
 
     /**
-     * Getter si la gare est un gare de 
+     * Getter si la gare est un gare de
      *
      * @return si la gare est un gare de fret
      */

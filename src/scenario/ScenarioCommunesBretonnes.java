@@ -1,9 +1,10 @@
 package scenario;
+
 import model.dao.AnneeDAO;
-import model.data.*;
+import model.data.Annee;
 
 public class ScenarioCommunesBretonnes {
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         AnneeDAO anneeDAO = new AnneeDAO();
         Annee annee1 = new Annee(2050, 40);
