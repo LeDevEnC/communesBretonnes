@@ -171,7 +171,7 @@ public class ControllerMenu {
         this.resetButtonColor();
         this.mainButtonSettings.setStyle("-fx-background-color: #d3d3d3;");
         try {
-            changeAppView("/views/template.fxml");
+            changeAppView("/views/settings.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
