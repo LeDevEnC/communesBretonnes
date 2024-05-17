@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -26,16 +27,46 @@ public class ControllerMenu {
     private Button mainButtonSettings;
 
     @FXML
+    private Label mainButtonSettingsLabel;
+
+    @FXML
+    private ImageView mainButtonSettingsImg;
+
+    @FXML
     private Button mainButtonEdit;
+
+    @FXML
+    private Label mainButtonEditLabel;
+
+    @FXML
+    private ImageView mainButtonEditImg;
 
     @FXML
     private Button mainButtonStats;
 
     @FXML
+    private Label mainButtonStatsLabel;
+
+    @FXML
+    private ImageView mainButtonStatsImg;
+
+    @FXML
     private Button mainButtonDataSee;
 
     @FXML
+    private Label mainButtonDataSeeLabel;
+
+    @FXML
+    private ImageView mainButtonDataSeeImg;
+
+    @FXML
     private Button mainButtonBoard;
+
+    @FXML
+    private Label mainButtonBoardLabel;
+
+    @FXML
+    private ImageView mainButtonBoardImg;
 
     @FXML
     private ImageView mainBzhImg;
@@ -47,9 +78,9 @@ public class ControllerMenu {
     private StackPane appView;
 
     private void changeAppView(String fxmlPath) throws IOException {
-        appView.getChildren().clear();
+        this.appView.getChildren().clear();
         Node node = FXMLLoader.load(getClass().getResource(fxmlPath));
-        appView.getChildren().add(node);
+        this.appView.getChildren().add(node);
     }
 
     private double calculateScale() {
@@ -60,61 +91,75 @@ public class ControllerMenu {
 
     @FXML
     private void openImgLink() {
-        app.getHostServices().showDocument("https://www.bretagne.bzh/");
+        this.app.getHostServices().showDocument("https://www.bretagne.bzh/");
     }
 
     private void menuResize() {
         DoubleBinding scale = Bindings.createDoubleBinding(this::calculateScale, window.widthProperty(),
                 window.heightProperty());
 
-        DoubleBinding autoResize = scale.multiply(300);
+        DoubleBinding autoResizeLogo = scale.multiply(300);
         DoubleBinding fontSize = scale.multiply(30);
+        DoubleBinding autoResizeIcon = scale.multiply(80);
 
-        mainBzhImg.fitWidthProperty().bind(autoResize);
-        mainBzhImg.fitHeightProperty().bind(autoResize);
-        mainBzhImg.setPreserveRatio(true);
+        this.mainBzhImg.fitWidthProperty().bind(autoResizeLogo);
+        this.mainBzhImg.fitHeightProperty().bind(autoResizeLogo);
+        this.mainBzhImg.setPreserveRatio(true);
 
-        mainButtonSettings.prefWidthProperty().bind(autoResize);
-        mainButtonEdit.prefWidthProperty().bind(autoResize);
-        mainButtonStats.prefWidthProperty().bind(autoResize);
-        mainButtonDataSee.prefWidthProperty().bind(autoResize);
-        mainButtonBoard.prefWidthProperty().bind(autoResize);
+        this.mainVBox.prefWidthProperty().bind(autoResizeLogo);
 
-        mainVBox.prefWidthProperty().bind(autoResize);
+        this.mainButtonSettings.prefWidthProperty().bind(autoResizeLogo);
+        this.mainButtonEdit.prefWidthProperty().bind(autoResizeLogo);
+        this.mainButtonStats.prefWidthProperty().bind(autoResizeLogo);
+        this.mainButtonDataSee.prefWidthProperty().bind(autoResizeLogo);
+        this.mainButtonBoard.prefWidthProperty().bind(autoResizeLogo);
 
-        String settings = "";
-        String edit = "";
-        String stats = "";
-        String dataSee = "";
-        String board = "";
 
-        if (currentMenu.equals("settings")) {
-            settings = "-fx-background-color: #d3d3d3;";
-        } else if (currentMenu.equals("edit")) {
-            edit = "-fx-background-color: #d3d3d3;";
-        } else if (currentMenu.equals("stats")) {
-            stats = "-fx-background-color: #d3d3d3;";
-        } else if (currentMenu.equals("dataSee")) {
-            dataSee = "-fx-background-color: #d3d3d3;";
-        } else if (currentMenu.equals("board")) {
-            board = "-fx-background-color: #d3d3d3;";
-        }
-        mainButtonEdit.styleProperty()
-                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + edit, fontSize));
-        mainButtonStats.styleProperty()
-                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + stats, fontSize));
-        mainButtonDataSee.styleProperty()
-                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + dataSee, fontSize));
-        mainButtonBoard.styleProperty()
-                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + board, fontSize));
-        mainButtonSettings.styleProperty()
-                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;" + settings, fontSize));
+        this.mainButtonEditLabel.styleProperty()
+                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
+        this.mainButtonStatsLabel.styleProperty()
+                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
+        this.mainButtonDataSeeLabel.styleProperty()
+                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
+        this.mainButtonBoardLabel.styleProperty()
+                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
+        this.mainButtonSettingsLabel.styleProperty()
+                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
+
+        this.mainButtonBoardImg.fitWidthProperty().bind(autoResizeIcon);
+        this.mainButtonBoardImg.fitHeightProperty().bind(autoResizeIcon);
+        this.mainButtonBoardImg.setPreserveRatio(true);
+
+        this.mainButtonDataSeeImg.fitWidthProperty().bind(autoResizeIcon);
+        this.mainButtonDataSeeImg.fitHeightProperty().bind(autoResizeIcon);
+        this.mainButtonDataSeeImg.setPreserveRatio(true);
+
+        this.mainButtonStatsImg.fitWidthProperty().bind(autoResizeIcon);
+        this.mainButtonStatsImg.fitHeightProperty().bind(autoResizeIcon);
+        this.mainButtonStatsImg.setPreserveRatio(true);
+
+        this.mainButtonEditImg.fitWidthProperty().bind(autoResizeIcon);
+        this.mainButtonEditImg.fitHeightProperty().bind(autoResizeIcon);
+        this.mainButtonEditImg.setPreserveRatio(true);
+
+        this.mainButtonSettingsImg.fitWidthProperty().bind(autoResizeIcon);
+        this.mainButtonSettingsImg.fitHeightProperty().bind(autoResizeIcon);
+        this.mainButtonSettingsImg.setPreserveRatio(true);
+    }
+
+    private void resetButtonColor() {
+        this.mainButtonBoard.setStyle("");
+        this.mainButtonDataSee.setStyle("");
+        this.mainButtonStats.setStyle("");
+        this.mainButtonEdit.setStyle("");
+        this.mainButtonSettings.setStyle("");
+
     }
 
     public void initialize() {
         menuResize();
         try {
-            changeAppView("/views/dataSee.fxml");
+            changeAppView("/views/template.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -123,31 +168,67 @@ public class ControllerMenu {
     @FXML
     private void buttonSettingsPressed() {
         this.currentMenu = "settings";
-        System.out.println("fefe");
+        this.resetButtonColor();
+        this.mainButtonSettings.setStyle("-fx-background-color: #d3d3d3;");
+        try {
+            changeAppView("/views/template.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         menuResize();
     }
 
     @FXML
     private void buttonEditPressed() {
         this.currentMenu = "edit";
-        menuResize(); // reset
+        this.resetButtonColor();
+        this.mainButtonEdit.setStyle("-fx-background-color: #d3d3d3;");
+        try {
+            changeAppView("/views/template.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        menuResize();
     }
 
     @FXML
     private void buttonStatsPressed() {
         this.currentMenu = "stats";
+        this.resetButtonColor();
+        this.mainButtonStats.setStyle("-fx-background-color: #d3d3d3;");
+
+        try {
+            changeAppView("/views/template.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         menuResize();
     }
 
     @FXML
     private void buttonDataSeePressed() {
         this.currentMenu = "dataSee";
+        this.resetButtonColor();
+        this.mainButtonDataSee.setStyle("-fx-background-color: #d3d3d3;");
+
+        try {
+            changeAppView("/views/dataSee.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         menuResize();
     }
 
     @FXML
     private void buttonBoardPressed() {
         this.currentMenu = "board";
+        this.resetButtonColor();
+        this.mainButtonBoard.setStyle("-fx-background-color: #d3d3d3;");
+        try {
+            changeAppView("/views/template.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         menuResize();
     }
 

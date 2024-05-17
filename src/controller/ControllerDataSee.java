@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,7 +22,8 @@ public class ControllerDataSee {
     @FXML
     Button buttonSelectThree;
 
-    // TODO : Remplacer les ? par les vrais types de données (non implémenté pour le moment)
+    // TODO : Remplacer les ? par les vrais types de données (non implémenté pour le
+    // moment)
     @FXML
     private TableView<?> tableView;
 
@@ -51,25 +51,13 @@ public class ControllerDataSee {
     // private HashMap<String, ?> villeDataMap;
 
     public void initialize() {
-    // Assurez-vous que la TableView est déjà initialisée ici
-
-    // Utilisez Platform.runLater pour différer l'appel à getScene() jusqu'à ce que la Scene soit disponible
-    Platform.runLater(() -> {
-        // Utilisez widthProperty pour obtenir la largeur de la TableView
         ReadOnlyDoubleProperty width = tableView.widthProperty();
-        width.addListener((observable, oldValue, newValue) -> {
-            System.out.println("La TableView a été redimensionnée. Nouvelle largeur : " + newValue);
-        });
 
-        // Définissez la largeur préférée, minimale et maximale de chaque colonne en pourcentage de la largeur de la TableView
         setColumnWidth(colCodePostal, width, 0.15);
         setColumnWidth(colDepartement, width, 0.15);
         setColumnWidth(colINSEE, width, 0.15);
         setColumnWidth(colPrix, width, 0.15);
         setColumnWidth(colNb, width, 0.15);
-
-        System.out.println(tableView.getScene().widthProperty());
-    });
     }
 
     private void setColumnWidth(

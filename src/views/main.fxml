@@ -8,37 +8,111 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
 
-<SplitPane fx:id="window" dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: D0C9C9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerMenu">
+
+<SplitPane fx:id="window" dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity"
+   minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0"
+   style="-fx-background-color: D0C9C9;" xmlns="http://javafx.com/javafx/21"
+   xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerMenu">
    <items>
-      <VBox fx:id="mainVBox" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="200.0" prefWidth="300.0">
+      <VBox fx:id="mainVBox" fillWidth="false" maxHeight="1.7976931348623157E308"
+         maxWidth="-Infinity" prefHeight="200.0" prefWidth="300.0">
          <children>
-            <Button fx:id="mainButtonBoard" mnemonicParsing="false" onMouseClicked="#buttonBoardPressed" prefHeight="156.0" prefWidth="300.0" text="Tableau de bord">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
+            <Button
+               fx:id="mainButtonBoard" mnemonicParsing="false" onMouseClicked="#buttonBoardPressed"
+               prefHeight="156.0" prefWidth="300.0">
+               <graphic>
+                  <VBox alignment="CENTER" spacing="10.0">
+                     <Label text="Tableau de bord" fx:id="mainButtonBoardLabel">
+                        <font>
+                           <Font name="System Bold" size="20.0" />
+                        </font>
+                     </Label>
+                     <ImageView fitHeight="50.0" fitWidth="50.0" fx:id="mainButtonBoardImg">
+                        <image>
+                           <Image url="@../ressources/icons/boardIcon.png" />
+                        </image>
+                     </ImageView>
+                  </VBox>
+               </graphic>
             </Button>
-            <Button fx:id="mainButtonDataSee" mnemonicParsing="false" onMouseClicked="#buttonDataSeePressed" prefHeight="156.0" prefWidth="300.0" text="Voir les données">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
+
+            <Button fx:id="mainButtonDataSee" mnemonicParsing="false"
+               onMouseClicked="#buttonDataSeePressed" prefHeight="156.0" prefWidth="300.0"
+               >
+               <graphic>
+                  <VBox alignment="CENTER" spacing="10.0">
+                     <Label text="Voir les données" fx:id="mainButtonDataSeeLabel">
+                        <font>
+                           <Font name="System Bold" size="20.0" />
+                        </font>
+                     </Label>
+                     <ImageView fitHeight="50.0" fitWidth="50.0" fx:id="mainButtonDataSeeImg">
+                        <image>
+                           <Image url="@../ressources/icons/dataSeeIcon.png" />
+                        </image>
+                     </ImageView>
+                  </VBox>
+               </graphic>
             </Button>
-            <Button fx:id="mainButtonStats" mnemonicParsing="false" onMouseClicked="#buttonStatsPressed" prefHeight="156.0" prefWidth="300.0" text="Croiser facteurs">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
+            <Button fx:id="mainButtonStats" mnemonicParsing="false"
+               onMouseClicked="#buttonStatsPressed" prefHeight="156.0" prefWidth="300.0"
+               >
+               <graphic>
+                  <VBox alignment="CENTER" spacing="10.0">
+                     <Label text="Croiser facteurs" fx:id="mainButtonStatsLabel">
+                        <font>
+                           <Font name="System Bold" size="20.0" />
+                        </font>
+                     </Label>
+                     <ImageView fitHeight="50.0" fitWidth="50.0" fx:id="mainButtonStatsImg">
+                        <image>
+                           <Image url="@../ressources/icons/statsIcon.png" />
+                        </image>
+                     </ImageView>
+                  </VBox>
+               </graphic>
             </Button>
-            <Button fx:id="mainButtonEdit" mnemonicParsing="false" onMouseClicked="#buttonEditPressed" prefHeight="156.0" prefWidth="300.0" text="Modifier données">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
+            <Button fx:id="mainButtonEdit" mnemonicParsing="false"
+               onMouseClicked="#buttonEditPressed" prefHeight="156.0" prefWidth="300.0"
+               >
+               <graphic>
+                  <VBox alignment="CENTER" spacing="10.0">
+                     <Label text="Modifier données" fx:id="mainButtonEditLabel">
+                        <font>
+                           <Font name="System Bold" size="20.0" />
+                        </font>
+                     </Label>
+                     <ImageView fitHeight="50.0" fitWidth="50.0" fx:id="mainButtonEditImg">
+                        <image>
+                           <Image url="@../ressources/icons/editIcon.png" />
+                        </image>
+                     </ImageView>
+                  </VBox>
+               </graphic>
             </Button>
-            <Button fx:id="mainButtonSettings" mnemonicParsing="false" onMouseClicked="#buttonSettingsPressed" prefHeight="156.0" prefWidth="300.0" text="Paramètres">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
+            <Button fx:id="mainButtonSettings" mnemonicParsing="false"
+               onMouseClicked="#buttonSettingsPressed" prefHeight="156.0" prefWidth="300.0"
+               >
+               <graphic>
+                  <VBox alignment="CENTER" spacing="10.0">
+                     <Label text="Paramètres" fx:id="mainButtonSettingsLabel">
+                        <font>
+                           <Font name="System Bold" size="20.0" />
+                        </font>
+                     </Label>
+                     <ImageView fitHeight="50.0" fitWidth="50.0" fx:id="mainButtonSettingsImg">
+                        <image>
+                           <Image url="@../ressources/icons/settingsIcon.png" />
+                        </image>
+                     </ImageView>
+                  </VBox>
+               </graphic>
             </Button>
-            <ImageView fx:id="mainBzhImg" fitHeight="300.0" fitWidth="300.0" onMouseClicked="#openImgLink" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="mainBzhImg" fitHeight="300.0" fitWidth="300.0"
+               onMouseClicked="#openImgLink" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../ressources/images/region_bretagne.png" />
                </image>
