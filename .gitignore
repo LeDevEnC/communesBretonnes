@@ -27,3 +27,4 @@ replay_pid*
 /src/lib
 lib/
 bin/
+test*/

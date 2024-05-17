@@ -114,7 +114,7 @@ public class ControllerMenu {
     public void initialize() {
         menuResize();
         try {
-            changeAppView("/views/template.fxml");
+            changeAppView("/views/dataSee.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

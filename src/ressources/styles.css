@@ -1,0 +1,22 @@
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: gray;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.page-button {
+    -fx-background-color: lightgray;
+    -fx-text-fill: black;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.page-button.selected {
+    -fx-background-color: #624DE3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
