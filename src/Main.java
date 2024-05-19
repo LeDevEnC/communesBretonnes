@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 import controller.ControllerMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,11 +20,13 @@ public class Main extends Application {
         Parent root = loader.load();
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight() - 40);
+        scene.getStylesheets().add(getClass().getResource("ressources/styles.css").toExternalForm());
         primaryStage.setMinWidth(800);
         primaryStage.setMinHeight(600);
         ControllerMenu controller = loader.getController();
-        scene.getStylesheets().add(getClass().getResource("ressources/styles.css").toExternalForm());
         controller.setApp(this);
+        controller.setViewCache(new HashMap<>());
+        controller.buttonBoardPressed(); // Affiche le menu principal au démarrage de l'application
         primaryStage.setScene(scene);
         primaryStage.show();
     }

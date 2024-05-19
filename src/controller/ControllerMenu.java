@@ -6,8 +6,6 @@ import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
@@ -15,7 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class ControllerMenu {
+public class ControllerMenu extends Controller {
 
     Application app;
     String currentMenu = "board";
@@ -77,12 +75,6 @@ public class ControllerMenu {
     @FXML
     private StackPane appView;
 
-    private void changeAppView(String fxmlPath) throws IOException {
-        this.appView.getChildren().clear();
-        Node node = FXMLLoader.load(getClass().getResource(fxmlPath));
-        this.appView.getChildren().add(node);
-    }
-
     private double calculateScale() {
         double scaleX = window.getWidth() / 1920.0;
         double scaleY = window.getHeight() / 1080.0;
@@ -91,7 +83,7 @@ public class ControllerMenu {
 
     @FXML
     private void openImgLink() {
-        this.app.getHostServices().showDocument("https://www.bretagne.bzh/");
+        super.openWebLink("https://www.bretagne.bzh/");
     }
 
     private void menuResize() {
@@ -113,7 +105,6 @@ public class ControllerMenu {
         this.mainButtonStats.prefWidthProperty().bind(autoResizeLogo);
         this.mainButtonDataSee.prefWidthProperty().bind(autoResizeLogo);
         this.mainButtonBoard.prefWidthProperty().bind(autoResizeLogo);
-
 
         this.mainButtonEditLabel.styleProperty()
                 .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
@@ -158,11 +149,6 @@ public class ControllerMenu {
 
     public void initialize() {
         menuResize();
-        try {
-            changeAppView("/views/template.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
@@ -171,7 +157,7 @@ public class ControllerMenu {
         this.resetButtonColor();
         this.mainButtonSettings.setStyle("-fx-background-color: #d3d3d3;");
         try {
-            changeAppView("/views/settings.fxml");
+            changeView(appView, "/views/settings.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -184,7 +170,7 @@ public class ControllerMenu {
         this.resetButtonColor();
         this.mainButtonEdit.setStyle("-fx-background-color: #d3d3d3;");
         try {
-            changeAppView("/views/template.fxml");
+            changeView(appView, "/views/template.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -198,7 +184,7 @@ public class ControllerMenu {
         this.mainButtonStats.setStyle("-fx-background-color: #d3d3d3;");
 
         try {
-            changeAppView("/views/template.fxml");
+            changeView(appView, "/views/template.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -212,7 +198,7 @@ public class ControllerMenu {
         this.mainButtonDataSee.setStyle("-fx-background-color: #d3d3d3;");
 
         try {
-            changeAppView("/views/dataSee.fxml");
+            changeView(appView, "/views/dataSee.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -220,19 +206,15 @@ public class ControllerMenu {
     }
 
     @FXML
-    private void buttonBoardPressed() {
+    public void buttonBoardPressed() { // Note : public pour pouvoir appeler la vue par défaut
         this.currentMenu = "board";
         this.resetButtonColor();
         this.mainButtonBoard.setStyle("-fx-background-color: #d3d3d3;");
         try {
-            changeAppView("/views/template.fxml");
+            changeView(appView, "/views/board.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
         menuResize();
-    }
-
-    public void setApp(Application app) {
-        this.app = app;
     }
 }

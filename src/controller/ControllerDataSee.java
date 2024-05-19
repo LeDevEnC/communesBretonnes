@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class ControllerDataSee {
+public class ControllerDataSee extends Controller{
     @FXML
     Button buttonSelectPrevious;
 
@@ -64,7 +64,6 @@ public class ControllerDataSee {
             TableColumn<?, ?> column, ReadOnlyDoubleProperty width, double percentage) {
         column.prefWidthProperty().bind(width.multiply(percentage));
         column.minWidthProperty().set(0); // Ajoutez cette ligne
-
     }
 
 }
