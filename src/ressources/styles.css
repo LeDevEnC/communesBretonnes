@@ -16,7 +16,7 @@
 }
 
 .page-button.selected {
-    -fx-background-color: #624DE3;
+    -fx-background-color: #624de3;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }

@@ -46,6 +46,7 @@ public abstract class Controller {
     /**
      * Calcule l'échelle à appliquer à un élément pour qu'il s'adapte à la taille de
      * la fenêtre
+     * 
      * @param window La fenêtre
      * @return L'échelle à appliquer
      */

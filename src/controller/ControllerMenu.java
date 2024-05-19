@@ -81,7 +81,7 @@ public class ControllerMenu extends Controller {
     }
 
     protected void resize() {
-        DoubleBinding scale =  super.getScale(window);
+        DoubleBinding scale = super.getScale(window);
 
         DoubleBinding autoResizeLogo = scale.multiply(300);
         DoubleBinding fontSize = scale.multiply(30);
