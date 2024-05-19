@@ -75,20 +75,13 @@ public class ControllerMenu extends Controller {
     @FXML
     private StackPane appView;
 
-    private double calculateScale() {
-        double scaleX = window.getWidth() / 1920.0;
-        double scaleY = window.getHeight() / 1080.0;
-        return Math.min(scaleX, scaleY);
-    }
-
     @FXML
     private void openImgLink() {
         super.openWebLink("https://www.bretagne.bzh/");
     }
 
-    private void menuResize() {
-        DoubleBinding scale = Bindings.createDoubleBinding(this::calculateScale, window.widthProperty(),
-                window.heightProperty());
+    protected void resize() {
+        DoubleBinding scale =  super.getScale(window);
 
         DoubleBinding autoResizeLogo = scale.multiply(300);
         DoubleBinding fontSize = scale.multiply(30);
@@ -148,7 +141,7 @@ public class ControllerMenu extends Controller {
     }
 
     public void initialize() {
-        menuResize();
+        resize();
     }
 
     @FXML
@@ -161,7 +154,7 @@ public class ControllerMenu extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        menuResize();
+        resize();
     }
 
     @FXML
@@ -174,7 +167,7 @@ public class ControllerMenu extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        menuResize();
+        resize();
     }
 
     @FXML
@@ -188,7 +181,7 @@ public class ControllerMenu extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        menuResize();
+        resize();
     }
 
     @FXML
@@ -202,7 +195,7 @@ public class ControllerMenu extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        menuResize();
+        resize();
     }
 
     @FXML
@@ -211,10 +204,10 @@ public class ControllerMenu extends Controller {
         this.resetButtonColor();
         this.mainButtonBoard.setStyle("-fx-background-color: #d3d3d3;");
         try {
-            changeView(appView, "/views/board.fxml");
+            changeView(appView, "/views/template.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        menuResize();
+        resize();
     }
 }

@@ -50,7 +50,7 @@ public class ControllerDataSee extends Controller{
 
     // private HashMap<String, ?> villeDataMap;
 
-    public void initialize() {
+    protected void resize() {
         ReadOnlyDoubleProperty width = tableView.widthProperty();
 
         setColumnWidth(colCodePostal, width, 0.15);
@@ -58,6 +58,10 @@ public class ControllerDataSee extends Controller{
         setColumnWidth(colINSEE, width, 0.15);
         setColumnWidth(colPrix, width, 0.15);
         setColumnWidth(colNb, width, 0.15);
+    }
+
+    public void initialize() {
+        resize();
     }
 
     private void setColumnWidth(

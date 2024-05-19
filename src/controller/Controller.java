@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.util.Map;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 
 /**
  * Classe abstraite pour les contrôleurs
@@ -24,6 +27,7 @@ public abstract class Controller {
 
     /**
      * Permet de définir la variable contenant les vues déjà chargées
+     * 
      * @param viewCache La variable contenant les vues déjà chargées
      */
     public void setViewCache(Map<String, Node> viewCache) {
@@ -32,6 +36,7 @@ public abstract class Controller {
 
     /**
      * Permet de définir la variable contenant l'application JavaFX
+     * 
      * @param app L'application JavaFX
      */
     public void setApp(Application app) {
@@ -39,10 +44,39 @@ public abstract class Controller {
     }
 
     /**
+     * Calcule l'échelle à appliquer à un élément pour qu'il s'adapte à la taille de
+     * la fenêtre
+     * @param window La fenêtre
+     * @return L'échelle à appliquer
+     */
+    public double calculateScale(Region window) {
+        double scaleX = window.getWidth() / 1920.0;
+        double scaleY = window.getHeight() / 1080.0;
+        return Math.min(scaleX, scaleY);
+    }
+
+    /**
+     * Crée une liaison entre la taille de la fenêtre et l'échelle à appliquer à un
+     * élément
+     * 
+     * @param window La fenêtre
+     * @return La liaison entre la taille de la fenêtre et l'échelle à appliquer à
+     *         l'élément
+     */
+    public DoubleBinding getScale(Region window) {
+        DoubleBinding scale = Bindings.createDoubleBinding(() -> calculateScale(
+                window), window.widthProperty(),
+                window.heightProperty());
+        return scale;
+    }
+
+    /**
      * Ouvre un lien web dans le navigateur par défaut
+     * 
      * @param url L'URL à ouvrir
-     * @throws IllegalArgumentException Si l'URL est null ou ne commence pas par http:// ou https://
-     * @throws IllegalStateException Si l'application est null
+     * @throws IllegalArgumentException Si l'URL est null ou ne commence pas par
+     *                                  http:// ou https://
+     * @throws IllegalStateException    Si l'application est null
      */
     protected void openWebLink(String url) throws IllegalArgumentException, IllegalStateException {
         if (url == null) {
@@ -50,20 +84,22 @@ public abstract class Controller {
         }
         if (app == null) {
             throw new IllegalStateException("Application cannot be null, please call setApp() first");
-        }
-        else if (!(url.startsWith("http://") || url.startsWith("https://"))){
+        } else if (!(url.startsWith("http://") || url.startsWith("https://"))) {
             throw new IllegalArgumentException("URL must start with http:// or https://");
         }
-        this.app.getHostServices().showDocument("https://www.bretagne.bzh/");
+        this.app.getHostServices().showDocument(url);
     }
 
     /**
      * Change la vue d'un élément par une vue chargée depuis un fichier FXML
-     * @param elem L'élément à modifier
+     * 
+     * @param elem     L'élément à modifier
      * @param fxmlPath Le chemin du fichier FXML
-     * @throws IllegalArgumentException Si l'élément ou le chemin du fichier FXML est null
-     * @throws IllegalStateException Si la variable contenant les vues déjà chargées est null
-     * @throws IOException Si le chargement du fichier FXML a échoué
+     * @throws IllegalArgumentException Si l'élément ou le chemin du fichier FXML
+     *                                  est null
+     * @throws IllegalStateException    Si la variable contenant les vues déjà
+     *                                  chargées est null
+     * @throws IOException              Si le chargement du fichier FXML a échoué
      */
     protected void changeView(Pane elem, String fxmlPath)
             throws IllegalArgumentException, IllegalStateException, IOException {
@@ -83,7 +119,7 @@ public abstract class Controller {
             view = loader.load();
             Controller controller = loader.getController();
             // Le contrôleur peut être null si la vue n'a pas de contrôleur
-            if (controller != null){
+            if (controller != null) {
                 controller.setApp(app);
                 controller.setViewCache(viewCache);
             }
@@ -93,5 +129,14 @@ public abstract class Controller {
         elem.getChildren().add(view);
     }
 
+    /**
+     * Initialise le contrôleur
+     * Est appelée après le chargement du fichier FXML
+     */
     public abstract void initialize();
+
+    /**
+     * Redimensionne les éléments de la vue
+     */
+    protected abstract void resize();
 }
