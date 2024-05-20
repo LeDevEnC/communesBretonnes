@@ -163,7 +163,7 @@ public class ControllerMenu extends Controller {
         this.resetButtonColor();
         this.mainButtonEdit.setStyle("-fx-background-color: #d3d3d3;");
         try {
-            changeView(appView, "/views/template.fxml");
+            changeView(appView, "/views/login.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
