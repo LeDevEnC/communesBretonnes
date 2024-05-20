@@ -210,4 +210,8 @@ public class ControllerMenu extends Controller {
         }
         resize();
     }
+
+    public void onViewOpened(){
+        this.buttonBoardPressed(); // Affiche le menu principal au démarrage de l'application
+    }
 }

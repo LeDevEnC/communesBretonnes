@@ -30,14 +30,14 @@
                <bottom>
                   <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <top>
-                        <Button fx:id="bt_deconnexion" alignment="CENTER" mnemonicParsing="false" prefHeight="44.0" prefWidth="452.0" text="Se deconnecter" BorderPane.alignment="CENTER">
+                        <Button fx:id="bt_deconnexion" alignment="CENTER" mnemonicParsing="false" onMousePressed="#btDeconnexionPress" prefHeight="44.0" prefWidth="452.0" text="Se deconnecter" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="30.0" />
                            </font>
                         </Button>
                      </top>
                      <center>
-                        <Button fx:id="bt_exporter" mnemonicParsing="false" prefHeight="62.0" prefWidth="714.0" text="Exporter les données de la base de données" BorderPane.alignment="CENTER">
+                        <Button fx:id="bt_exporter" mnemonicParsing="false" onMousePressed="#btExporterPress" prefHeight="62.0" prefWidth="714.0" text="Exporter les données de la base de données" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="30.0" />
                            </font>

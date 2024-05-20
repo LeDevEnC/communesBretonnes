@@ -70,4 +70,5 @@ public class ControllerDataSee extends Controller{
         column.minWidthProperty().set(0); // Ajoutez cette ligne
     }
 
+    public void onViewOpened(){};
 }

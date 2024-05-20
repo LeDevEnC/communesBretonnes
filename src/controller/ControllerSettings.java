@@ -94,8 +94,8 @@ public class ControllerSettings extends Controller {
         }
 
         @FXML
-        private void btConnexionPress() {
-                // TODO
+        private void btDeconnexionPress() {
+                super.getModel().logout();
         }
 
         @FXML
@@ -106,5 +106,9 @@ public class ControllerSettings extends Controller {
         @FXML
         private void lienContactPress() {
                 openWebLink("https://www.bretagne.bzh/");
+        }
+
+        public void onViewOpened() {
+                // TODO
         }
 }

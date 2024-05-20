@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import model.MainModel;
 
 /**
  * Classe abstraite pour les contrôleurs
@@ -26,6 +27,16 @@ public abstract class Controller {
     private Map<String, Node> viewCache = null;
 
     /**
+     * Contient les contrôleurs des vues déjà chargés
+     */
+    private Map<String, Controller> controllerCache = null;
+
+    /**
+     * Contient le modèle principal
+     */
+    private MainModel model;
+
+    /**
      * Permet de définir la variable contenant les vues déjà chargées
      * 
      * @param viewCache La variable contenant les vues déjà chargées
@@ -35,12 +46,24 @@ public abstract class Controller {
     }
 
     /**
+     * Contient les contrôleurs des vues déjà chargés
+     * @param controllerCache La variable contenant les contrôleurs des vues déjà chargés
+     */
+    public void setControllerCache(Map<String, Controller> controllerCache) {
+        this.controllerCache = controllerCache;
+    }
+
+    /**
      * Permet de définir la variable contenant l'application JavaFX
      * 
      * @param app L'application JavaFX
      */
     public void setApp(Application app) {
         this.app = app; // Peut être null
+    }
+
+    public void setModel(MainModel model) {
+        this.model = model;
     }
 
     /**
@@ -110,24 +133,41 @@ public abstract class Controller {
         if (fxmlPath == null) {
             throw new IllegalArgumentException("Fxml path cannot be null");
         }
-        if (viewCache == null) {
+        if (this.viewCache == null) {
             throw new IllegalStateException("View cache cannot be null, please call setViewCache() first");
         }
 
-        Node view = viewCache.get(fxmlPath);
+        Node view = this.viewCache.get(fxmlPath);
+        Controller controller;
         if (view == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             view = loader.load();
-            Controller controller = loader.getController();
+            controller = loader.getController();
             // Le contrôleur peut être null si la vue n'a pas de contrôleur
             if (controller != null) {
-                controller.setApp(app);
-                controller.setViewCache(viewCache);
+                controller.setApp(this.app);
+                controller.setViewCache(this.viewCache);
+                controller.setModel(this.model);
+                controller.setControllerCache(this.controllerCache);
             }
-            viewCache.put(fxmlPath, view);
+            this.controllerCache.put(fxmlPath, controller);
+            this.viewCache.put(fxmlPath, view);
+        } else {
+            controller = this.controllerCache.get(fxmlPath);
+        }
+        if (controller != null) {
+            controller.onViewOpened();
         }
         elem.getChildren().clear();
         elem.getChildren().add(view);
+    }
+
+    /**
+     * Permet de récupérer le modèle principal
+     * @return Le modèle principal
+     */
+    public MainModel getModel() {
+        return model;
     }
 
     /**
@@ -140,4 +180,9 @@ public abstract class Controller {
      * Redimensionne les éléments de la vue
      */
     protected abstract void resize();
+
+    /**
+     * Méthode appeller à chaque fois que l'on ouvre la vue
+     */
+    public abstract void onViewOpened();
 }
