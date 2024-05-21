@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class ControllerDataSee extends Controller{
+public class ControllerDataSee extends Controller {
     @FXML
     Button buttonSelectPrevious;
 
@@ -70,5 +70,6 @@ public class ControllerDataSee extends Controller{
         column.minWidthProperty().set(0); // Ajoutez cette ligne
     }
 
-    public void onViewOpened(){};
+    public void onViewOpened() {
+    };
 }

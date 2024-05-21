@@ -47,7 +47,9 @@ public abstract class Controller {
 
     /**
      * Contient les contrôleurs des vues déjà chargés
-     * @param controllerCache La variable contenant les contrôleurs des vues déjà chargés
+     * 
+     * @param controllerCache La variable contenant les contrôleurs des vues déjà
+     *                        chargés
      */
     public void setControllerCache(Map<String, Controller> controllerCache) {
         this.controllerCache = controllerCache;
@@ -164,6 +166,7 @@ public abstract class Controller {
 
     /**
      * Permet de récupérer le modèle principal
+     * 
      * @return Le modèle principal
      */
     public MainModel getModel() {

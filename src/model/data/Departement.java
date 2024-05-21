@@ -26,7 +26,6 @@ public class Departement {
      */
     private ArrayList<Aeroport> aeroports;
 
-
     /**
      * Constructeur de la classe Departement
      *

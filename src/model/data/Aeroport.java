@@ -49,7 +49,6 @@ public class Aeroport {
         return this.adresse;
     }
 
-
     /**
      * Setter du nom de l'aéroport
      *

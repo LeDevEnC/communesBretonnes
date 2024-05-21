@@ -65,7 +65,6 @@ public class Gare {
         return this.nomGare;
     }
 
-
     /**
      * Getter si la gare est un gare de
      *

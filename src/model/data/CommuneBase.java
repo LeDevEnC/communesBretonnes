@@ -135,7 +135,7 @@ public class CommuneBase {
      * @param leDepartement le département de la commune
      * @throws IllegalArgumentException si le département de la commune est null
      */
-    public void addNeighbor(CommuneBase neighbor) throws IllegalArgumentException{
+    public void addNeighbor(CommuneBase neighbor) throws IllegalArgumentException {
         if (neighbor != null) {
             this.lesVoisins.add(neighbor);
         } else {

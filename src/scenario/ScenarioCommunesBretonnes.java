@@ -1,14 +1,16 @@
 package scenario;
-import model.data.*;
+
 import java.util.ArrayList;
+
 import model.dao.CommuneBaseDAO;
 import model.dao.CommunesInfoParAnneeDAO;
-import model.dao.DepartementDAO;
+import model.data.Aeroport;
+import model.data.CommuneBase;
 import model.data.CommunesInfoParAnnee;
-
+import model.data.Gare;
 
 public class ScenarioCommunesBretonnes {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         CommunesInfoParAnneeDAO communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO();
         CommuneBaseDAO communeBaseDAO = new CommuneBaseDAO();
 
@@ -17,12 +19,12 @@ public class ScenarioCommunesBretonnes {
         System.out.println(vannesInfos.toString());
         ArrayList<CommuneBase> voisins = vannes.getLesVoisins();
         System.out.println("Voisins de Vannes : ");
-        for (CommuneBase voisin : voisins){
+        for (CommuneBase voisin : voisins) {
             System.out.println(voisin.getNomCommune());
         }
         System.out.println("Gares de Vannes : ");
         ArrayList<Gare> gares = vannes.getLesGares();
-        for (Gare gare : gares){
+        for (Gare gare : gares) {
             System.out.println(gare.getNomGare());
         }
         System.out.println("Département de Vannes : ");
@@ -30,17 +32,17 @@ public class ScenarioCommunesBretonnes {
 
         System.out.println("Aéroports proches de Vannes : ");
         ArrayList<Aeroport> aeroports = vannes.getLeDepartement().getAeroports();
-        for (Aeroport aeroport : aeroports){
+        for (Aeroport aeroport : aeroports) {
             System.out.println(aeroport.getNom());
-        }        
+        }
 
         ArrayList<CommuneBase> communes = new ArrayList<CommuneBase>();
 
         communes = communeBaseDAO.findAll();
-        for (CommuneBase commune : communes){
+        for (CommuneBase commune : communes) {
             System.out.println(commune.getNomCommune());
             System.out.println("Les voisins sont : ");
-            for (CommuneBase voisin : commune.getLesVoisins()){
+            for (CommuneBase voisin : commune.getLesVoisins()) {
                 System.out.println(voisin.getNomCommune());
             }
         }

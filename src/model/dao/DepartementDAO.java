@@ -28,27 +28,30 @@ public class DepartementDAO extends DAO<Departement> {
     public ArrayList<Departement> findAll() {
         ArrayList<Departement> departements = new ArrayList<>();
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Departement")) {
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Departement")) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Long idDep = resultSet.getLong("idDep");
                     ArrayList<Aeroport> aeroportsOfDept = new ArrayList<>();
-                    try (PreparedStatement statement2 = connection.prepareStatement("SELECT * FROM Aeroport WHERE leDepartement = ?")) {
+                    try (PreparedStatement statement2 = connection
+                            .prepareStatement("SELECT * FROM Aeroport WHERE leDepartement = ?")) {
                         statement2.setLong(1, idDep);
                         try (ResultSet resultSet2 = statement2.executeQuery()) {
                             while (resultSet2.next()) {
-                                aeroportsOfDept.add(new Aeroport(resultSet2.getString("nom"), resultSet2.getString("adresse")));
+                                aeroportsOfDept.add(
+                                        new Aeroport(resultSet2.getString("nom"), resultSet2.getString("adresse")));
                             }
                         }
                     }
-                    Departement departement = new Departement(resultSet.getInt("idDep"), resultSet.getString("nomDep"), resultSet.getLong("investissementCulturel2019"), aeroportsOfDept);
+                    Departement departement = new Departement(resultSet.getInt("idDep"), resultSet.getString("nomDep"),
+                            resultSet.getLong("investissementCulturel2019"), aeroportsOfDept);
                     departements.add(departement);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    
+
         return departements;
     }
 

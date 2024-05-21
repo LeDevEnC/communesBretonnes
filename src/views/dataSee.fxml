@@ -13,7 +13,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerDataSee">
+<BorderPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21"
+   xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerDataSee">
    <center>
       <TableView fx:id="tableView" BorderPane.alignment="CENTER">
          <columns>
@@ -59,7 +60,8 @@
       </TableView>
    </center>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0"
+         BorderPane.alignment="CENTER">
          <children>
             <Button styleClass="nav-button" text="Previous" />
             <Button styleClass="page-button, selected" text="1" />
@@ -70,13 +72,15 @@
       </HBox>
    </bottom>
    <top>
-      <GridPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <GridPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="20.0"
+         prefWidth="200.0" BorderPane.alignment="CENTER">
          <columnConstraints>
             <ColumnConstraints hgrow="NEVER" />
             <ColumnConstraints hgrow="ALWAYS" />
          </columnConstraints>
          <children>
-            <ImageView fitHeight="26.0" fitWidth="33.0" preserveRatio="true" GridPane.columnIndex="0">
+            <ImageView fitHeight="26.0" fitWidth="33.0" preserveRatio="true"
+               GridPane.columnIndex="0">
                <image>
                   <Image url="@../ressources/icons/loopIcon.png" />
                </image>
@@ -84,7 +88,8 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </ImageView>
-            <TextField maxWidth="1.7976931348623157E308" minWidth="-Infinity" promptText="Rechercher ..." GridPane.columnIndex="1">
+            <TextField maxWidth="1.7976931348623157E308" minWidth="-Infinity"
+               promptText="Rechercher ..." GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
