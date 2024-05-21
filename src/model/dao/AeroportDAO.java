@@ -6,10 +6,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.data.Aeroport;
-import model.data.Departement;
 
+/**
+ * Classe DAO pour les aéroports
+ */
 public class AeroportDAO extends DAO<Aeroport> {
 
+    /**
+     * &nbsp;
+     */
+    public AeroportDAO() {
+    }
+
+    /**
+     * Trouver tous les aéroports
+     */
     @Override
     public ArrayList<Aeroport> findAll() {
         ArrayList<Aeroport> aeroports = new ArrayList<>();
@@ -19,20 +30,23 @@ public class AeroportDAO extends DAO<Aeroport> {
             while (rs.next()) {
                 String nom = rs.getString("nom");
                 String adresse = rs.getString("adresse");
-                long leDepartementId = rs.getLong("leDepartement");
-                DepartementDAO departementDAO = new DepartementDAO();
-                Departement departement = departementDAO.findByID(leDepartementId);
-                Aeroport aeroport = new Aeroport(nom, adresse, departement);
+                Aeroport aeroport = new Aeroport(nom, adresse);
                 aeroports.add(aeroport);
             }   
                 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return aeroports;
     }
 
-    @Override
+    /**
+     * Trouver un aéroport par son nom
+     * 
+     * @param name le nom de l'aéroport
+     * @return l'aéroport
+     */
     public Aeroport findByName(String name) {
         Aeroport aeroport = null;
         try (Connection connection = getConnection();
@@ -42,10 +56,7 @@ public class AeroportDAO extends DAO<Aeroport> {
                 if (rs.next()) {
                     String nom = rs.getString("nom");
                     String adresse = rs.getString("adresse");
-                    long leDepartementId = rs.getLong("leDepartement");
-                    DepartementDAO departementDAO = new DepartementDAO();
-                    Departement departement = departementDAO.findByID(leDepartementId);
-                    aeroport = new Aeroport(nom, adresse, departement);
+                    aeroport = new Aeroport(nom, adresse);
                 }
             }
         } catch (SQLException e) {
@@ -54,13 +65,20 @@ public class AeroportDAO extends DAO<Aeroport> {
         return aeroport;
     }
 
+    /**
+     * Mettre à jour un aéroport
+     * 
+     * @param aeroport un aéroport
+     * @return le nombre de lignes modifiées
+     */
     @Override
-    public int update(Aeroport aeroport) {
+    public int update(Aeroport aeroport) { // JE SAIS PAS QUOI UPDATE PUTAIN DE MERDE NIQUEZ VOS MERES
         int rowsUpdated = 0;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("UPDATE Aeroport SET nom = ? WHERE adresse = ?")) {
+                PreparedStatement statement = connection.prepareStatement("DELTE * FROM * FROM XOR")) {
             statement.setString(1, aeroport.getNom());
-            statement.setString(2, aeroport.getAdresse()); 
+            statement.setString(2, aeroport.getAdresse());
+
             rowsUpdated = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,12 +86,19 @@ public class AeroportDAO extends DAO<Aeroport> {
         return rowsUpdated;
     }
 
+    /**
+     * Supprimer un aéroport
+     * 
+     * @param aeroport un aéroport
+     * @return le nombre de lignes supprimées
+     */
     @Override
     public int delete(Aeroport aeroport) {
         int rowsDeleted = 0;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("DELETE FROM Aeroport WHERE nom = ?")) {
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM Aeroport WHERE nom = ? AND adresse = ?")) {
             statement.setString(1, aeroport.getNom()); 
+            statement.setString(2, aeroport.getAdresse());
             rowsDeleted = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,30 +106,42 @@ public class AeroportDAO extends DAO<Aeroport> {
         return rowsDeleted;
     }
 
-    @Override
-    public int create(Aeroport aeroport) {
-        int id = 0;
+    /**
+     * Créer un aéroport
+     * @param aeroport un aéroport 
+     * @param leDepartement un département
+     * @return le nombre de lignes créées
+     */
+    public int create(Aeroport aeroport, int leDepartement){
+        int rowsCreated = 0;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO Aeroport (nom, adresse, leDepartement) VALUES (?, ?, ?)",
-                        PreparedStatement.RETURN_GENERATED_KEYS)) {
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO Aeroport (nom, adresse, leDepartement) VALUES (?, ?, ?)")) {
             statement.setString(1, aeroport.getNom());
             statement.setString(2, aeroport.getAdresse());
-            statement.setLong(3, aeroport.getDepartement().getIdDep());
-            statement.executeUpdate();
-            try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    id = resultSet.getInt(1);
-                }
-            }
+            statement.setInt(3, leDepartement);
+            rowsCreated = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return id;
+
+        return rowsCreated;
     }
 
+    /**
+     * Méthode de création non implémentée car l'objet aéroport ne dispose pas d'attribut département et la table aéroport a un attribut département
+     */
+    @Override
+    public int create(Aeroport aeroport) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * Méthode de recherche non implémentée car l'objet aéroport ne dispose pas d'attribut long et la table aéroport n'a pas d'attribut long
+     */
     @Override
     public Aeroport findByID(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByName'");
+        throw new UnsupportedOperationException("No long values in Aeroport table");
     }
+
 }
+

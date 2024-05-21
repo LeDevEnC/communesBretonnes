@@ -1,13 +1,10 @@
 package model.dao;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-
 import model.data.Annee;
 
 /**
@@ -26,8 +23,8 @@ public class AnneeDAO extends DAO<Annee> {
      * @return la liste des années
      */
     @Override
-    public List<Annee> findAll() {
-        List<Annee> annees = new ArrayList<>();
+    public ArrayList<Annee> findAll() {
+        ArrayList<Annee> annees = new ArrayList<>();
         try (Connection connection = getConnection();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM Annee")) {
@@ -66,7 +63,7 @@ public class AnneeDAO extends DAO<Annee> {
     }
 
     /**
-     * Mettre à jour une année
+     * Mettre à jour un taux d'inflation d'une année
      * 
      * @param annee une année
      * @return le nombre de lignes mises à jour
@@ -130,11 +127,6 @@ public class AnneeDAO extends DAO<Annee> {
         return result;
     }
 
-    @Override
-    public Annee findByName(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByName'");
-    }
 
     
 }

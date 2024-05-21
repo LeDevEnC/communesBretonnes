@@ -27,9 +27,9 @@ public class CommuneBase {
     private ArrayList<CommuneBase> lesVoisins;
 
     /**
-     * Gare de la commune
+     * ArrayList des gares de la commune
      */
-    private Gare laGare;
+    private ArrayList<Gare> lesGares;
 
     /**
      * Constructeur de la classe CommuneBase
@@ -41,8 +41,8 @@ public class CommuneBase {
      * @param laGare        la gare de la commune
      */
     public CommuneBase(int idCommune, String nomCommune, Departement leDepartement, ArrayList<CommuneBase> lesVoisins,
-            Gare laGare) throws IllegalArgumentException {
-        if (idCommune < 0 || nomCommune == null || leDepartement == null || lesVoisins == null || laGare == null) {
+            ArrayList<Gare> lesGares) throws IllegalArgumentException {
+        if (idCommune < 0 || nomCommune == null || leDepartement == null || lesVoisins == null || lesGares == null) {
             throw new IllegalArgumentException(
                     "L'identifiant de la commune est négatif ou le nom de la commune, le département, les communes voisines ou la gare de la commune sont null");
         } else {
@@ -50,7 +50,7 @@ public class CommuneBase {
             this.nomCommune = nomCommune;
             this.leDepartement = leDepartement;
             this.lesVoisins = lesVoisins;
-            this.laGare = laGare;
+            this.lesGares = lesGares;
         }
     }
 
@@ -95,8 +95,8 @@ public class CommuneBase {
      *
      * @return la gare de la commune
      */
-    public Gare getLaGare() {
-        return this.laGare;
+    public ArrayList<Gare> getLesGares() {
+        return this.lesGares;
     }
 
     /**
@@ -127,6 +127,20 @@ public class CommuneBase {
             this.nomCommune = nomCommune;
         }
 
+    }
+
+    /**
+     * Setter du département de la commune
+     *
+     * @param leDepartement le département de la commune
+     * @throws IllegalArgumentException si le département de la commune est null
+     */
+    public void addNeighbor(CommuneBase neighbor) throws IllegalArgumentException{
+        if (neighbor != null) {
+            this.lesVoisins.add(neighbor);
+        } else {
+            throw new IllegalArgumentException("La commune voisine est null");
+        }
     }
 
     /**

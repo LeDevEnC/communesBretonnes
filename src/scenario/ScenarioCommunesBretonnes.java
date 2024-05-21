@@ -1,30 +1,49 @@
 package scenario;
-import model.dao.DepartementDAO;
-import model.data.Aeroport;
-import model.data.Departement;
-
+import model.data.*;
 import java.util.ArrayList;
-
-import model.dao.AeroportDAO;
+import model.dao.CommuneBaseDAO;
+import model.dao.CommunesInfoParAnneeDAO;
+import model.dao.DepartementDAO;
+import model.data.CommunesInfoParAnnee;
 
 
 public class ScenarioCommunesBretonnes {
     public static void main(String[] args){
-        DepartementDAO departementDAO = new DepartementDAO();
-        AeroportDAO aeroportDAO = new AeroportDAO();
-        ArrayList<Departement> departements = departementDAO.findAll();
-        for (Departement departement : departements) {
-            System.out.println(departement.getIdDep() + " " + departement.getNomDep() + " " + departement.getNomDep() + " " + departement.getIdDep());
+        CommunesInfoParAnneeDAO communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO();
+        CommuneBaseDAO communeBaseDAO = new CommuneBaseDAO();
+
+        CommuneBase vannes = communeBaseDAO.findByName("Vannes", true);
+        CommunesInfoParAnnee vannesInfos = communesInfoParAnneeDAO.findByIDComplete(2019L, vannes);
+        System.out.println(vannesInfos.toString());
+        ArrayList<CommuneBase> voisins = vannes.getLesVoisins();
+        System.out.println("Voisins de Vannes : ");
+        for (CommuneBase voisin : voisins){
+            System.out.println(voisin.getNomCommune());
         }
-
-        ArrayList<Aeroport> aeroports = aeroportDAO.findAll();
-        for (Aeroport aeroport : aeroports) {
-            System.out.println(aeroport.getNom() + " " + aeroport.getAdresse() + " " + aeroport.getDepartement().getNomDep() + " " + aeroport.getDepartement().getIdDep());
+        System.out.println("Gares de Vannes : ");
+        ArrayList<Gare> gares = vannes.getLesGares();
+        for (Gare gare : gares){
+            System.out.println(gare.getNomGare());
         }
+        System.out.println("Département de Vannes : ");
+        System.out.println(vannes.getLeDepartement().getNomDep());
 
-        
+        System.out.println("Aéroports proches de Vannes : ");
+        ArrayList<Aeroport> aeroports = vannes.getLeDepartement().getAeroports();
+        for (Aeroport aeroport : aeroports){
+            System.out.println(aeroport.getNom());
+        }        
 
-        
+        ArrayList<CommuneBase> communes = new ArrayList<CommuneBase>();
+
+        communes = communeBaseDAO.findAll();
+        for (CommuneBase commune : communes){
+            System.out.println(commune.getNomCommune());
+            System.out.println("Les voisins sont : ");
+            for (CommuneBase voisin : commune.getLesVoisins()){
+                System.out.println(voisin.getNomCommune());
+            }
+        }
 
     }
 }

@@ -13,27 +13,21 @@ public class Aeroport {
      * Adresse de l'aéroport
      */
     private String adresse;
-    /**
-     * Le departement de l'aeroport
-     */
-    private Departement departement;
 
     /**
      * Constructeur de la classe Aeroport
      *
      * @param nom     le nom de l'aéroport
      * @param adresse l'adresse de l'aéroport
-     * @param departement le departement de l'aeroport
      * @throws IllegalArgumentException si le nom ou l'adresse de l'aéroport est
      *                                  null
      */
-    public Aeroport(String nom, String adresse, Departement departement) throws IllegalArgumentException {
-        if (nom == null || adresse == null || departement == null) {
-            throw new IllegalArgumentException("Le nom ou l'adresse de l'aéroport ou le departement de l'aéroport est null");
+    public Aeroport(String nom, String adresse) throws IllegalArgumentException {
+        if (nom == null || adresse == null) {
+            throw new IllegalArgumentException("Le nom ou l'adresse de l'aéroport est null");
         } else {
             this.nom = nom;
             this.adresse = adresse;
-            this.departement = departement;
         }
     }
 
@@ -55,14 +49,6 @@ public class Aeroport {
         return this.adresse;
     }
 
-    /**
-     * Getter du departement de l'aeroport
-     *
-     * @return le departement de l'aeroport
-     */
-    public Departement getDepartement() {
-        return this.departement;
-    }
 
     /**
      * Setter du nom de l'aéroport
@@ -89,20 +75,6 @@ public class Aeroport {
             throw new IllegalArgumentException("L'adresse de l'aéroport est null");
         } else {
             this.adresse = adresse;
-        }
-    }
-
-    /**
-     * Setter du departement de l'aeroport
-     *
-     * @param departement le departement de l'aeroport
-     * @throws IllegalArgumentException si le departement de l'aeroport est null
-     */
-    public void setDepartement(Departement departement) throws IllegalArgumentException {
-        if (departement == null) {
-            throw new IllegalArgumentException("Le departement de l'aeroport est null");
-        } else {
-            this.departement = departement;
         }
     }
 

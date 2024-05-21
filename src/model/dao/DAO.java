@@ -68,13 +68,6 @@ public abstract class DAO<T> {
     public abstract T findByID(Long id);
 
     /**
-     * Trouver un objet par son nom
-     * @param name le nom 
-     * @return l'objet
-     */
-    public abstract T findByName(String name);
-
-    /**
      * Mettre à jour un objet
      * 
      * @param user l'objet

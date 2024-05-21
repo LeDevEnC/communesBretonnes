@@ -1,6 +1,6 @@
 package model.data;
 
-
+import java.util.ArrayList;
 
 /**
  * Classe Departement représentant les informations d'un département
@@ -21,6 +21,11 @@ public class Departement {
      */
     private final long INVESCULTUREL2019;
 
+    /**
+     * Liste des aéroports du département
+     */
+    private ArrayList<Aeroport> aeroports;
+
 
     /**
      * Constructeur de la classe Departement
@@ -33,15 +38,16 @@ public class Departement {
      *                                  du département, l'investissement culturel ou
      *                                  la liste des aéroports est null
      */
-    public Departement(int idDep, String nomDep, long invesCulturel)
+    public Departement(int idDep, String nomDep, long invesCulturel, ArrayList<Aeroport> aeroports)
             throws IllegalArgumentException {
-        if (idDep < 0 || nomDep == null || invesCulturel < 0 ) {
+        if (idDep < 0 || nomDep == null || invesCulturel < 0 || aeroports == null) {
             throw new IllegalArgumentException(
-                    "L'identifiant du département est négatif ou le nom du département, l'investissement culturel est null");
+                    "L'identifiant du département est négatif ou le nom du département, l'investissement culturel ou la liste des aéroports est null");
         } else {
             this.idDep = idDep;
             this.nomDep = nomDep.toString();
             this.INVESCULTUREL2019 = invesCulturel;
+            this.aeroports = aeroports;
         }
     }
 
@@ -70,6 +76,15 @@ public class Departement {
      */
     public long getInvestCulturel2019() {
         return this.INVESCULTUREL2019;
+    }
+
+    /**
+     * Getter de la liste des aéroports du département
+     *
+     * @return la liste des aéroports du département
+     */
+    public ArrayList<Aeroport> getAeroports() {
+        return this.aeroports;
     }
 
     /**
