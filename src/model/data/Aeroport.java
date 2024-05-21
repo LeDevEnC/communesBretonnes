@@ -97,4 +97,13 @@ public class Aeroport {
 
         return isSame;
     }
+
+    /**
+     * Méthode permettant d'afficher un aéroport sous forme de chaîne de caractères
+     * 
+     * @return l'aéroport sous forme de csv "nom","adresse"
+     */
+    public String toString() {
+        return "\"" + this.nom + "\",\"" + this.adresse + "\"";
+    }
 }

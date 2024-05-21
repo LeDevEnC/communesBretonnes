@@ -99,4 +99,14 @@ public class Annee {
         }
         return res;
     }
+
+    /**
+     * Méthode permettant d'afficher une année sous forme de chaîne de caractères
+     * 
+     * @return l'aéroport sous forme de csv "année","tauxInflation"
+     */
+    public String toString() {
+        return "\"" + this.annee + "\",\"" + this.tauxInflation + "\"";
+    }
+
 }

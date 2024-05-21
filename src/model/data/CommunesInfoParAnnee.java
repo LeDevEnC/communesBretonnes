@@ -293,16 +293,14 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Fait un affichage des informations de la commune pour une année donnée
+     * Méthode permettant d'afficher les informations de la commune pour une année sous forme de chaîne de caractères
+     * 
+     * @return les informations de la commune pour une année sous forme de csv "nomCommune","année","nbMaison","nbAppart","prixMoyen","prixMCarreMoyen","surfaceMoy","depCulturellesTotales","budgetTotal","population"
      */
     public String toString() {
-        return "Commune : " + this.laCommune.getNomCommune() + "\nAnnée : " + this.lAnnee.getAnnee()
-                + "\nNombre de maisons : "
-                + this.nbMaison + "\nNombre d'appartements : " + this.nbAppart + "\nPrix moyen : " + this.prixMoyen
-                + "\nPrix moyen par mètre carré : " + this.prixMCarreMoyen + "\nSurface moyenne : " + this.surfaceMoy
-                + "\nDépenses culturelles totales : " + this.depCulturellesTotales + "\nBudget total : "
-                + this.budgetTotal
-                + "\nPopulation : " + this.population;
+        return "\"" + this.laCommune.getNomCommune() + "\",\"" + this.lAnnee.getAnnee() + "\",\"" + this.nbMaison + "\",\""
+                + this.nbAppart + "\",\"" + this.prixMoyen + "\",\"" + this.prixMCarreMoyen + "\",\"" + this.surfaceMoy
+                + "\",\"" + this.depCulturellesTotales + "\",\"" + this.budgetTotal + "\",\"" + this.population + "\"";
     }
 
     /**
@@ -326,5 +324,4 @@ public class CommunesInfoParAnnee {
         }
         return ret;
     }
-
 }

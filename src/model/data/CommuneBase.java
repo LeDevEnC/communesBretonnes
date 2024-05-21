@@ -167,4 +167,12 @@ public class CommuneBase {
         }
     }
 
+    /**
+     * Méthode permettant d'afficher une commune sous forme de chaîne de caractères
+     *
+     * @return la commune sous forme de csv "idCommune","nomCommune","leDepartement"
+     */
+    public String toString() {
+        return "\"" + this.idCommune + "\",\"" + this.nomCommune + "\",\"" + this.leDepartement + "\"";
+    }
 }

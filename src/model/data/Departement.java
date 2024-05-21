@@ -141,4 +141,15 @@ public class Departement {
             return res;
         }
     }
+
+    /**
+     * Méthode permettant d'afficher les informations d'un département sous forme de
+     * chaîne de caractères
+     * 
+     * @return les informations du département sous forme de csv
+     *         "idDep","nomDep","invesCulturel2019"
+     */
+    public String toString() {
+        return "\"" + this.idDep + "\",\"" + this.nomDep + "\",\"" + this.INVESCULTUREL2019 + "\"";
+    }
 }
