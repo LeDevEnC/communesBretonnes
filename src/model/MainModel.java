@@ -1,5 +1,9 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 /**
  * TODO : Implémenter le modèle
  */
@@ -18,13 +22,20 @@ public class MainModel {
      * Permet de connecter l'utilisateur à la bdd
      */
     public void login(String email, String password){
-        // TODO : Connexion à la bdd
-        if (email.equals("admin") && password.equals("admin")) { // Utiliser tant que la connexion n'est pas implémentée
+        // Replace with your database url, username, and password
+        String url = "jdbc:mysql://localhost:3306/bdsae";
+        String username = email;
+        String dbPassword = password;
+
+        try (Connection connection = DriverManager.getConnection(url, username, dbPassword)) {
+            // If connection is successful
             isLogged = true;
-            username = email;
+            this.username = email;
+        } catch (SQLException e) {
+            System.out.println("Connection failed");
+            e.printStackTrace();
         }
     }
-
     /**
      * Permet de déconnecter l'utilisateur de la bdd
      */
