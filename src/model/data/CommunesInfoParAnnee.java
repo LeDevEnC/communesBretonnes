@@ -324,4 +324,32 @@ public class CommunesInfoParAnnee {
         }
         return ret;
     }
+    /**
+     * Calcule le score d'attractivité de la commune cette année.
+     * Le score d'attractivité est lissé sur ce qui touche à l'argent via le taux
+     * d'infation.
+     * Ce score est calculé en fonction de :
+     * - la population
+     * - le nombre de maisons
+     * - le nombre d'appartements
+     * - le prix moyen
+     * - le prix moyen par mètre carré
+     * - la surface moyenne
+     * - les dépenses culturelles totales
+     * - le budget total
+     * - Si la commune a une gare de voyageurs ou non
+     * - Si la commune a une gare de marchandises ou non
+     * - Le nombre de voisine de la commune
+     *
+     * @return Un score d'attractivité de la commune cette année en pourcentage,
+     *         plus ce score est élevé, plus la commune est attractive. Si des
+     *         informations sont manquantes, retourne -1
+     */
+    public double calcScoreAnnee() {
+        double score = 0;
+
+        // TODO : Calcul du score d'attractivité
+
+        return score;
+    }
 }
