@@ -43,7 +43,7 @@ public class ControllerDataSee extends Controller {
     private TableColumn<?, String> colINSEE;
 
     @FXML
-    private TableColumn<?, String> colPrix;
+    private TableColumn<?, String> depCulturel;
 
     @FXML
     private TableColumn<?, Integer> colNb;
@@ -56,7 +56,7 @@ public class ControllerDataSee extends Controller {
         setColumnWidth(colCodePostal, width, 0.15);
         setColumnWidth(colDepartement, width, 0.15);
         setColumnWidth(colINSEE, width, 0.15);
-        setColumnWidth(colPrix, width, 0.15);
+        setColumnWidth(depCulturel, width, 0.15);
         setColumnWidth(colNb, width, 0.15);
     }
 

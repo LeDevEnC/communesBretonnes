@@ -43,12 +43,12 @@
                   <PropertyValueFactory property="insee" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="colPrix" text="Prix">
+            <TableColumn fx:id="depCulturel" text="Dépense Culturel">
                <cellValueFactory>
                   <PropertyValueFactory property="prix" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="colNb" text="Nb">
+            <TableColumn fx:id="colNb" text="Nb Voisins">
                <cellValueFactory>
                   <PropertyValueFactory property="nb" />
                </cellValueFactory>
