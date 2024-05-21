@@ -96,6 +96,7 @@ public class ControllerSettings extends Controller {
         @FXML
         private void btDeconnexionPress() {
                 super.getModel().logout();
+                onViewOpened();
         }
 
         @FXML
@@ -107,8 +108,17 @@ public class ControllerSettings extends Controller {
         private void lienContactPress() {
                 openWebLink("https://www.bretagne.bzh/");
         }
-
+        
         public void onViewOpened() {
-                // TODO
+                if (super.getModel().isLogged()){
+                        txt_connexion.setText("Connecté en tant que : " + (super.getModel().getUsername()));
+                        bt_deconnexion.setDisable(false);
+                } else {
+                        txt_connexion.setText("Non connecté");
+                        bt_deconnexion.setDisable(true);
+                }
         }
+
+
+
 }

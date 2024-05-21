@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -30,7 +32,6 @@ public class ControllerLogin extends Controller {
     @FXML
     CheckBox keepLoginCheckBox;
 
-
     @FXML
     private void loginButtonPressed() {
         this.errorLabel.setText("Erreur : méthode non implémenté");
@@ -48,11 +49,19 @@ public class ControllerLogin extends Controller {
                 this.loginGridPane.setVisible(false);
                 this.emailTextField.clear();
                 this.passwordTextField.clear();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             this.loginGridPane.setVisible(true);
+        }
+    }
+
+    @FXML
+    private void handleEnterPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            loginButtonPressed();
         }
     }
 

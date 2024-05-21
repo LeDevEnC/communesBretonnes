@@ -8,6 +8,11 @@ public class MainModel {
      * Gère si l'utilisateur est connecté à la bdd (en écriture) ou non
      */
     private boolean isLogged;
+    
+    /**
+     * Nom d'utilisateur
+     */
+    private String username;
 
     /**
      * Permet de connecter l'utilisateur à la bdd
@@ -16,6 +21,7 @@ public class MainModel {
         // TODO : Connexion à la bdd
         if (email.equals("admin") && password.equals("admin")) { // Utiliser tant que la connexion n'est pas implémentée
             isLogged = true;
+            username = email;
         }
     }
 
@@ -33,5 +39,13 @@ public class MainModel {
      */
     public boolean isLogged(){
         return isLogged;
+    }
+
+    /**
+     * Permet de récupérer le nom d'utilisateur
+     * @return le nom d'utilisateur
+     */
+    public String getUsername() {
+        return username;
     }
 }
