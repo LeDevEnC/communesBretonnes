@@ -16,6 +16,11 @@ public class AeroportDAO extends DAO<Aeroport> {
      * &nbsp;
      */
     public AeroportDAO() {
+        super();
+    }
+
+    public AeroportDAO(String username, String password) {
+        super(username, password);
     }
 
     /**

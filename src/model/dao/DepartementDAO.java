@@ -17,6 +17,11 @@ public class DepartementDAO extends DAO<Departement> {
      * &nbsp;
      */
     public DepartementDAO() {
+        super();
+    }
+
+    public DepartementDAO(String username, String password) {
+        super(username, password);
     }
 
     /**

@@ -16,6 +16,11 @@ public class GareDAO extends DAO<Gare> {
      * &nbsp;
      */
     public GareDAO() {
+        super();
+    }
+
+    public GareDAO(String username, String password) {
+        super(username, password);
     }
 
     /**

@@ -14,6 +14,11 @@ public class CommuneBaseDAO extends DAO<CommuneBase>{
      * &nbsp;
      */
     public CommuneBaseDAO() {
+        super();
+    }
+
+    public CommuneBaseDAO(String username, String password) {
+        super(username, password);
     }
 
     /**

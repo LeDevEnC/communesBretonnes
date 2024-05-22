@@ -15,6 +15,11 @@ public class AnneeDAO extends DAO<Annee> {
      * &nbsp;
      */
     public AnneeDAO() {
+        super();
+    }
+
+    public AnneeDAO(String username, String password) {
+        super(username, password);
     }
 
     /**
