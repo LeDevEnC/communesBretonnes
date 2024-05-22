@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.data.Aeroport;
 import model.data.Departement;
@@ -13,9 +14,19 @@ import model.data.Departement;
  * Classe DAO pour les départements
  */
 public class DepartementDAO extends DAO<Departement> {
+
+    private HashMap<String, ArrayList<Aeroport>> tousAeroport;
+
     /**
      * &nbsp;
      */
+    public DepartementDAO(HashMap<String, ArrayList<Aeroport>> aeroports) {
+        if (aeroports == null) {
+            throw new IllegalArgumentException("aeroports cannot be null");
+        }
+        this.tousAeroport = aeroports;
+    }
+    
     public DepartementDAO() {
         super();
     }
@@ -29,31 +40,25 @@ public class DepartementDAO extends DAO<Departement> {
      * 
      * @return la liste des départements
      */
-    @Override
-    public ArrayList<Departement> findAll() {
-        ArrayList<Departement> departements = new ArrayList<>();
+    public HashMap<String, Departement> findAll() {
+        HashMap<String, Departement> departements = new HashMap<>();
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Departement")) {
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Departement")) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Long idDep = resultSet.getLong("idDep");
-                    ArrayList<Aeroport> aeroportsOfDept = new ArrayList<>();
-                    try (PreparedStatement statement2 = connection.prepareStatement("SELECT * FROM Aeroport WHERE leDepartement = ?")) {
-                        statement2.setLong(1, idDep);
-                        try (ResultSet resultSet2 = statement2.executeQuery()) {
-                            while (resultSet2.next()) {
-                                aeroportsOfDept.add(new Aeroport(resultSet2.getString("nom"), resultSet2.getString("adresse")));
-                            }
-                        }
-                    }
-                    Departement departement = new Departement(resultSet.getInt("idDep"), resultSet.getString("nomDep"), resultSet.getLong("investissementCulturel2019"), aeroportsOfDept);
-                    departements.add(departement);
+                    ArrayList<Aeroport> aeroportsOfDept = tousAeroport.get(String.valueOf(idDep));
+                    int idDepartement = resultSet.getInt("idDep");
+                    Departement departement = new Departement(
+                            idDepartement, resultSet.getString("nomDep"),
+                            resultSet.getLong("investissementCulturel2019"), aeroportsOfDept);
+                    departements.put(String.valueOf(idDepartement),departement);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    
+
         return departements;
     }
 
@@ -73,7 +78,7 @@ public class DepartementDAO extends DAO<Departement> {
             statement.setLong(1, idDep);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    aeroportsOfDept.add(new Aeroport(resultSet.getString("nom"), resultSet.getString("adresse")));
+                    aeroportsOfDept = tousAeroport.get(String.valueOf(idDep));
                 }
             }
         } catch (SQLException e) {

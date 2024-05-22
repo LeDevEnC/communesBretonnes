@@ -28,4 +28,4 @@ replay_pid*
 lib/
 bin/
 test*/
-.vscode/
+.vscode

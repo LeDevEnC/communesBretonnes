@@ -108,9 +108,9 @@ public class ControllerSettings extends Controller {
         private void lienContactPress() {
                 openWebLink("https://www.bretagne.bzh/");
         }
-        
+
         public void onViewOpened() {
-                if (super.getModel().isLogged()){
+                if (super.getModel().isLogged()) {
                         txt_connexion.setText("Connecté en tant que : " + (super.getModel().getUsername()));
                         bt_deconnexion.setDisable(false);
                 } else {
@@ -118,7 +118,5 @@ public class ControllerSettings extends Controller {
                         bt_deconnexion.setDisable(true);
                 }
         }
-
-
 
 }

@@ -75,9 +75,9 @@ public class CommunesInfoParAnnee {
             double prixMCarreMoyen, double surfaceMoy, double depCulturellesTotales, double budgetTotal, int population)
             throws IllegalArgumentException {
         if (laCommune == null || lAnnee == null || nbMaison < 0 || nbAppart < 0 || prixMoyen < 0 || prixMCarreMoyen < 0
-                || surfaceMoy < 0 || depCulturellesTotales < 0 || budgetTotal < 0 || population < 0) {
+                || surfaceMoy < 0) {
             throw new IllegalArgumentException(
-                    "La commune, l'année, le nombre de maisons, le nombre d'appartements, le prix moyen, le prix au mètre carré moyen, la surface moyenne, les dépenses culturelles totales, le budget total ou la population sont négatif ou null");
+                    "La commune, l'année, le nombre de maisons, le nombre d'appartements, le prix moyen, le prix au mètre carré moyen, la surface moyenne sont négatif ou null");
         } else {
             this.laCommune = laCommune;
             this.lAnnee = lAnnee;
@@ -296,16 +296,14 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Fait un affichage des informations de la commune pour une année donnée
+     * Méthode permettant d'afficher les informations de la commune pour une année sous forme de chaîne de caractères
+     * 
+     * @return les informations de la commune pour une année sous forme de csv "nomCommune","année","nbMaison","nbAppart","prixMoyen","prixMCarreMoyen","surfaceMoy","depCulturellesTotales","budgetTotal","population"
      */
     public String toString() {
-        return "Commune : " + this.laCommune.getNomCommune() + "\nAnnée : " + this.lAnnee.getAnnee()
-                + "\nNombre de maisons : "
-                + this.nbMaison + "\nNombre d'appartements : " + this.nbAppart + "\nPrix moyen : " + this.prixMoyen
-                + "\nPrix moyen par mètre carré : " + this.prixMCarreMoyen + "\nSurface moyenne : " + this.surfaceMoy
-                + "\nDépenses culturelles totales : " + this.depCulturellesTotales + "\nBudget total : "
-                + this.budgetTotal
-                + "\nPopulation : " + this.population;
+        return "\"" + this.laCommune.getNomCommune() + "\",\"" + this.lAnnee.getAnnee() + "\",\"" + this.nbMaison + "\",\""
+                + this.nbAppart + "\",\"" + this.prixMoyen + "\",\"" + this.prixMCarreMoyen + "\",\"" + this.surfaceMoy
+                + "\",\"" + this.depCulturellesTotales + "\",\"" + this.budgetTotal + "\",\"" + this.population + "\"";
     }
 
     /**

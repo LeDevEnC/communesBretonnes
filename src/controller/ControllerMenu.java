@@ -204,14 +204,14 @@ public class ControllerMenu extends Controller {
         this.resetButtonColor();
         this.mainButtonBoard.setStyle("-fx-background-color: #d3d3d3;");
         try {
-            changeView(appView, "/views/template.fxml");
+            changeView(appView, "/views/board.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
         resize();
     }
 
-    public void onViewOpened(){
+    public void onViewOpened() {
         this.buttonBoardPressed(); // Affiche le menu principal au démarrage de l'application
     }
 }

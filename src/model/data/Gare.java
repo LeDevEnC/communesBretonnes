@@ -65,7 +65,6 @@ public class Gare {
         return this.nomGare;
     }
 
-
     /**
      * Getter si la gare est un gare de
      *
@@ -158,4 +157,12 @@ public class Gare {
         return res;
     }
 
+    /**
+     * Méthode permettant d'afficher les informations d'une gare sous forme de chaîne de caractères
+     * 
+     * @return les informations de la gare sous forme de csv "codeGare","nomGare","estFret","estVoyageur"
+     */
+    public String toString() {
+        return "\"" + this.codeGare + "\",\"" + this.nomGare + "\",\"" + this.estFret + "\",\"" + this.estVoyageur + "\"";
+    }
 }

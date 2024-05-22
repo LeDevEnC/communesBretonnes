@@ -28,7 +28,7 @@ public class Main extends Application {
         primaryStage.setMinWidth(800);
         primaryStage.setMinHeight(600);
         ControllerMenu controller = loader.getController();
-        
+
         controller.setApp(this);
 
         Map<String, Node> viewCache = new HashMap<>();
@@ -41,7 +41,7 @@ public class Main extends Application {
 
         controller.setModel(new MainModel());
         controller.onViewOpened();
-        
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }

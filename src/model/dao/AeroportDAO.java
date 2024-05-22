@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import model.data.Aeroport;
 
 /**
@@ -26,19 +28,22 @@ public class AeroportDAO extends DAO<Aeroport> {
     /**
      * Trouver tous les aéroports
      */
-    @Override
-    public ArrayList<Aeroport> findAll() {
-        ArrayList<Aeroport> aeroports = new ArrayList<>();
+    public HashMap<String, ArrayList<Aeroport>> findAll() {
+        HashMap<String, ArrayList<Aeroport>> aeroports = new HashMap<>();
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement("SELECT * FROM Aeroport");
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
                 String nom = rs.getString("nom");
                 String adresse = rs.getString("adresse");
+                int dep = rs.getInt("leDepartement");
                 Aeroport aeroport = new Aeroport(nom, adresse);
-                aeroports.add(aeroport);
-            }   
-                
+                if (!aeroports.containsKey(String.valueOf(dep))) {
+                    aeroports.put(String.valueOf(dep), new ArrayList<Aeroport>());
+                }
+                aeroports.get(String.valueOf(dep)).add(aeroport);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -101,8 +106,9 @@ public class AeroportDAO extends DAO<Aeroport> {
     public int delete(Aeroport aeroport) {
         int rowsDeleted = 0;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("DELETE FROM Aeroport WHERE nom = ? AND adresse = ?")) {
-            statement.setString(1, aeroport.getNom()); 
+                PreparedStatement statement = connection
+                        .prepareStatement("DELETE FROM Aeroport WHERE nom = ? AND adresse = ?")) {
+            statement.setString(1, aeroport.getNom());
             statement.setString(2, aeroport.getAdresse());
             rowsDeleted = statement.executeUpdate();
         } catch (SQLException e) {
@@ -113,14 +119,16 @@ public class AeroportDAO extends DAO<Aeroport> {
 
     /**
      * Créer un aéroport
-     * @param aeroport un aéroport 
+     * 
+     * @param aeroport      un aéroport
      * @param leDepartement un département
      * @return le nombre de lignes créées
      */
-    public int create(Aeroport aeroport, int leDepartement){
+    public int create(Aeroport aeroport, int leDepartement) {
         int rowsCreated = 0;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO Aeroport (nom, adresse, leDepartement) VALUES (?, ?, ?)")) {
+                PreparedStatement statement = connection
+                        .prepareStatement("INSERT INTO Aeroport (nom, adresse, leDepartement) VALUES (?, ?, ?)")) {
             statement.setString(1, aeroport.getNom());
             statement.setString(2, aeroport.getAdresse());
             statement.setInt(3, leDepartement);
@@ -133,7 +141,8 @@ public class AeroportDAO extends DAO<Aeroport> {
     }
 
     /**
-     * Méthode de création non implémentée car l'objet aéroport ne dispose pas d'attribut département et la table aéroport a un attribut département
+     * Méthode de création non implémentée car l'objet aéroport ne dispose pas
+     * d'attribut département et la table aéroport a un attribut département
      */
     @Override
     public int create(Aeroport aeroport) {
@@ -141,7 +150,8 @@ public class AeroportDAO extends DAO<Aeroport> {
     }
 
     /**
-     * Méthode de recherche non implémentée car l'objet aéroport ne dispose pas d'attribut long et la table aéroport n'a pas d'attribut long
+     * Méthode de recherche non implémentée car l'objet aéroport ne dispose pas
+     * d'attribut long et la table aéroport n'a pas d'attribut long
      */
     @Override
     public Aeroport findByID(Long id) {
@@ -149,4 +159,3 @@ public class AeroportDAO extends DAO<Aeroport> {
     }
 
 }
-

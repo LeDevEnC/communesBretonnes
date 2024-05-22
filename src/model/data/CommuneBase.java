@@ -42,15 +42,26 @@ public class CommuneBase {
      */
     public CommuneBase(int idCommune, String nomCommune, Departement leDepartement, ArrayList<CommuneBase> lesVoisins,
             ArrayList<Gare> lesGares) throws IllegalArgumentException {
-        if (idCommune < 0 || nomCommune == null || leDepartement == null || lesVoisins == null || lesGares == null) {
+        if (idCommune < 0 || nomCommune == null || leDepartement == null) {
             throw new IllegalArgumentException(
-                    "L'identifiant de la commune est négatif ou le nom de la commune, le département, les communes voisines ou la gare de la commune sont null");
+                    "L'identifiant de la commune est négatif ou le nom de la commune ou le département sont null");
         } else {
+            // Si aucun voisin
+            if (lesVoisins == null) {
+                this.lesVoisins = new ArrayList<CommuneBase>();
+            } else {
+                this.lesVoisins = lesVoisins;
+            }
+            // Si aucune gare
+            if (lesGares == null) {
+                this.lesGares = new ArrayList<Gare>();
+            } else {
+                this.lesGares = lesGares;
+            }
+
             this.idCommune = idCommune;
             this.nomCommune = nomCommune;
             this.leDepartement = leDepartement;
-            this.lesVoisins = lesVoisins;
-            this.lesGares = lesGares;
         }
     }
 
@@ -135,7 +146,7 @@ public class CommuneBase {
      * @param leDepartement le département de la commune
      * @throws IllegalArgumentException si le département de la commune est null
      */
-    public void addNeighbor(CommuneBase neighbor) throws IllegalArgumentException{
+    public void addNeighbor(CommuneBase neighbor) throws IllegalArgumentException {
         if (neighbor != null) {
             this.lesVoisins.add(neighbor);
         } else {
@@ -167,4 +178,12 @@ public class CommuneBase {
         }
     }
 
+    /**
+     * Méthode permettant d'afficher une commune sous forme de chaîne de caractères
+     *
+     * @return la commune sous forme de csv "idCommune","nomCommune","leDepartement"
+     */
+    public String toString() {
+        return "\"" + this.idCommune + "\",\"" + this.nomCommune + "\",\"" + this.leDepartement + "\"";
+    }
 }
