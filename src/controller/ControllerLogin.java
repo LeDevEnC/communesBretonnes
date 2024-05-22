@@ -34,7 +34,7 @@ public class ControllerLogin extends Controller {
 
     @FXML
     private void loginButtonPressed() {
-        this.errorLabel.setText("Erreur : méthode non implémenté");
+        this.errorLabel.setText("Impossible de se connecter.");
         this.errorLabel.setVisible(true);
         System.out.println("Email : " + emailTextField.getText() + "\nMot de passe : " + passwordTextField.getText()
                 + "\nCheckBox Coché ? : " + keepLoginCheckBox.isSelected());

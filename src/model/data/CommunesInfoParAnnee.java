@@ -1,5 +1,8 @@
 package model.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Classe représentant les informations d'une commune pour une année donnée
  */
@@ -327,6 +330,165 @@ public class CommunesInfoParAnnee {
         return ret;
     }
 
-    
+    public static int scoreCompute(CommunesInfoParAnnee communeInfos) {
+        Map<String, Double> coeffs = Map.of(
+                "nbGares", 0.1, // Importance des transports en commun
+                "nbAeroports", 0.05, // Moins crucial pour la plupart des résidents mais important pour les
+                                     // connexions internationales
+                "nbMaisons", 0.15, // Indicateur de la disponibilité de logements familiaux
+                "nbAppart", 0.1, // Importance des logements urbains pour jeunes actifs et étudiants
+                "prixMoyen", 0.2, // Indicateur du coût de la vie
+                "prixM2Moyen", 0.15, // Indicateur de la valeur immobilière et de l'accessibilité financière
+                "SurfaceMoy", 0.05, // Moins crucial, mais peut refléter la qualité de vie
+                "depensesCulturellesTotales", 0.1, // Importance des infrastructures et des activités culturelles
+                "budgetTotal", 0.05, // Indicateur de la capacité de la commune à investir dans les services et les
+                                     // infrastructures
+                "population", 0.05 // Taille de la population, reflet du dynamisme et des opportunités économiques
+        );
+
+        int scoreFinal = 0;
+        int tempScore = 0;
+
+        switch (communeInfos.getLaCommune().getLesGares().size()) {
+            case 0:
+                tempScore = 0;
+                break;
+            case 1:
+                tempScore = 50;
+                break;
+            case 2:
+                tempScore = 75;
+                break;
+            case 3:
+                tempScore = 100;
+                break;
+            default:
+                break;
+        }
+
+        scoreFinal += tempScore * coeffs.get("nbGares");
+
+        switch (communeInfos.getLaCommune().getLeDepartement().getAeroports().size()) {
+            case 1:
+                tempScore = 50;
+                break;
+            case 2:
+                tempScore = 75;
+                break;
+            case 3:
+                tempScore = 100;
+                break;
+            default:
+                break;
+        }
+
+        scoreFinal += tempScore * coeffs.get("nbAeroports");
+
+        int nbMaisons = communeInfos.getNbMaison();
+        if (nbMaisons < 20) {
+            tempScore = 0;
+        } else if (nbMaisons < 31) {
+            tempScore = 25;
+        } else if (nbMaisons < 100) {
+            tempScore = 75;
+        } else {
+            tempScore = 100;
+        }
+
+        scoreFinal += tempScore * coeffs.get("nbMaisons");
+
+        int nbAppart = communeInfos.getNbAppart();
+        if (nbAppart < 10) {
+            tempScore = 0;
+        } else if (nbAppart < 15) {
+            tempScore = 25;
+        } else if (nbAppart < 30) {
+            tempScore = 75;
+        } else {
+            tempScore = 100;
+        }
+
+        scoreFinal += tempScore * coeffs.get("nbAppart");
+
+        double prixMoyen = communeInfos.getPrixMoyen();
+        if (prixMoyen < 100000) {
+            tempScore = 100;
+        } else if (prixMoyen < 150000) {
+            tempScore = 75;
+        } else if (prixMoyen < 200000) {
+            tempScore = 50;
+        } else {
+            tempScore = 25;
+        }
+
+        scoreFinal += tempScore * coeffs.get("prixMoyen");
+
+        double prixM2Moyen = communeInfos.getPrixMCarreMoyen();
+        if (prixM2Moyen < 1000) {
+            tempScore = 100;
+        } else if (prixM2Moyen < 1500) {
+            tempScore = 75;
+        } else if (prixM2Moyen < 2000) {
+            tempScore = 50;
+        } else {
+            tempScore = 25;
+        }
+
+        scoreFinal += tempScore * coeffs.get("prixM2Moyen");
+
+        double surfaceMoy = communeInfos.getSurfaceMoy();
+        if (surfaceMoy < 50) {
+            tempScore = 25;
+        } else if (surfaceMoy < 75) {
+            tempScore = 50;
+        } else if (surfaceMoy < 100) {
+            tempScore = 75;
+        } else {
+            tempScore = 100;
+        }
+
+        scoreFinal += tempScore * coeffs.get("SurfaceMoy");
+
+        double depensesCulturellesTotales = communeInfos.getDepCulturellesTotales();
+        if (depensesCulturellesTotales < 100) {
+            tempScore = 25;
+        } else if (depensesCulturellesTotales < 200 || depensesCulturellesTotales == -1) {
+            tempScore = 50;
+        } else if (depensesCulturellesTotales < 300) {
+            tempScore = 75;
+        } else {
+            tempScore = 100;
+        }
+
+        scoreFinal += tempScore * coeffs.get("depensesCulturellesTotales");
+
+        double budgetTotal = communeInfos.getBudgetTotal();
+        if (budgetTotal < 1000) {
+            tempScore = 25;
+        } else if (budgetTotal < 2000 || budgetTotal == -1) {
+            tempScore = 50;
+        } else if (budgetTotal < 3000) {
+            tempScore = 75;
+        } else {
+            tempScore = 100;
+        }
+
+        scoreFinal += tempScore * coeffs.get("budgetTotal");
+
+        double population = communeInfos.getPopulation();
+        if (population < 1000) {
+            tempScore = 25;
+        } else if (population < 1500 || budgetTotal == -1) {
+            tempScore = 50;
+        } else if (population < 2000) {
+            tempScore = 75;
+        } else {
+            tempScore = 100;
+        }
+
+        scoreFinal += tempScore * coeffs.get("population");
+
+        return scoreFinal;
+    }
 
 }

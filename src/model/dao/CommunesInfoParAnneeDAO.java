@@ -58,7 +58,7 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnneeDAO> {
                 while (resultSet.next()) {
                     communesInfoParAnnee = new CommunesInfoParAnnee(communeBase, anneeS, resultSet.getInt("nbMaison"),
                             resultSet.getInt("nbAppart"), resultSet.getDouble("prixMoyen"),
-                            resultSet.getInt("prixM2Moyen"), resultSet.getDouble("SurfaceMoy"),
+                            resultSet.getDouble("prixM2Moyen"), resultSet.getDouble("SurfaceMoy"),
                             resultSet.getDouble("depensesCulturellesTotales"), resultSet.getDouble("budgetTotal"),
                             resultSet.getInt("population"));
                 }
