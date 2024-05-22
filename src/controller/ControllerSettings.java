@@ -106,7 +106,7 @@ public class ControllerSettings extends Controller {
 
         @FXML
         private void lienContactPress() {
-                openWebLink("https://www.bretagne.bzh/");
+                openWebLink("https://www.bretagne.bzh/contact/");
         }
 
         public void onViewOpened() {

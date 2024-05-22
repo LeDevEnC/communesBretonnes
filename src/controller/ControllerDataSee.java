@@ -50,6 +50,9 @@ public class ControllerDataSee extends Controller {
 
     // private HashMap<String, ?> villeDataMap;
 
+    /**
+     * Redimensionne les colonnes du tableau en fonction de la taille de la fenêtre
+     */
     protected void resize() {
         ReadOnlyDoubleProperty width = tableView.widthProperty();
 
@@ -64,6 +67,7 @@ public class ControllerDataSee extends Controller {
         resize();
     }
 
+    
     private void setColumnWidth(
             TableColumn<?, ?> column, ReadOnlyDoubleProperty width, double percentage) {
         column.prefWidthProperty().bind(width.multiply(percentage));

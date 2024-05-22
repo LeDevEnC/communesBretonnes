@@ -32,6 +32,10 @@ public class ControllerLogin extends Controller {
     @FXML
     CheckBox keepLoginCheckBox;
 
+    /**
+     * Méthode appelée directement lors du clic sur le bouton de connexion ou appelé
+     * lors de l'appui sur la touche "Entrée"
+     */
     @FXML
     private void loginButtonPressed() {
         this.errorLabel.setText("Erreur : méthode non implémenté");
@@ -42,6 +46,9 @@ public class ControllerLogin extends Controller {
         changeViewIfLogged();
     }
 
+    /**
+     * Change la vue si l'utilisateur est connecté
+     */
     private void changeViewIfLogged() {
         if (super.getModel().isLogged()) {
             try {
@@ -58,6 +65,11 @@ public class ControllerLogin extends Controller {
         }
     }
 
+    /**
+     * Méthode appelée lors de l'appui sur la touche "Entrée"
+     * 
+     * @param event
+     */
     @FXML
     private void handleEnterPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
@@ -65,14 +77,25 @@ public class ControllerLogin extends Controller {
         }
     }
 
+    /**
+     * Méthode appelée lors de la création de la vue
+     * Permet de cacher le message d'erreur
+     */
     public void initialize() {
         this.errorLabel.setVisible(false);
     }
 
+    /**
+     * Redimensionne les éléments de la vue
+     */
     protected void resize() {
 
     }
 
+    /**
+     * Méthode appelée à chaque ouverture de la vue
+     * Permet de cacher le message d'erreur et de changer la vue si l'utilisateur est connecté
+     */
     public void onViewOpened() {
         this.errorLabel.setVisible(false);
         changeViewIfLogged();

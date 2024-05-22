@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 
-import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
@@ -14,8 +13,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class ControllerMenu extends Controller {
-
-    Application app;
+    /**
+     * Stocke le menu actuellement affiché
+     */
     String currentMenu = "board";
 
     @FXML
@@ -75,11 +75,18 @@ public class ControllerMenu extends Controller {
     @FXML
     private StackPane appView;
 
+    /**
+     * Ouvre le site de la région bretagne dans le navigateur par défaut lorsque on
+     * clique sur l'image de la région
+     */
     @FXML
     private void openImgLink() {
         super.openWebLink("https://www.bretagne.bzh/");
     }
 
+    /**
+     * Redimensionne les éléments de la vue en fonction de la taille de la fenêtre
+     */
     protected void resize() {
         DoubleBinding scale = super.getScale(window);
 
@@ -131,6 +138,9 @@ public class ControllerMenu extends Controller {
         this.mainButtonSettingsImg.setPreserveRatio(true);
     }
 
+    /**
+     * Réinitialise la couleur des boutons du menu principal
+     */
     private void resetButtonColor() {
         this.mainButtonBoard.setStyle("");
         this.mainButtonDataSee.setStyle("");
@@ -140,10 +150,18 @@ public class ControllerMenu extends Controller {
 
     }
 
+    /**
+     * Initialise la vue
+     */
     public void initialize() {
         resize();
     }
 
+    /**
+     * Ouvre la vue des paramètres lorsque l'on clique sur le bouton "Paramètres"
+     * dans le menu principal.
+     * Permet de changer la vue principale de l'application et la couleur du bouton
+     */
     @FXML
     private void buttonSettingsPressed() {
         this.currentMenu = "settings";
@@ -157,6 +175,11 @@ public class ControllerMenu extends Controller {
         resize();
     }
 
+    /**
+     * Ouvre la vue d'édition lorsque l'on clique sur le bouton "Edition" dans le
+     * menu principal.
+     * Permet de changer la vue principale de l'application et la couleur du bouton.
+     */
     @FXML
     private void buttonEditPressed() {
         this.currentMenu = "edit";
@@ -170,6 +193,12 @@ public class ControllerMenu extends Controller {
         resize();
     }
 
+    /**
+     * Ouvre la vue des statistiques lorsque l'on clique sur le bouton "Croiser
+     * facteurs"
+     * dans le menu principal.
+     * Permet de changer la vue principale de l'application et la couleur du bouton.
+     */
     @FXML
     private void buttonStatsPressed() {
         this.currentMenu = "stats";
@@ -184,6 +213,11 @@ public class ControllerMenu extends Controller {
         resize();
     }
 
+    /**
+     * Ouvre la vue de visualisation des données lorsque l'on clique sur le bouton
+     * "Voir les données" dans le menu principal.
+     * Permet de changer la vue principale de l'application et la couleur du bouton.
+     */
     @FXML
     private void buttonDataSeePressed() {
         this.currentMenu = "dataSee";
@@ -198,6 +232,9 @@ public class ControllerMenu extends Controller {
         resize();
     }
 
+    /**
+     * Ouvre la vue du tableau de bord lorsque l'on clique sur le bouton "Tableau de bord" dans le menu principal.
+     */
     @FXML
     public void buttonBoardPressed() { // Note : public pour pouvoir appeler la vue par défaut
         this.currentMenu = "board";
@@ -211,6 +248,9 @@ public class ControllerMenu extends Controller {
         resize();
     }
 
+    /**
+     * Appelé lors de l'ouverture de la vue
+     */
     public void onViewOpened() {
         this.buttonBoardPressed(); // Affiche le menu principal au démarrage de l'application
     }
