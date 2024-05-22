@@ -39,14 +39,18 @@ public class Departement {
      */
     public Departement(int idDep, String nomDep, long invesCulturel, ArrayList<Aeroport> aeroports)
             throws IllegalArgumentException {
-        if (idDep < 0 || nomDep == null || invesCulturel < 0 || aeroports == null) {
+        if (idDep < 0 || nomDep == null || invesCulturel < 0) {
             throw new IllegalArgumentException(
-                    "L'identifiant du département est négatif ou le nom du département, l'investissement culturel ou la liste des aéroports est null");
+                    "L'identifiant du département est négatif ou le nom du département ou l'investissement culturel sont null");
         } else {
+            if (aeroports == null) {
+                this.aeroports = new ArrayList<Aeroport>();
+            } else {
+                this.aeroports = aeroports;
+            }
             this.idDep = idDep;
             this.nomDep = nomDep.toString();
             this.INVESCULTUREL2019 = invesCulturel;
-            this.aeroports = aeroports;
         }
     }
 

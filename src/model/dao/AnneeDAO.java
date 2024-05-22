@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.data.Annee;
 
@@ -24,14 +24,16 @@ public class AnneeDAO extends DAO<Annee> {
      * 
      * @return la liste des années
      */
-    @Override
-    public ArrayList<Annee> findAll() {
-        ArrayList<Annee> annees = new ArrayList<>();
+    public HashMap<String, Annee> findAll() {
+        HashMap<String, Annee> annees = new HashMap<>();
         try (Connection connection = getConnection();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM Annee")) {
             while (resultSet.next()) {
-                annees.add(new Annee(resultSet.getInt("annee"), resultSet.getDouble("tauxInflation")));
+                int anneeInt = resultSet.getInt("annee");
+                double tauxInflation = resultSet.getDouble("tauxInflation");
+                Annee annee = new Annee(anneeInt, tauxInflation);
+                annees.put(String.valueOf(anneeInt), annee);
             }
         } catch (SQLException e) {
             e.printStackTrace();

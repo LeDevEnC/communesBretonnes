@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.data.Gare;
 
@@ -24,15 +25,22 @@ public class GareDAO extends DAO<Gare> {
      * 
      * @return la liste des gares
      */
-    @Override
-    public ArrayList<Gare> findAll() {
-        ArrayList<Gare> gares = new ArrayList<>();
+    public HashMap<String, ArrayList<Gare>> findAll() {
+        HashMap<String, ArrayList<Gare>> gares = new HashMap<>();
         try (Connection connection = getConnection();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM Gare")) {
             while (resultSet.next()) {
-                gares.add(new Gare(resultSet.getInt("codeGare"), resultSet.getString("nomGare"),
-                        resultSet.getBoolean("estFret"), resultSet.getBoolean("estVoyageur")));
+                int codeGare = resultSet.getInt("codeGare");
+                Gare gare = new Gare(codeGare, resultSet.getString("nomGare"),
+                        resultSet.getBoolean("estFret"), resultSet.getBoolean("estVoyageur"));
+                if (gares.containsKey(String.valueOf(codeGare))) {
+                    gares.get(String.valueOf(codeGare)).add(gare);
+                } else {
+                    ArrayList<Gare> gareList = new ArrayList<>();
+                    gareList.add(gare);
+                    gares.put(String.valueOf(codeGare), gareList);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

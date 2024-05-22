@@ -3,7 +3,6 @@ package model.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Classe DAO générique
@@ -28,11 +27,11 @@ public abstract class DAO<T> {
     /**
      * Nom d'utilisateur de la base de données
      */
-    private static String username = "root";
+    private static String username = "visitor";
     /**
      * Mot de passe de la base de données
      */
-    private static String password = "root";
+    private static String password = "";
 
     /**
      * Obtenir la connection
@@ -52,12 +51,12 @@ public abstract class DAO<T> {
         return DriverManager.getConnection(url, username, password);
     }
 
-    /**
-     * Trouver tous les objets
-     * 
-     * @return la liste des objets
-     */
-    public abstract List<T> findAll();
+    // /**
+    // * Trouver tous les objets
+    // * 
+    // * @return la liste des objets
+    // */
+    // public abstract HashMap<String, T> findAll();
 
     /**
      * Trouver un objet par son identifiant

@@ -72,9 +72,9 @@ public class CommunesInfoParAnnee {
             double prixMCarreMoyen, double surfaceMoy, double depCulturellesTotales, double budgetTotal, int population)
             throws IllegalArgumentException {
         if (laCommune == null || lAnnee == null || nbMaison < 0 || nbAppart < 0 || prixMoyen < 0 || prixMCarreMoyen < 0
-                || surfaceMoy < 0 || depCulturellesTotales < 0 || budgetTotal < 0 || population < 0) {
+                || surfaceMoy < 0) {
             throw new IllegalArgumentException(
-                    "La commune, l'année, le nombre de maisons, le nombre d'appartements, le prix moyen, le prix au mètre carré moyen, la surface moyenne, les dépenses culturelles totales, le budget total ou la population sont négatif ou null");
+                    "La commune, l'année, le nombre de maisons, le nombre d'appartements, le prix moyen, le prix au mètre carré moyen, la surface moyenne sont négatif ou null");
         } else {
             this.laCommune = laCommune;
             this.lAnnee = lAnnee;

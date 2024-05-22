@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.data.Aeroport;
 
@@ -22,17 +23,20 @@ public class AeroportDAO extends DAO<Aeroport> {
     /**
      * Trouver tous les aéroports
      */
-    @Override
-    public ArrayList<Aeroport> findAll() {
-        ArrayList<Aeroport> aeroports = new ArrayList<>();
+    public HashMap<String, ArrayList<Aeroport>> findAll() {
+        HashMap<String, ArrayList<Aeroport>> aeroports = new HashMap<>();
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement("SELECT * FROM Aeroport");
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
                 String nom = rs.getString("nom");
                 String adresse = rs.getString("adresse");
+                int dep = rs.getInt("leDepartement");
                 Aeroport aeroport = new Aeroport(nom, adresse);
-                aeroports.add(aeroport);
+                if (!aeroports.containsKey(String.valueOf(dep))) {
+                    aeroports.put(String.valueOf(dep), new ArrayList<Aeroport>());
+                }
+                aeroports.get(String.valueOf(dep)).add(aeroport);
             }
 
         } catch (SQLException e) {
