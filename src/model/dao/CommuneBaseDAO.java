@@ -21,15 +21,23 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
     /**
      * &nbsp;
      */
-    public CommuneBaseDAO() {
-        super();
-    }
 
-    public CommuneBaseDAO(String username, String password) {
+    public CommuneBaseDAO(String username, String password, HashMap<String, Departement> departements, HashMap<String, ArrayList<Gare>> gares) {
         super(username, password);
+        if (departements == null) {
+            throw new IllegalArgumentException("departements cannot be null");
+        }
+        if (gares == null) {
+            throw new IllegalArgumentException("gares cannot be null");
+        }
+
+        this.tousDepartements = departements;
+        this.toutesGares = gares;
+        this.toutesCommunes = new HashMap<>();
     }
     
     public CommuneBaseDAO(HashMap<String, Departement> departements, HashMap<String, ArrayList<Gare>> gares) {
+        super();
         if (departements == null) {
             throw new IllegalArgumentException("departements cannot be null");
         }

@@ -19,6 +19,19 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
      * &nbsp;
      */
     public CommunesInfoParAnneeDAO(HashMap<String, Annee> annees, HashMap<String, CommuneBase> communesBase) {
+        super();
+        if (annees == null) {
+            throw new IllegalArgumentException("annees cannot be null");
+        }
+        if (communesBase == null) {
+            throw new IllegalArgumentException("communesBase cannot be null");
+        }
+        this.toutesLesAnnees = annees;
+        this.toutesLesCommunesBase = communesBase;
+    }
+
+    public CommunesInfoParAnneeDAO(String username, String password, HashMap<String, Annee> annees, HashMap<String, CommuneBase> communesBase) {
+        super(username, password);
         if (annees == null) {
             throw new IllegalArgumentException("annees cannot be null");
         }
