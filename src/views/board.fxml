@@ -24,12 +24,13 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <PieChart title="Attractivité de la Bretagne">
+            <PieChart fx:id="pieChartBretagneAtt" title="Attractivité de la Bretagne">
                <GridPane.margin>
                   <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                </GridPane.margin>
             </PieChart>
-            <BarChart title="Attractivité des départements en 2023" GridPane.columnIndex="1">
+
+            <BarChart fx:id="barChartBretagneAtt" title="Attractivité des départements en 2021" GridPane.columnIndex="1">
                <xAxis>
                   <CategoryAxis side="BOTTOM" />
                </xAxis>
@@ -40,7 +41,7 @@
                   <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                </GridPane.margin>
             </BarChart>
-            <LineChart title="Attractivité de la Bretagne par année" GridPane.rowIndex="1">
+            <LineChart fx:id="lineChartBretagneAtt" title="Attractivité de la Bretagne par année" GridPane.rowIndex="1">
                <xAxis>
                   <CategoryAxis side="BOTTOM" />
                </xAxis>

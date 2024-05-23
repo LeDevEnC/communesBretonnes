@@ -326,165 +326,160 @@ public class CommunesInfoParAnnee {
         return ret;
     }
 
-    public static int scoreCompute(CommunesInfoParAnnee communeInfos) {
+    public int scoreCompute() {
         Map<String, Double> coeffs = Map.of(
-                "nbGares", 0.1, // Importance des transports en commun
-                "nbAeroports", 0.05, // Moins crucial pour la plupart des résidents mais important pour les
-                                     // connexions internationales
-                "nbMaisons", 0.15, // Indicateur de la disponibilité de logements familiaux
-                "nbAppart", 0.1, // Importance des logements urbains pour jeunes actifs et étudiants
-                "prixMoyen", 0.2, // Indicateur du coût de la vie
-                "prixM2Moyen", 0.15, // Indicateur de la valeur immobilière et de l'accessibilité financière
-                "SurfaceMoy", 0.05, // Moins crucial, mais peut refléter la qualité de vie
-                "depensesCulturellesTotales", 0.1, // Importance des infrastructures et des activités culturelles
-                "budgetTotal", 0.05, // Indicateur de la capacité de la commune à investir dans les services et les
-                                     // infrastructures
-                "population", 0.05 // Taille de la population, reflet du dynamisme et des opportunités économiques
-        );
-
+            "nbGares", 0.12, // Augmenté pour valoriser davantage les transports en commun
+            "nbAeroports", 0.08, // Augmenté pour les connexions internationales
+            "nbMaisons", 0.15,
+            "nbAppart", 0.12, // Augmenté pour les logements urbains
+            "prixMoyen", 0.18, // Légèrement diminué pour équilibrer
+            "prixM2Moyen", 0.15,
+            "SurfaceMoy", 0.05,
+            "depensesCulturellesTotales", 0.1,
+            "budgetTotal", 0.05,
+            "population", 0.1 // Augmenté pour valoriser le dynamisme économique
+    );
+    
         int scoreFinal = 0;
         int tempScore = 0;
-
-        switch (communeInfos.getLaCommune().getLesGares().size()) {
+    
+        switch (this.getLaCommune().getLesGares().size()) {
             case 0:
-                tempScore = 0;
+                tempScore = 25;
                 break;
             case 1:
-                tempScore = 50;
+                tempScore = 75;
                 break;
             case 2:
-                tempScore = 75;
+                tempScore = 90;
                 break;
             case 3:
                 tempScore = 100;
                 break;
             default:
+                tempScore = 100;
                 break;
         }
-
         scoreFinal += tempScore * coeffs.get("nbGares");
-
-        switch (communeInfos.getLaCommune().getLeDepartement().getAeroports().size()) {
+    
+        switch (this.getLaCommune().getLeDepartement().getAeroports().size()) {
+            case 0:
+                tempScore = 25;
+                break;
             case 1:
-                tempScore = 50;
+                tempScore = 75;
                 break;
             case 2:
-                tempScore = 75;
+                tempScore = 90;
                 break;
             case 3:
                 tempScore = 100;
                 break;
             default:
+                tempScore = 100;
                 break;
         }
-
         scoreFinal += tempScore * coeffs.get("nbAeroports");
-
-        int nbMaisons = communeInfos.getNbMaison();
-        if (nbMaisons < 20) {
-            tempScore = 0;
-        } else if (nbMaisons < 31) {
-            tempScore = 25;
-        } else if (nbMaisons < 100) {
+    
+        int nbMaisons = this.getNbMaison();
+        if (nbMaisons < 10) {
+            tempScore = 50;
+        } else if (nbMaisons < 30) {
             tempScore = 75;
+        } else if (nbMaisons < 60) {
+            tempScore = 90;
         } else {
             tempScore = 100;
         }
-
         scoreFinal += tempScore * coeffs.get("nbMaisons");
-
-        int nbAppart = communeInfos.getNbAppart();
-        if (nbAppart < 10) {
-            tempScore = 0;
-        } else if (nbAppart < 15) {
-            tempScore = 25;
-        } else if (nbAppart < 30) {
+    
+        int nbAppart = this.getNbAppart();
+        if (nbAppart < 5) {
+            tempScore = 50;
+        } else if (nbAppart < 20) {
             tempScore = 75;
+        } else if (nbAppart < 40) {
+            tempScore = 90;
         } else {
             tempScore = 100;
         }
-
         scoreFinal += tempScore * coeffs.get("nbAppart");
-
-        double prixMoyen = communeInfos.getPrixMoyen();
+    
+        double prixMoyen = this.getPrixMoyen();
         if (prixMoyen < 100000) {
             tempScore = 100;
         } else if (prixMoyen < 150000) {
-            tempScore = 75;
+            tempScore = 90;
         } else if (prixMoyen < 200000) {
-            tempScore = 50;
+            tempScore = 75;
         } else {
-            tempScore = 25;
+            tempScore = 50;
         }
-
         scoreFinal += tempScore * coeffs.get("prixMoyen");
-
-        double prixM2Moyen = communeInfos.getPrixMCarreMoyen();
-        if (prixM2Moyen < 1000) {
+    
+        double prixM2Moyen = this.getPrixMCarreMoyen();
+        if (prixM2Moyen < 800) {
             tempScore = 100;
-        } else if (prixM2Moyen < 1500) {
+        } else if (prixM2Moyen < 1200) {
+            tempScore = 90;
+        } else if (prixM2Moyen < 1600) {
             tempScore = 75;
-        } else if (prixM2Moyen < 2000) {
-            tempScore = 50;
         } else {
-            tempScore = 25;
+            tempScore = 50;
         }
-
         scoreFinal += tempScore * coeffs.get("prixM2Moyen");
-
-        double surfaceMoy = communeInfos.getSurfaceMoy();
-        if (surfaceMoy < 50) {
-            tempScore = 25;
-        } else if (surfaceMoy < 75) {
+    
+        double surfaceMoy = this.getSurfaceMoy();
+        if (surfaceMoy < 40) {
             tempScore = 50;
+        } else if (surfaceMoy < 70) {
+            tempScore = 75;
         } else if (surfaceMoy < 100) {
-            tempScore = 75;
+            tempScore = 90;
         } else {
             tempScore = 100;
         }
-
         scoreFinal += tempScore * coeffs.get("SurfaceMoy");
-
-        double depensesCulturellesTotales = communeInfos.getDepCulturellesTotales();
-        if (depensesCulturellesTotales < 100) {
-            tempScore = 25;
-        } else if (depensesCulturellesTotales < 200 || depensesCulturellesTotales == -1) {
+    
+        double depensesCulturellesTotales = this.getDepCulturellesTotales();
+        if (depensesCulturellesTotales < 80) {
             tempScore = 50;
-        } else if (depensesCulturellesTotales < 300) {
+        } else if (depensesCulturellesTotales < 150) {
             tempScore = 75;
+        } else if (depensesCulturellesTotales < 250) {
+            tempScore = 90;
         } else {
             tempScore = 100;
         }
-
         scoreFinal += tempScore * coeffs.get("depensesCulturellesTotales");
-
-        double budgetTotal = communeInfos.getBudgetTotal();
-        if (budgetTotal < 1000) {
-            tempScore = 25;
-        } else if (budgetTotal < 2000 || budgetTotal == -1) {
+    
+        double budgetTotal = this.getBudgetTotal();
+        if (budgetTotal < 800) {
             tempScore = 50;
-        } else if (budgetTotal < 3000) {
+        } else if (budgetTotal < 1500) {
             tempScore = 75;
+        } else if (budgetTotal < 2500) {
+            tempScore = 90;
         } else {
             tempScore = 100;
         }
-
         scoreFinal += tempScore * coeffs.get("budgetTotal");
-
-        double population = communeInfos.getPopulation();
+    
+        double population = this.getPopulation();
         if (population < 1000) {
-            tempScore = 25;
-        } else if (population < 1500 || budgetTotal == -1) {
             tempScore = 50;
-        } else if (population < 2000) {
+        } else if (population < 1800) {
             tempScore = 75;
+        } else if (population < 2500) {
+            tempScore = 90;
         } else {
             tempScore = 100;
         }
-
         scoreFinal += tempScore * coeffs.get("population");
-
+    
         return scoreFinal;
     }
+    
+    
 
 }
