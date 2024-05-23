@@ -122,4 +122,52 @@ public class MainModel {
         this.communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(this.toutesLesAnnees, this.toutesLesCommunesBase);
         this.toutesLesCommunesInfoParAnnee = this.communesInfoParAnneeDAO.findAll();
     }
+
+    /**
+     * Permet de récupérer tous les aéroports
+     * @return La HashMap contenant tous les aéroports
+     */
+    public HashMap<String, ArrayList<Aeroport>> getTousAeroport() {
+        return tousAeroport;
+    }
+
+    /**
+     * Permet de récupérer toutes les gares
+     * @return La HashMap contenant toutes les gares
+     */
+    public HashMap<String, ArrayList<Gare>> getToutesLesGares() {
+        return toutesLesGares;
+    }
+
+    /**
+     * Permet de récupérer tous les départements
+     * @return La HashMap contenant tous les départements
+     */
+    public HashMap<String, Departement> getTousLesDepartements() {
+        return tousLesDepartements;
+    }
+
+    /**
+     * Permet de récupérer toutes les années
+     * @return La HashMap contenant toutes les années
+     */
+    public HashMap<String, Annee> getToutesLesAnnees() {
+        return toutesLesAnnees;
+    }
+
+    /**
+     * Permet de récupérer toutes les communes de base
+     * @return La HashMap contenant toutes les communes de base
+     */
+    public HashMap<String, CommuneBase> getToutesLesCommunesBase() {
+        return toutesLesCommunesBase;
+    }
+
+    /**
+     * Permet de récupérer toutes les communes info par année
+     * @return La HashMap contenant toutes les communes info par année
+     */
+    public HashMap<String, CommunesInfoParAnnee> getToutesLesCommunesInfoParAnnee() {
+        return toutesLesCommunesInfoParAnnee;
+    }
 }

@@ -20,8 +20,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        System.out.println("Starting application");
+        long startTime = System.currentTimeMillis();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("views/main.fxml"));
         Parent root = loader.load();
+        MainModel mainModel = new MainModel();
+        System.out.println("Loading time: " + (System.currentTimeMillis() - startTime) + "ms");
+
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight() - 40);
         scene.getStylesheets().add(getClass().getResource("ressources/styles.css").toExternalForm());
@@ -39,7 +44,7 @@ public class Main extends Application {
         controllerCache.put("views/main.fxml", controller);
         controller.setControllerCache(controllerCache);
 
-        controller.setModel(new MainModel());
+        controller.setModel(mainModel);
         controller.onViewOpened();
 
         primaryStage.setScene(scene);

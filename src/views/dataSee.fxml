@@ -38,19 +38,19 @@
                   <PropertyValueFactory property="departement" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="colINSEE" text="Code INSEE">
+            <TableColumn fx:id="colAnnee" text="Année">
                <cellValueFactory>
-                  <PropertyValueFactory property="insee" />
+                  <PropertyValueFactory property="annee" />
                </cellValueFactory>
             </TableColumn>
             <TableColumn fx:id="depCulturel" text="Dépense Culturel">
                <cellValueFactory>
-                  <PropertyValueFactory property="prix" />
+                  <PropertyValueFactory property="culturel" />
                </cellValueFactory>
             </TableColumn>
             <TableColumn fx:id="colNb" text="Nb Voisins">
                <cellValueFactory>
-                  <PropertyValueFactory property="nb" />
+                  <PropertyValueFactory property="nbVoisins" />
                </cellValueFactory>
             </TableColumn>
          </columns>

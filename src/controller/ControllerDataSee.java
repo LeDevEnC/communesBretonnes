@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import model.TableauModel;
+import model.data.CommunesInfoParAnnee;
 
 public class ControllerDataSee extends Controller {
     @FXML
@@ -22,33 +24,29 @@ public class ControllerDataSee extends Controller {
     @FXML
     Button buttonSelectThree;
 
-    // TODO : Remplacer les ? par les vrais types de données (non implémenté pour le
-    // moment)
     @FXML
-    private TableView<?> tableView;
+    private TableView<TableauModel> tableView;
 
     @FXML
-    private TableColumn<?, String> colScore;
+    private TableColumn<TableauModel, String> colScore;
 
     @FXML
-    private TableColumn<?, String> colVille;
+    private TableColumn<TableauModel, String> colVille;
 
     @FXML
-    private TableColumn<?, String> colCodePostal;
+    private TableColumn<TableauModel, String> colCodePostal;
 
     @FXML
-    private TableColumn<?, String> colDepartement;
+    private TableColumn<TableauModel, String> colDepartement;
 
     @FXML
-    private TableColumn<?, String> colINSEE;
+    private TableColumn<TableauModel, String> colAnnee;
 
     @FXML
-    private TableColumn<?, String> depCulturel;
+    private TableColumn<TableauModel, String> depCulturel;
 
     @FXML
-    private TableColumn<?, Integer> colNb;
-
-    // private HashMap<String, ?> villeDataMap;
+    private TableColumn<TableauModel, Integer> colNb;
 
     /**
      * Redimensionne les colonnes du tableau en fonction de la taille de la fenêtre
@@ -58,22 +56,38 @@ public class ControllerDataSee extends Controller {
 
         setColumnWidth(colCodePostal, width, 0.15);
         setColumnWidth(colDepartement, width, 0.15);
-        setColumnWidth(colINSEE, width, 0.15);
+        setColumnWidth(colAnnee, width, 0.15);
         setColumnWidth(depCulturel, width, 0.15);
         setColumnWidth(colNb, width, 0.15);
     }
 
+    /**
+     * Initialise le contrôleur de la vue
+     */
     public void initialize() {
         resize();
     }
 
-    
-    private void setColumnWidth(
-            TableColumn<?, ?> column, ReadOnlyDoubleProperty width, double percentage) {
+    /**
+     * Redimensionne une colonne en fonction de la taille de la fenêtre
+     * 
+     * @param column     La colonne à redimensionner
+     * @param width      La taille de la table
+     * @param percentage Le pourcentage de la taille de la table que doit prendre la
+     *                   colonne
+     */
+    private void setColumnWidth(TableColumn<?, ?> column, ReadOnlyDoubleProperty width, double percentage) {
         column.prefWidthProperty().bind(width.multiply(percentage));
-        column.minWidthProperty().set(0); // Ajoutez cette ligne
+        column.minWidthProperty().set(0);
     }
 
+    /**
+     * Rempli le tableau avec les données des communes
+     */
     public void onViewOpened() {
-    };
+        for (CommunesInfoParAnnee commune : super.getModel().getToutesLesCommunesInfoParAnnee().values()) {
+            TableauModel tableauModel = new TableauModel(commune);
+            tableView.getItems().add(tableauModel);
+        }
+    }
 }
