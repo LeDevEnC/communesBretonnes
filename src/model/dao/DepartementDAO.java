@@ -20,13 +20,22 @@ public class DepartementDAO extends DAO<Departement> {
     /**
      * &nbsp;
      */
+
     public DepartementDAO(HashMap<String, ArrayList<Aeroport>> aeroports) {
+        super();
         if (aeroports == null) {
             throw new IllegalArgumentException("aeroports cannot be null");
         }
         this.tousAeroport = aeroports;
     }
 
+    public DepartementDAO(String username, String password , HashMap<String, ArrayList<Aeroport>> aeroports) {
+        super(username, password);
+        if (aeroports == null) {
+            throw new IllegalArgumentException("aeroports cannot be null");
+        }
+        this.tousAeroport = aeroports;
+    }
     /**
      * Trouver tous les départements
      * 

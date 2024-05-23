@@ -1,52 +1,44 @@
 package scenario;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import model.dao.AeroportDAO;
+import model.dao.AnneeDAO;
 import model.dao.CommuneBaseDAO;
 import model.dao.CommunesInfoParAnneeDAO;
+import model.dao.DepartementDAO;
+import model.dao.GareDAO;
 import model.data.Aeroport;
+import model.data.Annee;
 import model.data.CommuneBase;
 import model.data.CommunesInfoParAnnee;
+import model.data.Departement;
 import model.data.Gare;
 
-// TODO : Réparer lmao
 public class ScenarioCommunesBretonnes {
     public static void main(String[] args) {
-        CommunesInfoParAnneeDAO communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO();
-        CommuneBaseDAO communeBaseDAO = new CommuneBaseDAO();
+        AeroportDAO aeroportDAO = new AeroportDAO();
+        HashMap<String, ArrayList<Aeroport>> tousAeroport = aeroportDAO.findAll();
 
-        CommuneBase vannes = communeBaseDAO.findByName("Vannes", true);
-        CommunesInfoParAnnee vannesInfos = communesInfoParAnneeDAO.findByIDComplete(2019L, vannes);
-        System.out.println(vannesInfos.toString());
-        ArrayList<CommuneBase> voisins = vannes.getLesVoisins();
-        System.out.println("Voisins de Vannes : ");
-        for (CommuneBase voisin : voisins) {
-            System.out.println(voisin.getNomCommune());
-        }
-        System.out.println("Gares de Vannes : ");
-        ArrayList<Gare> gares = vannes.getLesGares();
-        for (Gare gare : gares) {
-            System.out.println(gare.getNomGare());
-        }
-        System.out.println("Département de Vannes : ");
-        System.out.println(vannes.getLeDepartement().getNomDep());
+        AnneeDAO anneeDAO = new AnneeDAO();
+        HashMap<String, Annee> toutesLesAnnees = anneeDAO.findAll();
 
-        System.out.println("Aéroports proches de Vannes : ");
-        ArrayList<Aeroport> aeroports = vannes.getLeDepartement().getAeroports();
-        for (Aeroport aeroport : aeroports) {
-            System.out.println(aeroport.getNom());
-        }
+        DepartementDAO departementDAO = new DepartementDAO(tousAeroport);
+        HashMap<String, Departement> tousLesDepartements = departementDAO.findAll();
 
-        ArrayList<CommuneBase> communes = new ArrayList<CommuneBase>();
+        GareDAO gareDAO = new GareDAO();
+        HashMap<String, ArrayList<Gare>> toutesLesGares = gareDAO.findAll();
 
-        communes = communeBaseDAO.findAll();
-        for (CommuneBase commune : communes) {
-            System.out.println(commune.getNomCommune());
-            System.out.println("Les voisins sont : ");
-            for (CommuneBase voisin : commune.getLesVoisins()) {
-                System.out.println(voisin.getNomCommune());
-            }
-        }
+        CommuneBaseDAO communeBaseDAO = new CommuneBaseDAO(tousLesDepartements, toutesLesGares);
+        HashMap<String, CommuneBase> toutesLesCommunesBase = communeBaseDAO.findAll();
+
+        CommunesInfoParAnneeDAO communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(toutesLesAnnees, toutesLesCommunesBase);
+        HashMap<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = communesInfoParAnneeDAO.findAll();
+
+        System.out.println(toutesLesCommunesInfoParAnnee.get("RENNES 2021"));
+        Annee annee = new Annee(2025, 100000);
+        anneeDAO.create(annee);
 
     }
 }

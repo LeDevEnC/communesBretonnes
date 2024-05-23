@@ -14,24 +14,32 @@ public abstract class DAO<T> {
      * &nbsp;
      */
     public DAO() {
+        this.username = "visitor";
+        this.password = "";
     }
+
+    public DAO(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
 
     /**
      * Nom de la classe du pilote
      */
-    private static String driverClassName = "com.mysql.cj.jdbc.Driver";
+    private final static String driverClassName = "com.mysql.cj.jdbc.Driver";
     /**
      * URL de la base de données
      */
-    private static String url = "jdbc:mysql://localhost:3306/bdsae";
+    private final static String url = "jdbc:mysql://localhost:3306/bdsae";
     /**
      * Nom d'utilisateur de la base de données
      */
-    private static String username = "visitor";
+    private String username;
     /**
      * Mot de passe de la base de données
      */
-    private static String password = "";
+    private String password;
 
     /**
      * Obtenir la connection
