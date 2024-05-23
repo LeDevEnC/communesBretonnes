@@ -33,7 +33,8 @@ public class ScenarioCommunesBretonnes {
         CommuneBaseDAO communeBaseDAO = new CommuneBaseDAO(tousLesDepartements, toutesLesGares);
         HashMap<String, CommuneBase> toutesLesCommunesBase = communeBaseDAO.findAll();
 
-        CommunesInfoParAnneeDAO communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(toutesLesAnnees, toutesLesCommunesBase);
+        CommunesInfoParAnneeDAO communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(toutesLesAnnees,
+                toutesLesCommunesBase);
         HashMap<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = communesInfoParAnneeDAO.findAll();
 
         System.out.println(toutesLesCommunesInfoParAnnee.get("RENNES 2021"));

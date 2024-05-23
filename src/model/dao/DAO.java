@@ -23,7 +23,6 @@ public abstract class DAO<T> {
         this.password = password;
     }
 
-
     /**
      * Nom de la classe du pilote
      */
@@ -61,7 +60,7 @@ public abstract class DAO<T> {
 
     // /**
     // * Trouver tous les objets
-    // * 
+    // *
     // * @return la liste des objets
     // */
     // public abstract HashMap<String, T> findAll();

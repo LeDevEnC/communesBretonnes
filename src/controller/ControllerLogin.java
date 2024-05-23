@@ -94,7 +94,8 @@ public class ControllerLogin extends Controller {
 
     /**
      * Méthode appelée à chaque ouverture de la vue
-     * Permet de cacher le message d'erreur et de changer la vue si l'utilisateur est connecté
+     * Permet de cacher le message d'erreur et de changer la vue si l'utilisateur
+     * est connecté
      */
     public void onViewOpened() {
         this.errorLabel.setVisible(false);

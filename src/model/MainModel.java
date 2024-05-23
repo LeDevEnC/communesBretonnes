@@ -62,7 +62,7 @@ public class MainModel {
     /**
      * Permet de connecter l'utilisateur à la bdd
      */
-    public void login(String username, String password){
+    public void login(String username, String password) {
         // Replace with your database url, username, and password
         String url = "jdbc:mysql://localhost:3306/bdsae";
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
@@ -79,7 +79,7 @@ public class MainModel {
     /**
      * Permet de déconnecter l'utilisateur de la bdd
      */
-    public void logout(){
+    public void logout() {
         this.username = "visitor";
         this.password = "";
         this.isLogged = false;
@@ -125,6 +125,7 @@ public class MainModel {
 
     /**
      * Permet de récupérer tous les aéroports
+     * 
      * @return La HashMap contenant tous les aéroports
      */
     public HashMap<String, ArrayList<Aeroport>> getTousAeroport() {
@@ -133,6 +134,7 @@ public class MainModel {
 
     /**
      * Permet de récupérer toutes les gares
+     * 
      * @return La HashMap contenant toutes les gares
      */
     public HashMap<String, ArrayList<Gare>> getToutesLesGares() {
@@ -141,6 +143,7 @@ public class MainModel {
 
     /**
      * Permet de récupérer tous les départements
+     * 
      * @return La HashMap contenant tous les départements
      */
     public HashMap<String, Departement> getTousLesDepartements() {
@@ -149,6 +152,7 @@ public class MainModel {
 
     /**
      * Permet de récupérer toutes les années
+     * 
      * @return La HashMap contenant toutes les années
      */
     public HashMap<String, Annee> getToutesLesAnnees() {
@@ -157,6 +161,7 @@ public class MainModel {
 
     /**
      * Permet de récupérer toutes les communes de base
+     * 
      * @return La HashMap contenant toutes les communes de base
      */
     public HashMap<String, CommuneBase> getToutesLesCommunesBase() {
@@ -165,6 +170,7 @@ public class MainModel {
 
     /**
      * Permet de récupérer toutes les communes info par année
+     * 
      * @return La HashMap contenant toutes les communes info par année
      */
     public HashMap<String, CommunesInfoParAnnee> getToutesLesCommunesInfoParAnnee() {

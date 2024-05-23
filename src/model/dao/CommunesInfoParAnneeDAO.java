@@ -30,7 +30,8 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
         this.toutesLesCommunesBase = communesBase;
     }
 
-    public CommunesInfoParAnneeDAO(String username, String password, HashMap<String, Annee> annees, HashMap<String, CommuneBase> communesBase) {
+    public CommunesInfoParAnneeDAO(String username, String password, HashMap<String, Annee> annees,
+            HashMap<String, CommuneBase> communesBase) {
         super(username, password);
         if (annees == null) {
             throw new IllegalArgumentException("annees cannot be null");
@@ -63,7 +64,8 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
                     double budgetTotal = resultSet.getDouble("budgetTotal");
                     int population = resultSet.getInt("population");
 
-                    CommunesInfoParAnnee nouvelleCommune = new CommunesInfoParAnnee(communeBase, annees, nbMaison, nbAppart, prixMoyen,
+                    CommunesInfoParAnnee nouvelleCommune = new CommunesInfoParAnnee(communeBase, annees, nbMaison,
+                            nbAppart, prixMoyen,
                             prixM2Moyen, SurfaceMoy, depensesCulturellesTotales, budgetTotal, population);
                     String primaryKey = communeBase.getNomCommune() + " " + annees.getAnnee();
                     toutesLesCommunesInfoParAnnee.put(primaryKey, nouvelleCommune);

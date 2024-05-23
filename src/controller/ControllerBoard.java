@@ -24,8 +24,6 @@ import model.data.CommunesInfoParAnnee;
 import model.data.Departement;
 import model.data.Gare;
 
-
-
 public class ControllerBoard extends Controller {
     /**
      * Score global de l'attractivité de la Bretagne
@@ -39,7 +37,8 @@ public class ControllerBoard extends Controller {
     private PieChart pieChartBretagneAtt;
 
     /**
-     * BarChart représentant le score moyen de l'attractivité de la Bretagne par département en 2021
+     * BarChart représentant le score moyen de l'attractivité de la Bretagne par
+     * département en 2021
      */
     @FXML
     private BarChart<String, Number> barChartBretagneAtt;
@@ -60,7 +59,6 @@ public class ControllerBoard extends Controller {
         this.pieChartBretagneAtt.setVisible(true);
     }
 
-    
     protected void resize() {
 
     }
@@ -68,7 +66,7 @@ public class ControllerBoard extends Controller {
     /**
      * Initialiser le PieChart
      */
-    private void initPieChart(){
+    private void initPieChart() {
 
         HashMap<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = findAllCommunesInfoParAnnee();
 
@@ -78,7 +76,6 @@ public class ControllerBoard extends Controller {
         }
 
         this.scoreGlobal = scoreGlobalTotal / toutesLesCommunesInfoParAnnee.size();
-        System.out.println(this.scoreGlobal);
 
         // Ajouter deux segments au PieChart : un pour le score, un pour le reste
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
@@ -95,11 +92,10 @@ public class ControllerBoard extends Controller {
         this.pieChartBretagneAtt.setLegendVisible(false);
     }
 
-
     /**
      * Initialiser le BarChart
      */
-    private void initBarChartDep(){
+    private void initBarChartDep() {
         HashMap<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = findAllCommunesInfoParAnnee();
         int scoreFinistere = 0;
         int scoreCotesArmor = 0;
@@ -119,7 +115,7 @@ public class ControllerBoard extends Controller {
             if (idDep == 29 && annee == 2021) {
                 scoreFinistere += communesInfoParAnnee.scoreCompute();
                 nbFinistere++;
-            } else if (idDep == 22 && annee == 2021){
+            } else if (idDep == 22 && annee == 2021) {
                 scoreCotesArmor += communesInfoParAnnee.scoreCompute();
                 nbCotesArmor++;
             } else if (idDep == 56 && annee == 2021) {
@@ -136,38 +132,40 @@ public class ControllerBoard extends Controller {
         scoreMorbihan = scoreMorbihan / nbMorbihan;
         scoreIlleVilaine = scoreIlleVilaine / nbIlleEtVilaine;
 
-
         this.barChartBretagneAtt.setTitle("Scores Moyens par Département en 2021");
         this.barChartBretagneAtt.getXAxis().setLabel("Département");
-        this.barChartBretagneAtt.setCategoryGap(30);  
-        this.barChartBretagneAtt.setBarGap(0);  
+        this.barChartBretagneAtt.setCategoryGap(30);
+        this.barChartBretagneAtt.setBarGap(0);
         this.barChartBretagneAtt.setLegendVisible(false);
-        double maxYValue = 100.0; 
+        double maxYValue = 100.0;
         ((NumberAxis) barChartBretagneAtt.getYAxis()).setAutoRanging(false);
         ((NumberAxis) barChartBretagneAtt.getYAxis()).setUpperBound(maxYValue);
 
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
 
-        XYChart.Series<String, Number> series = new XYChart.Series<>();    
-
-        XYChart.Data<String, Number> dataFinistere = new XYChart.Data<>("Finistère : " +scoreFinistere + " %", scoreFinistere);
-        XYChart.Data<String, Number> dataCotesArmor = new XYChart.Data<>("Côtes d'Armor : " + scoreCotesArmor + " %", scoreCotesArmor);
-        XYChart.Data<String, Number> dataMorbihan = new XYChart.Data<>("Morbihan : " + scoreMorbihan + " %", scoreMorbihan);
-        XYChart.Data<String, Number> dataIlleVilaine = new XYChart.Data<>("Ille-et-Vilaine : " + scoreIlleVilaine + " %", scoreIlleVilaine);
+        XYChart.Data<String, Number> dataFinistere = new XYChart.Data<>("Finistère : " + scoreFinistere + " %",
+                scoreFinistere);
+        XYChart.Data<String, Number> dataCotesArmor = new XYChart.Data<>("Côtes d'Armor : " + scoreCotesArmor + " %",
+                scoreCotesArmor);
+        XYChart.Data<String, Number> dataMorbihan = new XYChart.Data<>("Morbihan : " + scoreMorbihan + " %",
+                scoreMorbihan);
+        XYChart.Data<String, Number> dataIlleVilaine = new XYChart.Data<>(
+                "Ille-et-Vilaine : " + scoreIlleVilaine + " %", scoreIlleVilaine);
 
         series.getData().add(dataFinistere);
         series.getData().add(dataCotesArmor);
         series.getData().add(dataMorbihan);
         series.getData().add(dataIlleVilaine);
-        
+
         this.barChartBretagneAtt.getData().add(series);
-        applySingleColorToSeries(series, "#2eb82e"); 
+        applySingleColorToSeries(series, "#2eb82e");
     }
 
-    
     /**
      * Appliquer une couleur unique à une série
+     * 
      * @param series la série
-     * @param color la couleur
+     * @param color  la couleur
      */
     private void applySingleColorToSeries(XYChart.Series<String, Number> series, String color) {
         for (XYChart.Data<String, Number> data : series.getData()) {
@@ -176,12 +174,13 @@ public class ControllerBoard extends Controller {
         }
     }
 
-    private void initLineChart(){
+    private void initLineChart() {
 
     }
 
     /**
      * Trouver toutes les informations des communes par année
+     * 
      * @return la liste des informations des communes par année
      */
     private HashMap<String, CommunesInfoParAnnee> findAllCommunesInfoParAnnee() {

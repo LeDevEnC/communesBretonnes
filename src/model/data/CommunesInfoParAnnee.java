@@ -1,4 +1,5 @@
 package model.data;
+
 import java.util.Map;
 
 /**
@@ -294,12 +295,15 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Méthode permettant d'afficher les informations de la commune pour une année sous forme de chaîne de caractères
+     * Méthode permettant d'afficher les informations de la commune pour une année
+     * sous forme de chaîne de caractères
      * 
-     * @return les informations de la commune pour une année sous forme de csv "nomCommune","année","nbMaison","nbAppart","prixMoyen","prixMCarreMoyen","surfaceMoy","depCulturellesTotales","budgetTotal","population"
+     * @return les informations de la commune pour une année sous forme de csv
+     *         "nomCommune","année","nbMaison","nbAppart","prixMoyen","prixMCarreMoyen","surfaceMoy","depCulturellesTotales","budgetTotal","population"
      */
     public String toString() {
-        return "\"" + this.laCommune.getNomCommune() + "\",\"" + this.lAnnee.getAnnee() + "\",\"" + this.nbMaison + "\",\""
+        return "\"" + this.laCommune.getNomCommune() + "\",\"" + this.lAnnee.getAnnee() + "\",\"" + this.nbMaison
+                + "\",\""
                 + this.nbAppart + "\",\"" + this.prixMoyen + "\",\"" + this.prixMCarreMoyen + "\",\"" + this.surfaceMoy
                 + "\",\"" + this.depCulturellesTotales + "\",\"" + this.budgetTotal + "\",\"" + this.population + "\"";
     }
@@ -325,6 +329,7 @@ public class CommunesInfoParAnnee {
         }
         return ret;
     }
+
     /**
      * Calcule le score d'attractivité de la commune cette année.
      * Ce score est calculé en fonction de :
@@ -337,28 +342,28 @@ public class CommunesInfoParAnnee {
      * - les dépenses culturelles totales
      * - le budget total
      * - Le nombre de gare de la commune
-     * - Le nombre de voisine de la commune
+     * - Le nombre d'aéroport du département de la commune
      *
      * @return Un score d'attractivité de la commune cette année en pourcentage,
      *         plus ce score est élevé, plus la commune est attractive.
      */
     public int scoreCompute() {
         Map<String, Double> coeffs = Map.of(
-            "nbGares", 0.12, // Augmenté pour valoriser davantage les transports en commun
-            "nbAeroports", 0.08, // Augmenté pour les connexions internationales
-            "nbMaisons", 0.15,
-            "nbAppart", 0.12, // Augmenté pour les logements urbains
-            "prixMoyen", 0.18, // Légèrement diminué pour équilibrer
-            "prixM2Moyen", 0.15,
-            "SurfaceMoy", 0.05,
-            "depensesCulturellesTotales", 0.1,
-            "budgetTotal", 0.05,
-            "population", 0.1 // Augmenté pour valoriser le dynamisme économique
-    );
-    
+                "nbGares", 0.12, // Augmenté pour valoriser davantage les transports en commun
+                "nbAeroports", 0.08, // Augmenté pour les connexions internationales
+                "nbMaisons", 0.15,
+                "nbAppart", 0.12, // Augmenté pour les logements urbains
+                "prixMoyen", 0.18, // Légèrement diminué pour équilibrer
+                "prixM2Moyen", 0.15,
+                "SurfaceMoy", 0.05,
+                "depensesCulturellesTotales", 0.1,
+                "budgetTotal", 0.05,
+                "population", 0.1 // Augmenté pour valoriser le dynamisme économique
+        );
+
         int scoreFinal = 0;
         int tempScore = 0;
-    
+
         switch (this.getLaCommune().getLesGares().size()) {
             case 0:
                 tempScore = 25;
@@ -377,7 +382,7 @@ public class CommunesInfoParAnnee {
                 break;
         }
         scoreFinal += tempScore * coeffs.get("nbGares");
-    
+
         switch (this.getLaCommune().getLeDepartement().getAeroports().size()) {
             case 0:
                 tempScore = 25;
@@ -396,7 +401,7 @@ public class CommunesInfoParAnnee {
                 break;
         }
         scoreFinal += tempScore * coeffs.get("nbAeroports");
-    
+
         int nbMaisons = this.getNbMaison();
         if (nbMaisons < 10) {
             tempScore = 50;
@@ -408,7 +413,7 @@ public class CommunesInfoParAnnee {
             tempScore = 100;
         }
         scoreFinal += tempScore * coeffs.get("nbMaisons");
-    
+
         int nbAppart = this.getNbAppart();
         if (nbAppart < 5) {
             tempScore = 50;
@@ -420,7 +425,7 @@ public class CommunesInfoParAnnee {
             tempScore = 100;
         }
         scoreFinal += tempScore * coeffs.get("nbAppart");
-    
+
         double prixMoyen = this.getPrixMoyen();
         if (prixMoyen < 100000) {
             tempScore = 100;
@@ -432,7 +437,7 @@ public class CommunesInfoParAnnee {
             tempScore = 50;
         }
         scoreFinal += tempScore * coeffs.get("prixMoyen");
-    
+
         double prixM2Moyen = this.getPrixMCarreMoyen();
         if (prixM2Moyen < 800) {
             tempScore = 100;
@@ -444,7 +449,7 @@ public class CommunesInfoParAnnee {
             tempScore = 50;
         }
         scoreFinal += tempScore * coeffs.get("prixM2Moyen");
-    
+
         double surfaceMoy = this.getSurfaceMoy();
         if (surfaceMoy < 40) {
             tempScore = 50;
@@ -456,7 +461,7 @@ public class CommunesInfoParAnnee {
             tempScore = 100;
         }
         scoreFinal += tempScore * coeffs.get("SurfaceMoy");
-    
+
         double depensesCulturellesTotales = this.getDepCulturellesTotales();
         if (depensesCulturellesTotales < 80) {
             tempScore = 50;
@@ -468,7 +473,7 @@ public class CommunesInfoParAnnee {
             tempScore = 100;
         }
         scoreFinal += tempScore * coeffs.get("depensesCulturellesTotales");
-    
+
         double budgetTotal = this.getBudgetTotal();
         if (budgetTotal < 800) {
             tempScore = 50;
@@ -480,7 +485,7 @@ public class CommunesInfoParAnnee {
             tempScore = 100;
         }
         scoreFinal += tempScore * coeffs.get("budgetTotal");
-    
+
         double population = this.getPopulation();
         if (population < 1000) {
             tempScore = 50;
@@ -492,10 +497,7 @@ public class CommunesInfoParAnnee {
             tempScore = 100;
         }
         scoreFinal += tempScore * coeffs.get("population");
-    
+
         return scoreFinal;
     }
-    
-    
-
 }

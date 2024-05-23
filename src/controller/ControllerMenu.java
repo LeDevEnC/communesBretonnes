@@ -233,7 +233,8 @@ public class ControllerMenu extends Controller {
     }
 
     /**
-     * Ouvre la vue du tableau de bord lorsque l'on clique sur le bouton "Tableau de bord" dans le menu principal.
+     * Ouvre la vue du tableau de bord lorsque l'on clique sur le bouton "Tableau de
+     * bord" dans le menu principal.
      */
     @FXML
     public void buttonBoardPressed() { // Note : public pour pouvoir appeler la vue par défaut

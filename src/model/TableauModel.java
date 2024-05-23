@@ -18,7 +18,7 @@ public class TableauModel {
     public TableauModel(CommunesInfoParAnnee communesInfoParAnnee) {
         this.laCommune = communesInfoParAnnee;
 
-        this.score = new SimpleStringProperty(0d+"%");
+        this.score = new SimpleStringProperty(0d + "%");
         this.ville = new SimpleStringProperty(communesInfoParAnnee.getLaCommune().getNomCommune());
         this.codePostal = new SimpleStringProperty(String.valueOf(communesInfoParAnnee.getLaCommune().getIdCommune()));
         this.departement = new SimpleStringProperty(communesInfoParAnnee.getLaCommune().getLeDepartement().getNomDep());

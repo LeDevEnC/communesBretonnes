@@ -22,7 +22,8 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
      * &nbsp;
      */
 
-    public CommuneBaseDAO(String username, String password, HashMap<String, Departement> departements, HashMap<String, ArrayList<Gare>> gares) {
+    public CommuneBaseDAO(String username, String password, HashMap<String, Departement> departements,
+            HashMap<String, ArrayList<Gare>> gares) {
         super(username, password);
         if (departements == null) {
             throw new IllegalArgumentException("departements cannot be null");
@@ -35,7 +36,7 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
         this.toutesGares = gares;
         this.toutesCommunes = new HashMap<>();
     }
-    
+
     public CommuneBaseDAO(HashMap<String, Departement> departements, HashMap<String, ArrayList<Gare>> gares) {
         super();
         if (departements == null) {
