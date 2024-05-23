@@ -19,9 +19,6 @@ import model.data.CommunesInfoParAnnee;
 import model.data.Departement;
 import model.data.Gare;
 
-/**
- * TODO : Implémenter le modèle
- */
 public class MainModel {
 
     AeroportDAO aeroportDAO;
@@ -66,6 +63,7 @@ public class MainModel {
         // Replace with your database url, username, and password
         String url = "jdbc:mysql://localhost:3306/bdsae";
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            reCreateDAO();
             // If connection is successful
             isLogged = true;
             this.username = username;
@@ -83,6 +81,7 @@ public class MainModel {
         this.username = "visitor";
         this.password = "";
         this.isLogged = false;
+        this.reCreateDAO();
     }
 
     /**
@@ -103,24 +102,46 @@ public class MainModel {
         return username;
     }
 
-    public MainModel() {
-        this.aeroportDAO = new AeroportDAO();
+    private void initData() {
+        this.aeroportDAO = new AeroportDAO(this.username, this.password);
         this.tousAeroport = this.aeroportDAO.findAll();
 
         this.anneeDAO = new AnneeDAO();
         this.toutesLesAnnees = this.anneeDAO.findAll();
 
-        this.departementDAO = new DepartementDAO(this.tousAeroport);
+        this.departementDAO = new DepartementDAO(this.username, this.password, this.tousAeroport);
         this.tousLesDepartements = this.departementDAO.findAll();
 
-        this.gareDAO = new GareDAO();
+        this.gareDAO = new GareDAO(this.username, this.password);
         this.toutesLesGares = this.gareDAO.findAll();
 
-        this.communeBaseDAO = new CommuneBaseDAO(this.tousLesDepartements, this.toutesLesGares);
+        this.communeBaseDAO = new CommuneBaseDAO(this.username,
+                this.password, this.tousLesDepartements, this.toutesLesGares);
         this.toutesLesCommunesBase = this.communeBaseDAO.findAll();
 
-        this.communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(this.toutesLesAnnees, this.toutesLesCommunesBase);
+        this.communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(this.username,
+                this.password, this.toutesLesAnnees, this.toutesLesCommunesBase);
         this.toutesLesCommunesInfoParAnnee = this.communesInfoParAnneeDAO.findAll();
+    }
+
+    private void reCreateDAO() {
+        if (this.tousAeroport == null || tousLesDepartements == null || toutesLesGares == null
+                || toutesLesAnnees == null || toutesLesCommunesBase == null || toutesLesCommunesInfoParAnnee == null) {
+            initData();
+        } else {
+            this.aeroportDAO = new AeroportDAO(this.username, this.password);
+            this.anneeDAO = new AnneeDAO();
+            this.departementDAO = new DepartementDAO(this.username, this.password, this.tousAeroport);
+            this.gareDAO = new GareDAO();
+            this.communeBaseDAO = new CommuneBaseDAO(this.username,
+                    this.password, this.tousLesDepartements, this.toutesLesGares);
+            this.communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(this.username, this.password,
+                    this.toutesLesAnnees, this.toutesLesCommunesBase);
+        }
+    }
+
+    public MainModel() {
+        logout(); // Applique le mode visiteur par défaut et initialise les DAO
     }
 
     /**
