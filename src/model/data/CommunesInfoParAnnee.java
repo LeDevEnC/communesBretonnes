@@ -302,10 +302,17 @@ public class CommunesInfoParAnnee {
      *         "nomCommune","année","nbMaison","nbAppart","prixMoyen","prixMCarreMoyen","surfaceMoy","depCulturellesTotales","budgetTotal","population"
      */
     public String toString() {
-        return "\"" + this.laCommune.getNomCommune() + "\",\"" + this.lAnnee.getAnnee() + "\",\"" + this.nbMaison
-                + "\",\""
-                + this.nbAppart + "\",\"" + this.prixMoyen + "\",\"" + this.prixMCarreMoyen + "\",\"" + this.surfaceMoy
-                + "\",\"" + this.depCulturellesTotales + "\",\"" + this.budgetTotal + "\",\"" + this.population + "\"";
+        return String.format("\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"",
+                this.laCommune.getNomCommune(),
+                this.lAnnee.getAnneeRepr(),
+                this.nbMaison,
+                this.nbAppart,
+                this.prixMoyen,
+                this.prixMCarreMoyen,
+                this.surfaceMoy,
+                this.depCulturellesTotales,
+                this.budgetTotal,
+                this.population);
     }
 
     /**
@@ -362,142 +369,224 @@ public class CommunesInfoParAnnee {
         );
 
         int scoreFinal = 0;
-        int tempScore = 0;
 
-        switch (this.getLaCommune().getLesGares().size()) {
-            case 0:
-                tempScore = 25;
-                break;
-            case 1:
-                tempScore = 75;
-                break;
-            case 2:
-                tempScore = 90;
-                break;
-            case 3:
-                tempScore = 100;
-                break;
-            default:
-                tempScore = 100;
-                break;
-        }
-        scoreFinal += tempScore * coeffs.get("nbGares");
-
-        switch (this.getLaCommune().getLeDepartement().getAeroports().size()) {
-            case 0:
-                tempScore = 25;
-                break;
-            case 1:
-                tempScore = 75;
-                break;
-            case 2:
-                tempScore = 90;
-                break;
-            case 3:
-                tempScore = 100;
-                break;
-            default:
-                tempScore = 100;
-                break;
-        }
-        scoreFinal += tempScore * coeffs.get("nbAeroports");
-
-        int nbMaisons = this.getNbMaison();
-        if (nbMaisons < 10) {
-            tempScore = 50;
-        } else if (nbMaisons < 30) {
-            tempScore = 75;
-        } else if (nbMaisons < 60) {
-            tempScore = 90;
-        } else {
-            tempScore = 100;
-        }
-        scoreFinal += tempScore * coeffs.get("nbMaisons");
-
-        int nbAppart = this.getNbAppart();
-        if (nbAppart < 5) {
-            tempScore = 50;
-        } else if (nbAppart < 20) {
-            tempScore = 75;
-        } else if (nbAppart < 40) {
-            tempScore = 90;
-        } else {
-            tempScore = 100;
-        }
-        scoreFinal += tempScore * coeffs.get("nbAppart");
-
-        double prixMoyen = this.getPrixMoyen();
-        if (prixMoyen < 100000) {
-            tempScore = 100;
-        } else if (prixMoyen < 150000) {
-            tempScore = 90;
-        } else if (prixMoyen < 200000) {
-            tempScore = 75;
-        } else {
-            tempScore = 50;
-        }
-        scoreFinal += tempScore * coeffs.get("prixMoyen");
-
-        double prixM2Moyen = this.getPrixMCarreMoyen();
-        if (prixM2Moyen < 800) {
-            tempScore = 100;
-        } else if (prixM2Moyen < 1200) {
-            tempScore = 90;
-        } else if (prixM2Moyen < 1600) {
-            tempScore = 75;
-        } else {
-            tempScore = 50;
-        }
-        scoreFinal += tempScore * coeffs.get("prixM2Moyen");
-
-        double surfaceMoy = this.getSurfaceMoy();
-        if (surfaceMoy < 40) {
-            tempScore = 50;
-        } else if (surfaceMoy < 70) {
-            tempScore = 75;
-        } else if (surfaceMoy < 100) {
-            tempScore = 90;
-        } else {
-            tempScore = 100;
-        }
-        scoreFinal += tempScore * coeffs.get("SurfaceMoy");
-
-        double depensesCulturellesTotales = this.getDepCulturellesTotales();
-        if (depensesCulturellesTotales < 80) {
-            tempScore = 50;
-        } else if (depensesCulturellesTotales < 150) {
-            tempScore = 75;
-        } else if (depensesCulturellesTotales < 250) {
-            tempScore = 90;
-        } else {
-            tempScore = 100;
-        }
-        scoreFinal += tempScore * coeffs.get("depensesCulturellesTotales");
-
-        double budgetTotal = this.getBudgetTotal();
-        if (budgetTotal < 800) {
-            tempScore = 50;
-        } else if (budgetTotal < 1500) {
-            tempScore = 75;
-        } else if (budgetTotal < 2500) {
-            tempScore = 90;
-        } else {
-            tempScore = 100;
-        }
-        scoreFinal += tempScore * coeffs.get("budgetTotal");
-
-        double population = this.getPopulation();
-        if (population < 1000) {
-            tempScore = 50;
-        } else if (population < 1800) {
-            tempScore = 75;
-        } else if (population < 2500) {
-            tempScore = 90;
-        } else {
-            tempScore = 100;
-        }
-        scoreFinal += tempScore * coeffs.get("population");
+        scoreFinal += calculateScoreGares() * coeffs.get("nbGares");
+        scoreFinal += calculateScoreAeroports() * coeffs.get("nbAeroports");
+        scoreFinal += calculateScoreMaisons() * coeffs.get("nbMaisons");
+        scoreFinal += calculateScoreAppart() * coeffs.get("nbAppart");
+        scoreFinal += calculateScorePrixMoyen() * coeffs.get("prixMoyen");
+        scoreFinal += calculateScorePrixM2Moyen() * coeffs.get("prixM2Moyen");
+        scoreFinal += calculateScoreSurfaceMoy() * coeffs.get("SurfaceMoy");
+        scoreFinal += calculateScoreDepensesCulturelles() * coeffs.get("depensesCulturellesTotales");
+        scoreFinal += calculateScoreBudgetTotal() * coeffs.get("budgetTotal");
+        scoreFinal += calculateScorePopulation() * coeffs.get("population");
 
         return scoreFinal;
+    }
+
+    /**
+     * Calcule le score d'attractivité de la commune cette année en fonction du nombre de gares.
+     * @return le score d'attractivité de la commune cette année en fonction du nombre de gares
+     */
+    private int calculateScoreGares() {
+        int tempScore = 0;
+        int nbGaresCheck = this.getLaCommune().getLesGares().size();
+        switch (nbGaresCheck) {
+            case 0:
+                tempScore = 25;
+                break;
+            case 1:
+                tempScore = 75;
+                break;
+            case 2:
+                tempScore = 90;
+                break;
+            case 3:
+                tempScore = 100;
+                break;
+            default:
+                tempScore = 100;
+                break;
+        }
+        return tempScore;
+    }
+
+    /**
+     * Calcule le score d'attractivité de la commune cette année en fonction du nombre d'aéroports.
+     * @return le score d'attractivité de la commune cette année en fonction du nombre d'aéroports
+     */
+    private int calculateScoreAeroports() {
+        int tempScore = 0;
+        int nbAeroportsCheck = this.getLaCommune().getLeDepartement().getAeroports().size();
+        switch (nbAeroportsCheck) {
+            case 0:
+                tempScore = 25;
+                break;
+            case 1:
+                tempScore = 75;
+                break;
+            case 2:
+                tempScore = 90;
+                break;
+            case 3:
+                tempScore = 100;
+                break;
+            default:
+                tempScore = 100;
+                break;
+        }
+        return tempScore;
+    }
+
+    /**
+     * Calcule le score d'attractivité de la commune cette année en fonction du nombre de maisons.
+     * @return le score d'attractivité de la commune cette année en fonction du nombre de maisons
+     */
+    private int calculateScoreMaisons() {
+        int tempScore = 0;
+        int nbMaisonsCheck = this.getNbMaison();
+        if (nbMaisonsCheck < 10) {
+            tempScore = 50;
+        } else if (nbMaisonsCheck < 30) {
+            tempScore = 75;
+        } else if (nbMaisonsCheck < 60) {
+            tempScore = 90;
+        } else {
+            tempScore = 100;
+        }
+        return tempScore;
+    }
+
+    /**
+     * Calcule le score d'attractivité de la commune cette année en fonction du nombre d'appartements.
+     * @return le score d'attractivité de la commune cette année en fonction du nombre d'appartements
+     */
+    private int calculateScoreAppart() {
+        int tempScore = 0;
+        int nbAppartCheck = this.getNbAppart();
+        if (nbAppartCheck < 5) {
+            tempScore = 50;
+        } else if (nbAppartCheck < 20) {
+            tempScore = 75;
+        } else if (nbAppartCheck < 40) {
+            tempScore = 90;
+        } else {
+            tempScore = 100;
+        }
+        return tempScore;
+    }
+
+    /**
+     * Calcule le score d'attractivité de la commune cette année en fonction du prix moyen.
+     * @return le score d'attractivité de la commune cette année en fonction du prix moyen
+     */
+    private int calculateScorePrixMoyen() {
+        int tempScore = 0;
+        double prixMoyenCheck = this.getPrixMoyen();
+        if (prixMoyenCheck < 100000) {
+            tempScore = 100;
+        } else if (prixMoyenCheck < 150000) {
+            tempScore = 90;
+        } else if (prixMoyenCheck < 200000) {
+            tempScore = 75;
+        } else {
+            tempScore = 50;
+        }
+        return tempScore;
+    }
+
+    /**
+     * Calcule le score d'attractivité de la commune cette année en fonction du prix moyen par mètre carré.
+     * @return le score d'attractivité de la commune cette année en fonction du prix moyen par mètre carré
+     */
+    private int calculateScorePrixM2Moyen() {
+        int tempScore = 0;
+        double prixM2MoyenCheck = this.getPrixMCarreMoyen();
+        if (prixM2MoyenCheck < 800) {
+            tempScore = 100;
+        } else if (prixM2MoyenCheck < 1200) {
+            tempScore = 90;
+        } else if (prixM2MoyenCheck < 1600) {
+            tempScore = 75;
+        } else {
+            tempScore = 50;
+        }
+        return tempScore;
+    }
+
+    /**
+     * Calcule le score d'attractivité de la commune cette année en fonction de la surface moyenne.
+     * @return le score d'attractivité de la commune cette année en fonction de la surface moyenne
+     */
+    private int calculateScoreSurfaceMoy() {
+        int tempScore = 0;
+        double surfaceMoyCheck = this.getSurfaceMoy();
+        if (surfaceMoyCheck < 40) {
+            tempScore = 50;
+        } else if (surfaceMoyCheck < 70) {
+            tempScore = 75;
+        } else if (surfaceMoyCheck < 100) {
+            tempScore = 90;
+        } else {
+            tempScore = 100;
+        }
+        return tempScore;
+    }
+
+    /**
+     * Calcule le score d'attractivité de la commune cette année en fonction des dépenses culturelles totales.
+     * @return le score d'attractivité de la commune cette année en fonction des dépenses culturelles totales
+     */
+    private int calculateScoreDepensesCulturelles() {
+        int tempScore = 0;
+        double depensesCulturellesTotalesCheck = this.getDepCulturellesTotales();
+        if (depensesCulturellesTotalesCheck < 80) {
+            tempScore = 50;
+        } else if (depensesCulturellesTotalesCheck < 150) {
+            tempScore = 75;
+        } else if (depensesCulturellesTotalesCheck < 250) {
+            tempScore = 90;
+        } else {
+            tempScore = 100;
+        }
+        return tempScore;
+    }
+
+    /**
+     * Calcule le score d'attractivité de la commune cette année en fonction du budget total.
+     * @return le score d'attractivité de la commune cette année en fonction du budget total
+     */
+    private int calculateScoreBudgetTotal() {
+        int tempScore = 0;
+        double budgetTotalCheck = this.getBudgetTotal();
+        if (budgetTotalCheck < 800) {
+            tempScore = 50;
+        } else if (budgetTotalCheck < 1500) {
+            tempScore = 75;
+        } else if (budgetTotalCheck < 2500) {
+            tempScore = 90;
+        } else {
+            tempScore = 100;
+        }
+        return tempScore;
+    }
+
+    /**
+     * Calcule le score d'attractivité de la commune cette année en fonction de la population.
+     * @return le score d'attractivité de la commune cette année en fonction de la population
+     */
+    private int calculateScorePopulation() {
+        int tempScore = 0;
+        double populationCheck = this.getPopulation();
+        if (populationCheck < 1000) {
+            tempScore = 50;
+        } else if (populationCheck < 1800) {
+            tempScore = 75;
+        } else if (populationCheck < 2500) {
+            tempScore = 90;
+        } else {
+            tempScore = 100;
+        }
+        return tempScore;
     }
 }

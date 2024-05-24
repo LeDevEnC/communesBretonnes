@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import model.data.CommuneBase;
 import model.data.Departement;
@@ -14,16 +16,16 @@ import model.data.Gare;
 
 public class CommuneBaseDAO extends DAO<CommuneBase> {
 
-    HashMap<String, Departement> tousDepartements;
-    HashMap<String, ArrayList<Gare>> toutesGares;
-    HashMap<String, CommuneBase> toutesCommunes;
+    Map<String, Departement> tousDepartements;
+    Map<String, ArrayList<Gare>> toutesGares;
+    Map<String, CommuneBase> toutesCommunes;
 
     /**
      * &nbsp;
      */
 
-    public CommuneBaseDAO(String username, String password, HashMap<String, Departement> departements,
-            HashMap<String, ArrayList<Gare>> gares) {
+    public CommuneBaseDAO(String username, String password, Map<String, Departement> departements,
+            Map<String, ArrayList<Gare>> gares) {
         super(username, password);
         if (departements == null) {
             throw new IllegalArgumentException("departements cannot be null");
@@ -37,7 +39,7 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
         this.toutesCommunes = new HashMap<>();
     }
 
-    public CommuneBaseDAO(HashMap<String, Departement> departements, HashMap<String, ArrayList<Gare>> gares) {
+    public CommuneBaseDAO(Map<String, Departement> departements, Map<String, ArrayList<Gare>> gares) {
         super();
         if (departements == null) {
             throw new IllegalArgumentException("departements cannot be null");
@@ -56,17 +58,18 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
      * 
      * @return la liste des communes
      */
-    public HashMap<String, CommuneBase> findAll() {
-        HashMap<String, CommuneBase> communes = new HashMap<>();
+    public Map<String, CommuneBase> findAll() {
+        Map<String, CommuneBase> communes = new HashMap<>();
 
         // First pass: create all CommuneBase objects without setting their neighbors
         try (Connection connection = getConnection();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM Commune")) {
+                ResultSet resultSet = statement.executeQuery("SELECT idCommune, nomCommune, leDepartement FROM Commune")) {
             while (resultSet.next()) {
                 Long idCommune = resultSet.getLong("idCommune");
                 String nomCommune = resultSet.getString("nomCommune");
-                Departement leDepartement = tousDepartements.get(String.valueOf(resultSet.getLong("leDepartement")));
+                Long departement = resultSet.getLong("leDepartement");
+                Departement leDepartement = tousDepartements.get(String.valueOf(departement));
                 ArrayList<CommuneBase> lesVoisins = new ArrayList<>();
                 ArrayList<Gare> lesGares = this.toutesGares.get(String.valueOf(idCommune.intValue()));
                 CommuneBase commune = new CommuneBase(idCommune.intValue(), nomCommune, leDepartement, lesVoisins,
@@ -80,7 +83,7 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
         // Second pass: set the neighbors for each CommuneBase
         try (Connection connection = getConnection();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM Voisinage")) {
+                ResultSet resultSet = statement.executeQuery("SELECT commune, communeVoisine FROM Voisinage")) {
             while (resultSet.next()) {
                 Long communeId = resultSet.getLong("commune");
                 Long voisinId = resultSet.getLong("communeVoisine");
@@ -99,13 +102,20 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
         return communes;
     }
 
+    /**
+     * Trouver une commune par son ID
+     * 
+     * @param idCommune l'ID de la commune
+     * @param loadNeighbors si les voisins doivent être chargés
+     * @return la commune
+     */
     public CommuneBase findByID(Long idCommune, boolean loadNeighbors) {
         CommuneBase communeRet = null;
 
         // First pass: create all CommuneBase objects without setting their neighbors
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("SELECT * FROM Commune WHERE idCommune = ?")) {
+                        .prepareStatement("SELECT nomCommune, leDepartement FROM Commune WHERE idCommune = ?")) {
             statement.setLong(1, idCommune);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -113,7 +123,7 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
                     Long idDepartement = resultSet.getLong("leDepartement");
                     Departement leDepartement = tousDepartements.get(String.valueOf(idDepartement));
                     ArrayList<CommuneBase> lesVoisins = new ArrayList<>();
-                    ArrayList<Gare> lesGares = new GareDAO().findByCommuneID(idCommune.intValue());
+                    List<Gare> lesGares = new GareDAO().findByCommuneID(idCommune.intValue());
 
                     communeRet = new CommuneBase(idCommune.intValue(), nomCommune, leDepartement, lesVoisins, lesGares);
                 }
@@ -123,14 +133,15 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
         }
 
         // Second pass: set the neighbors for each CommuneBase
-        if (loadNeighbors) {
+        if (loadNeighbors && communeRet != null) {
             try (Connection connection = getConnection();
                     PreparedStatement statement = connection
-                            .prepareStatement("SELECT * FROM Voisinage WHERE commune = ?")) {
+                            .prepareStatement("SELECT communeVoisine FROM Voisinage WHERE commune = ?")) {
                 statement.setLong(1, idCommune);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
-                        CommuneBase voisin = findByID(resultSet.getLong("communeVoisine"), false);
+                        Long communeVoisine = resultSet.getLong("communeVoisine");
+                        CommuneBase voisin = findByID(communeVoisine, false);
                         communeRet.addNeighbor(voisin);
                     }
                 }
@@ -154,7 +165,7 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
         // First pass: create the CommuneBase object without setting its neighbors
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("SELECT * FROM Commune WHERE nomCommune = ?")) {
+                        .prepareStatement("SELECT idCommune, nomCommune FROM Commune WHERE nomCommune = ?")) {
             statement.setString(1, name);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -163,7 +174,7 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
                     Departement leDepartement = this.tousDepartements
                             .get(String.valueOf(resultSet.getLong("leDepartement")));
                     ArrayList<CommuneBase> lesVoisins = new ArrayList<>();
-                    ArrayList<Gare> lesGares = new GareDAO().findByCommuneID(idCommune.intValue());
+                    List<Gare> lesGares = new GareDAO().findByCommuneID(idCommune.intValue());
 
                     communeRet = new CommuneBase(idCommune.intValue(), nomCommune, leDepartement, lesVoisins, lesGares);
                 }
@@ -176,11 +187,12 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
         if (loadNeighbors && communeRet != null) {
             try (Connection connection = getConnection();
                     PreparedStatement statement = connection
-                            .prepareStatement("SELECT * FROM Voisinage WHERE commune = ?")) {
+                            .prepareStatement("SELECT communeVoisine FROM Voisinage WHERE commune = ?")) {
                 statement.setLong(1, communeRet.getIdCommune());
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
-                        CommuneBase voisin = findByID(resultSet.getLong("communeVoisine"), false);
+                        Long communeVoisine = resultSet.getLong("communeVoisine");
+                        CommuneBase voisin = findByID(communeVoisine, false);
                         communeRet.addNeighbor(voisin);
                     }
                 }

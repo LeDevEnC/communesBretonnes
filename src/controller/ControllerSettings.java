@@ -11,28 +11,28 @@ import javafx.scene.layout.StackPane;
 public class ControllerSettings extends Controller {
 
         @FXML
-        private StackPane pane_parametre;
+        private StackPane paneParametre;
 
         @FXML
-        private Label txt_titre;
+        private Label txtTitre;
 
         @FXML
-        private Label txt_connexion;
+        private Label txtConnexion;
 
         @FXML
-        private Label txt_info_logiciel;
+        private Label txtInfoLogiciel;
 
         @FXML
-        private Label txt_version;
+        private Label txtVersion;
 
         @FXML
-        private Button bt_deconnexion;
+        private Button btDeconnexion;
 
         @FXML
-        private Button bt_exporter;
+        private Button btExporter;
 
         @FXML
-        private Hyperlink lien_contact;
+        private Hyperlink lienContact;
 
         double initialSizeTitre;
         double initialSizeConnexion;
@@ -41,55 +41,57 @@ public class ControllerSettings extends Controller {
         double initialSizeContact;
 
         protected void resize() {
-                DoubleBinding scale = getScale(pane_parametre);
+                DoubleBinding scale = getScale(paneParametre);
                 DoubleBinding labelSize = scale.multiply(1);
                 DoubleBinding buttonSize = scale.multiply(800);
 
-                bt_deconnexion.prefWidthProperty().bind(buttonSize);
-                bt_exporter.prefWidthProperty().bind(buttonSize);
+                this.btDeconnexion.prefWidthProperty().bind(buttonSize);
+                this.btExporter.prefWidthProperty().bind(buttonSize);
 
-                bt_deconnexion.styleProperty()
+                final String STRING_FROMAT = "-fx-font-size: %.2f;";
+
+                this.btDeconnexion.styleProperty()
                                 .bind(Bindings.createStringBinding(
-                                                () -> String.format("-fx-font-size: %.2f;", labelSize.get() * 30),
+                                                () -> String.format(STRING_FROMAT, labelSize.get() * 30),
                                                 labelSize));
-                bt_exporter.styleProperty()
+                this.btExporter.styleProperty()
                                 .bind(Bindings.createStringBinding(
-                                                () -> String.format("-fx-font-size: %.2f;", labelSize.get() * 30),
+                                                () -> String.format(STRING_FROMAT, labelSize.get() * 30),
                                                 labelSize));
 
-                this.txt_titre.styleProperty()
+                this.txtTitre.styleProperty()
                                 .bind(Bindings.createStringBinding(
-                                                () -> String.format("-fx-font-size: %.2f;",
+                                                () -> String.format(STRING_FROMAT,
                                                                 labelSize.get() * this.initialSizeTitre),
                                                 labelSize));
-                this.txt_connexion.styleProperty()
+                this.txtConnexion.styleProperty()
                                 .bind(Bindings.createStringBinding(
-                                                () -> String.format("-fx-font-size: %.2f;",
+                                                () -> String.format(STRING_FROMAT,
                                                                 labelSize.get() * this.initialSizeConnexion),
                                                 labelSize));
-                this.txt_info_logiciel.styleProperty()
+                this.txtInfoLogiciel.styleProperty()
                                 .bind(Bindings.createStringBinding(
-                                                () -> String.format("-fx-font-size: %.2f;",
+                                                () -> String.format(STRING_FROMAT,
                                                                 labelSize.get() * this.initialSizeInfoLogiciel),
                                                 labelSize));
-                this.txt_version.styleProperty()
+                this.txtVersion.styleProperty()
                                 .bind(Bindings.createStringBinding(
-                                                () -> String.format("-fx-font-size: %.2f;",
+                                                () -> String.format(STRING_FROMAT,
                                                                 labelSize.get() * this.initialSizeVersion),
                                                 labelSize));
-                this.lien_contact.styleProperty()
+                this.lienContact.styleProperty()
                                 .bind(Bindings.createStringBinding(
-                                                () -> String.format("-fx-font-size: %.2f;",
+                                                () -> String.format(STRING_FROMAT,
                                                                 labelSize.get() * this.initialSizeContact),
                                                 labelSize));
         }
 
         public void initialize() {
-                this.initialSizeTitre = this.txt_titre.getFont().getSize();
-                this.initialSizeConnexion = this.txt_connexion.getFont().getSize();
-                this.initialSizeInfoLogiciel = this.txt_info_logiciel.getFont().getSize();
-                this.initialSizeVersion = this.txt_version.getFont().getSize();
-                this.initialSizeContact = this.lien_contact.getFont().getSize();
+                this.initialSizeTitre = this.txtTitre.getFont().getSize();
+                this.initialSizeConnexion = this.txtConnexion.getFont().getSize();
+                this.initialSizeInfoLogiciel = this.txtInfoLogiciel.getFont().getSize();
+                this.initialSizeVersion = this.txtVersion.getFont().getSize();
+                this.initialSizeContact = this.lienContact.getFont().getSize();
                 resize();
         }
 
@@ -101,7 +103,7 @@ public class ControllerSettings extends Controller {
 
         @FXML
         private void btExporterPress() {
-                // TODO
+                // TODO : Ajouter l'export des données
         }
 
         @FXML
@@ -111,11 +113,11 @@ public class ControllerSettings extends Controller {
 
         public void onViewOpened() {
                 if (super.getModel().isLogged()) {
-                        txt_connexion.setText("Connecté en tant que : " + (super.getModel().getUsername()));
-                        bt_deconnexion.setDisable(false);
+                        txtConnexion.setText("Connecté en tant que : " + (super.getModel().getUsername()));
+                        btDeconnexion.setDisable(false);
                 } else {
-                        txt_connexion.setText("Non connecté");
-                        bt_deconnexion.setDisable(true);
+                        txtConnexion.setText("Non connecté");
+                        btDeconnexion.setDisable(true);
                 }
         }
 

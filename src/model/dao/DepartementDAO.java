@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import model.data.Aeroport;
 import model.data.Departement;
@@ -15,13 +17,13 @@ import model.data.Departement;
  */
 public class DepartementDAO extends DAO<Departement> {
 
-    private HashMap<String, ArrayList<Aeroport>> tousAeroport;
+    private Map<String, ArrayList<Aeroport>> tousAeroport;
 
     /**
      * &nbsp;
      */
 
-    public DepartementDAO(HashMap<String, ArrayList<Aeroport>> aeroports) {
+    public DepartementDAO(Map<String, ArrayList<Aeroport>> aeroports) {
         super();
         if (aeroports == null) {
             throw new IllegalArgumentException("aeroports cannot be null");
@@ -29,7 +31,7 @@ public class DepartementDAO extends DAO<Departement> {
         this.tousAeroport = aeroports;
     }
 
-    public DepartementDAO(String username, String password, HashMap<String, ArrayList<Aeroport>> aeroports) {
+    public DepartementDAO(String username, String password, Map<String, ArrayList<Aeroport>> aeroports) {
         super(username, password);
         if (aeroports == null) {
             throw new IllegalArgumentException("aeroports cannot be null");
@@ -42,18 +44,19 @@ public class DepartementDAO extends DAO<Departement> {
      * 
      * @return la liste des départements
      */
-    public HashMap<String, Departement> findAll() {
-        HashMap<String, Departement> departements = new HashMap<>();
+    public Map<String, Departement> findAll() {
+        Map<String, Departement> departements = new HashMap<>();
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Departement")) {
+                PreparedStatement statement = connection
+                        .prepareStatement("SELECT idDep, nomDep, investissementCulturel2019 FROM Departement")) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    Long idDep = resultSet.getLong("idDep");
-                    ArrayList<Aeroport> aeroportsOfDept = tousAeroport.get(String.valueOf(idDep));
                     int idDepartement = resultSet.getInt("idDep");
-                    Departement departement = new Departement(
-                            idDepartement, resultSet.getString("nomDep"),
-                            resultSet.getLong("investissementCulturel2019"), aeroportsOfDept);
+                    String nomDep = resultSet.getString("nomDep");
+                    Long investissementCulturel2019 = resultSet.getLong("investissementCulturel2019");
+                    ArrayList<Aeroport> aeroportsOfDept = tousAeroport.get(String.valueOf(idDepartement));
+                    Departement departement = new Departement(idDepartement, nomDep, investissementCulturel2019,
+                            aeroportsOfDept);
                     departements.put(String.valueOf(idDepartement), departement);
                 }
             }
@@ -73,27 +76,18 @@ public class DepartementDAO extends DAO<Departement> {
     @Override
     public Departement findByID(Long idDep) {
         Departement departement = null;
-        ArrayList<Aeroport> aeroportsOfDept = new ArrayList<Aeroport>();
+        ArrayList<Aeroport> aeroportsOfDept = tousAeroport.get(String.valueOf(idDep));
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("SELECT * FROM Aeroport WHERE leDepartement = ?")) {
-            statement.setLong(1, idDep);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    aeroportsOfDept = tousAeroport.get(String.valueOf(idDep));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try (Connection connection = getConnection();
-                PreparedStatement statement = connection
-                        .prepareStatement("SELECT * FROM Departement WHERE idDep = ?")) {
+                        .prepareStatement(
+                                "SELECT nomDep, investissementCulturel2019 FROM Departement WHERE idDep = ?")) {
             statement.setLong(1, idDep);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    departement = new Departement(resultSet.getInt("idDep"), resultSet.getString("nomDep"),
-                            resultSet.getLong("investissementCulturel2019"), aeroportsOfDept);
+                    String nomDep = resultSet.getString("nomDep");
+                    Long investissementCulturel2019 = resultSet.getLong("investissementCulturel2019");
+                    departement = new Departement(Math.toIntExact(idDep), nomDep, investissementCulturel2019,
+                            aeroportsOfDept);
                 }
             }
         } catch (SQLException e) {
@@ -158,7 +152,7 @@ public class DepartementDAO extends DAO<Departement> {
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement(
                         "INSERT INTO Departement (idDep, nomDep, investissementCulturel2019) VALUES (?, ?, ?)",
-                        PreparedStatement.RETURN_GENERATED_KEYS)) {
+                        Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, departement.getIdDep());
             statement.setString(2, departement.getNomDep());
             statement.setLong(3, departement.getInvestCulturel2019());

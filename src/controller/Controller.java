@@ -90,10 +90,9 @@ public abstract class Controller {
      *         l'élément
      */
     public DoubleBinding getScale(Region window) {
-        DoubleBinding scale = Bindings.createDoubleBinding(() -> calculateScale(
+        return Bindings.createDoubleBinding(() -> calculateScale(
                 window), window.widthProperty(),
                 window.heightProperty());
-        return scale;
     }
 
     /**

@@ -13,10 +13,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class ControllerMenu extends Controller {
-    /**
-     * Stocke le menu actuellement affiché
-     */
-    String currentMenu = "board";
+    // /**
+    //  * Stocke le menu actuellement affiché
+    //  */
+    private String currentMenu = "board";
+
+    private static final String CLICKED_BUTTON_STYLE = "-fx-background-color: #d3d3d3;";
 
     @FXML
     private VBox mainVBox;
@@ -106,16 +108,17 @@ public class ControllerMenu extends Controller {
         this.mainButtonDataSee.prefWidthProperty().bind(autoResizeLogo);
         this.mainButtonBoard.prefWidthProperty().bind(autoResizeLogo);
 
+        final String buttonLabelStyle = "-fx-font-size: %.2f; -fx-font-weight: bold;";
         this.mainButtonEditLabel.styleProperty()
-                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
+                .bind(Bindings.format(buttonLabelStyle, fontSize));
         this.mainButtonStatsLabel.styleProperty()
-                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
+                .bind(Bindings.format(buttonLabelStyle, fontSize));
         this.mainButtonDataSeeLabel.styleProperty()
-                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
+                .bind(Bindings.format(buttonLabelStyle, fontSize));
         this.mainButtonBoardLabel.styleProperty()
-                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
+                .bind(Bindings.format(buttonLabelStyle, fontSize));
         this.mainButtonSettingsLabel.styleProperty()
-                .bind(Bindings.format("-fx-font-size: %.2f; -fx-font-weight: bold;", fontSize));
+                .bind(Bindings.format(buttonLabelStyle, fontSize));
 
         this.mainButtonBoardImg.fitWidthProperty().bind(autoResizeIcon);
         this.mainButtonBoardImg.fitHeightProperty().bind(autoResizeIcon);
@@ -166,7 +169,7 @@ public class ControllerMenu extends Controller {
     private void buttonSettingsPressed() {
         this.currentMenu = "settings";
         this.resetButtonColor();
-        this.mainButtonSettings.setStyle("-fx-background-color: #d3d3d3;");
+        this.mainButtonSettings.setStyle(CLICKED_BUTTON_STYLE);
         try {
             changeView(appView, "/views/settings.fxml");
         } catch (IOException e) {
@@ -184,7 +187,7 @@ public class ControllerMenu extends Controller {
     private void buttonEditPressed() {
         this.currentMenu = "edit";
         this.resetButtonColor();
-        this.mainButtonEdit.setStyle("-fx-background-color: #d3d3d3;");
+        this.mainButtonEdit.setStyle(CLICKED_BUTTON_STYLE);
         try {
             changeView(appView, "/views/login.fxml");
         } catch (IOException e) {
@@ -203,7 +206,7 @@ public class ControllerMenu extends Controller {
     private void buttonStatsPressed() {
         this.currentMenu = "stats";
         this.resetButtonColor();
-        this.mainButtonStats.setStyle("-fx-background-color: #d3d3d3;");
+        this.mainButtonStats.setStyle(CLICKED_BUTTON_STYLE);
 
         try {
             changeView(appView, "/views/template.fxml");
@@ -222,7 +225,7 @@ public class ControllerMenu extends Controller {
     private void buttonDataSeePressed() {
         this.currentMenu = "dataSee";
         this.resetButtonColor();
-        this.mainButtonDataSee.setStyle("-fx-background-color: #d3d3d3;");
+        this.mainButtonDataSee.setStyle(CLICKED_BUTTON_STYLE);
 
         try {
             changeView(appView, "/views/dataSee.fxml");
@@ -240,13 +243,22 @@ public class ControllerMenu extends Controller {
     public void buttonBoardPressed() { // Note : public pour pouvoir appeler la vue par défaut
         this.currentMenu = "board";
         this.resetButtonColor();
-        this.mainButtonBoard.setStyle("-fx-background-color: #d3d3d3;");
+        this.mainButtonBoard.setStyle(CLICKED_BUTTON_STYLE);
         try {
             changeView(appView, "/views/board.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
         resize();
+    }
+
+    /**
+     * Retourne le menu actuellement affiché
+     * 
+     * @return Le menu actuellement affiché
+     */
+    public String getCurrentMenu() {
+        return this.currentMenu;
     }
 
     /**

@@ -1,5 +1,6 @@
 package model;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import model.data.CommunesInfoParAnnee;
@@ -9,21 +10,21 @@ public class TableauModel {
 
     private SimpleStringProperty score;
     private SimpleStringProperty ville;
-    private SimpleStringProperty codePostal;
+    private SimpleIntegerProperty codePostal;
     private SimpleStringProperty departement;
     private SimpleIntegerProperty annee;
-    private SimpleStringProperty culturel;
+    private SimpleDoubleProperty culturel;
     private SimpleIntegerProperty nbVoisins;
 
     public TableauModel(CommunesInfoParAnnee communesInfoParAnnee) {
         this.laCommune = communesInfoParAnnee;
 
-        this.score = new SimpleStringProperty(0d + "%");
+        this.score = new SimpleStringProperty(communesInfoParAnnee.scoreCompute()+"%");
         this.ville = new SimpleStringProperty(communesInfoParAnnee.getLaCommune().getNomCommune());
-        this.codePostal = new SimpleStringProperty(String.valueOf(communesInfoParAnnee.getLaCommune().getIdCommune()));
+        this.codePostal = new SimpleIntegerProperty(communesInfoParAnnee.getLaCommune().getIdCommune());
         this.departement = new SimpleStringProperty(communesInfoParAnnee.getLaCommune().getLeDepartement().getNomDep());
-        this.annee = new SimpleIntegerProperty(communesInfoParAnnee.getLannee().getAnnee());
-        this.culturel = new SimpleStringProperty(String.valueOf(communesInfoParAnnee.getDepCulturellesTotales()));
+        this.annee = new SimpleIntegerProperty(communesInfoParAnnee.getLannee().getAnneeRepr());
+        this.culturel = new SimpleDoubleProperty(communesInfoParAnnee.getDepCulturellesTotales());
         this.nbVoisins = new SimpleIntegerProperty(communesInfoParAnnee.getLaCommune().getLesVoisins().size());
     }
 
@@ -35,7 +36,7 @@ public class TableauModel {
         return ville.get();
     }
 
-    public String getCodePostal() {
+    public int getCodePostal() {
         return codePostal.get();
     }
 
@@ -47,7 +48,7 @@ public class TableauModel {
         return annee.get();
     }
 
-    public String getCulturel() {
+    public double getCulturel() {
         return culturel.get();
     }
 

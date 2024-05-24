@@ -1,7 +1,6 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,18 +10,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import model.dao.AeroportDAO;
-import model.dao.AnneeDAO;
-import model.dao.CommuneBaseDAO;
-import model.dao.CommunesInfoParAnneeDAO;
-import model.dao.DepartementDAO;
-import model.dao.GareDAO;
-import model.data.Aeroport;
-import model.data.Annee;
-import model.data.CommuneBase;
 import model.data.CommunesInfoParAnnee;
-import model.data.Departement;
-import model.data.Gare;
 
 public class ControllerBoard extends Controller {
     /**
@@ -48,8 +36,7 @@ public class ControllerBoard extends Controller {
      */
     @Override
     public void initialize() {
-        initPieChart();
-        initBarChartDep();
+        // TODO : Appel resize() lorsque resize sera implémenté
     }
 
     /**
@@ -57,10 +44,13 @@ public class ControllerBoard extends Controller {
      */
     public void onViewOpened() {
         this.pieChartBretagneAtt.setVisible(true);
+        initPieChart();
+        initBarChartDep();
+        initLineChart();
     }
 
     protected void resize() {
-
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /**
@@ -68,7 +58,7 @@ public class ControllerBoard extends Controller {
      */
     private void initPieChart() {
 
-        HashMap<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = findAllCommunesInfoParAnnee();
+        Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = super.getModel().getToutesLesCommunesInfoParAnnee();
 
         int scoreGlobalTotal = 0;
         for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
@@ -79,8 +69,8 @@ public class ControllerBoard extends Controller {
 
         // Ajouter deux segments au PieChart : un pour le score, un pour le reste
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Bretagne : " + String.valueOf(this.scoreGlobal) + " %", this.scoreGlobal),
-                new PieChart.Data("", 100 - this.scoreGlobal));
+                new PieChart.Data("Bretagne : " + this.scoreGlobal + " %", this.scoreGlobal),
+                new PieChart.Data("", (100 - this.scoreGlobal)));
 
         this.pieChartBretagneAtt.setData(pieChartData);
         this.pieChartBretagneAtt.setTitle("% d'attractivité de la Bretagne");
@@ -92,46 +82,63 @@ public class ControllerBoard extends Controller {
         this.pieChartBretagneAtt.setLegendVisible(false);
     }
 
-    /**
-     * Initialiser le BarChart
-     */
     private void initBarChartDep() {
-        HashMap<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = findAllCommunesInfoParAnnee();
-        int scoreFinistere = 0;
-        int scoreCotesArmor = 0;
-        int scoreMorbihan = 0;
-        int scoreIlleVilaine = 0;
-        int idDep;
-        int annee;
-        int nbFinistere = 0;
-        int nbMorbihan = 0;
-        int nbCotesArmor = 0;
-        int nbIlleEtVilaine = 0;
+        Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = super.getModel()
+                .getToutesLesCommunesInfoParAnnee();
+        int[] scores = new int[4];
+        int[] nb = new int[4];
 
+        computeScoresAndNb(toutesLesCommunesInfoParAnnee, scores, nb);
+
+        normalizeScores(scores, nb);
+
+        setupBarChart();
+
+        addDataToChart(scores);
+    }
+
+    private void computeScoresAndNb(Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee, int[] scores,
+            int[] nb) {
         for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
-            idDep = communesInfoParAnnee.getLaCommune().getLeDepartement().getIdDep();
-            annee = communesInfoParAnnee.getLannee().getAnnee();
+            int idDep = communesInfoParAnnee.getLaCommune().getLeDepartement().getIdDep();
+            int annee = communesInfoParAnnee.getLannee().getAnneeRepr();
 
-            if (idDep == 29 && annee == 2021) {
-                scoreFinistere += communesInfoParAnnee.scoreCompute();
-                nbFinistere++;
-            } else if (idDep == 22 && annee == 2021) {
-                scoreCotesArmor += communesInfoParAnnee.scoreCompute();
-                nbCotesArmor++;
-            } else if (idDep == 56 && annee == 2021) {
-                scoreMorbihan += communesInfoParAnnee.scoreCompute();
-                nbMorbihan++;
-            } else if (idDep == 35 && annee == 2021) {
-                scoreIlleVilaine += communesInfoParAnnee.scoreCompute();
-                nbIlleEtVilaine++;
+            if (annee == 2021) {
+                switch (idDep) {
+                    case 29:
+                        scores[0] += communesInfoParAnnee.scoreCompute();
+                        nb[0]++;
+                        break;
+                    case 22:
+                        scores[1] += communesInfoParAnnee.scoreCompute();
+                        nb[1]++;
+                        break;
+                    case 56:
+                        scores[2] += communesInfoParAnnee.scoreCompute();
+                        nb[2]++;
+                        break;
+                    case 35:
+                        scores[3] += communesInfoParAnnee.scoreCompute();
+                        nb[3]++;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
+    }
 
-        scoreFinistere = scoreFinistere / nbFinistere;
-        scoreCotesArmor = scoreCotesArmor / nbCotesArmor;
-        scoreMorbihan = scoreMorbihan / nbMorbihan;
-        scoreIlleVilaine = scoreIlleVilaine / nbIlleEtVilaine;
+    private void normalizeScores(int[] scores, int[] nb) {
+        for (int i = 0; i < 4; i++) {
+            if (nb[i] == 0) {
+                scores[i] = 0;
+            } else {
+                scores[i] = scores[i] / nb[i];
+            }
+        }
+    }
 
+    private void setupBarChart() {
         this.barChartBretagneAtt.setTitle("Scores Moyens par Département en 2021");
         this.barChartBretagneAtt.getXAxis().setLabel("Département");
         this.barChartBretagneAtt.setCategoryGap(30);
@@ -140,22 +147,15 @@ public class ControllerBoard extends Controller {
         double maxYValue = 100.0;
         ((NumberAxis) barChartBretagneAtt.getYAxis()).setAutoRanging(false);
         ((NumberAxis) barChartBretagneAtt.getYAxis()).setUpperBound(maxYValue);
+    }
 
+    private void addDataToChart(int[] scores) {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
 
-        XYChart.Data<String, Number> dataFinistere = new XYChart.Data<>("Finistère : " + scoreFinistere + " %",
-                scoreFinistere);
-        XYChart.Data<String, Number> dataCotesArmor = new XYChart.Data<>("Côtes d'Armor : " + scoreCotesArmor + " %",
-                scoreCotesArmor);
-        XYChart.Data<String, Number> dataMorbihan = new XYChart.Data<>("Morbihan : " + scoreMorbihan + " %",
-                scoreMorbihan);
-        XYChart.Data<String, Number> dataIlleVilaine = new XYChart.Data<>(
-                "Ille-et-Vilaine : " + scoreIlleVilaine + " %", scoreIlleVilaine);
-
-        series.getData().add(dataFinistere);
-        series.getData().add(dataCotesArmor);
-        series.getData().add(dataMorbihan);
-        series.getData().add(dataIlleVilaine);
+        series.getData().add(new XYChart.Data<>("Finistère : " + scores[0] + " %", scores[0]));
+        series.getData().add(new XYChart.Data<>("Côtes d'Armor : " + scores[1] + " %", scores[1]));
+        series.getData().add(new XYChart.Data<>("Morbihan : " + scores[2] + " %", scores[2]));
+        series.getData().add(new XYChart.Data<>("Ille-et-Vilaine : " + scores[3] + " %", scores[3]));
 
         this.barChartBretagneAtt.getData().add(series);
         applySingleColorToSeries(series, "#2eb82e");
@@ -175,34 +175,6 @@ public class ControllerBoard extends Controller {
     }
 
     private void initLineChart() {
-
-    }
-
-    /**
-     * Trouver toutes les informations des communes par année
-     * 
-     * @return la liste des informations des communes par année
-     */
-    private HashMap<String, CommunesInfoParAnnee> findAllCommunesInfoParAnnee() {
-        AeroportDAO aeroportDAO = new AeroportDAO();
-        HashMap<String, ArrayList<Aeroport>> tousAeroport = aeroportDAO.findAll();
-
-        AnneeDAO anneeDAO = new AnneeDAO();
-        HashMap<String, Annee> toutesLesAnnees = anneeDAO.findAll();
-
-        DepartementDAO departementDAO = new DepartementDAO(tousAeroport);
-        HashMap<String, Departement> tousLesDepartements = departementDAO.findAll();
-
-        GareDAO gareDAO = new GareDAO();
-        HashMap<String, ArrayList<Gare>> toutesLesGares = gareDAO.findAll();
-
-        CommuneBaseDAO communeBaseDAO = new CommuneBaseDAO(tousLesDepartements, toutesLesGares);
-        HashMap<String, CommuneBase> toutesLesCommunesBase = communeBaseDAO.findAll();
-
-        CommunesInfoParAnneeDAO communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(toutesLesAnnees,
-                toutesLesCommunesBase);
-        HashMap<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = communesInfoParAnneeDAO.findAll();
-
-        return toutesLesCommunesInfoParAnnee;
+        // TODO : Implémenter le LineChart
     }
 }

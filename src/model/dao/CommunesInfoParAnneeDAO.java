@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 
 import model.data.Annee;
 import model.data.CommuneBase;
@@ -12,13 +13,13 @@ import model.data.CommunesInfoParAnnee;
 
 public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
 
-    private HashMap<String, Annee> toutesLesAnnees;
-    private HashMap<String, CommuneBase> toutesLesCommunesBase;
+    private Map<String, Annee> toutesLesAnnees;
+    private Map<String, CommuneBase> toutesLesCommunesBase;
 
     /**
      * &nbsp;
      */
-    public CommunesInfoParAnneeDAO(HashMap<String, Annee> annees, HashMap<String, CommuneBase> communesBase) {
+    public CommunesInfoParAnneeDAO(Map<String, Annee> annees, Map<String, CommuneBase> communesBase) {
         super();
         if (annees == null) {
             throw new IllegalArgumentException("annees cannot be null");
@@ -30,8 +31,8 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
         this.toutesLesCommunesBase = communesBase;
     }
 
-    public CommunesInfoParAnneeDAO(String username, String password, HashMap<String, Annee> annees,
-            HashMap<String, CommuneBase> communesBase) {
+    public CommunesInfoParAnneeDAO(String username, String password, Map<String, Annee> annees,
+            Map<String, CommuneBase> communesBase) {
         super(username, password);
         if (annees == null) {
             throw new IllegalArgumentException("annees cannot be null");
@@ -43,12 +44,13 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
         this.toutesLesCommunesBase = communesBase;
     }
 
-    public HashMap<String, CommunesInfoParAnnee> findAll() {
-        HashMap<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = new HashMap<>();
+    public Map<String, CommunesInfoParAnnee> findAll() {
+        Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = new HashMap<>();
 
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("SELECT * FROM DonneesAnnuelles")) {
+                        .prepareStatement(
+                                "SELECT laCommune, lAnnee, nbMaison, nbAppart, prixMoyen, prixM2Moyen, SurfaceMoy, depensesCulturellesTotales, budgetTotal, population FROM DonneesAnnuelles")) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     String nomCommune = resultSet.getString("laCommune");
@@ -59,15 +61,15 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
                     int nbAppart = resultSet.getInt("nbAppart");
                     double prixMoyen = resultSet.getDouble("prixMoyen");
                     int prixM2Moyen = resultSet.getInt("prixM2Moyen");
-                    double SurfaceMoy = resultSet.getDouble("SurfaceMoy");
+                    double surfaceMoyResult = resultSet.getDouble("SurfaceMoy");
                     double depensesCulturellesTotales = resultSet.getDouble("depensesCulturellesTotales");
                     double budgetTotal = resultSet.getDouble("budgetTotal");
                     int population = resultSet.getInt("population");
 
                     CommunesInfoParAnnee nouvelleCommune = new CommunesInfoParAnnee(communeBase, annees, nbMaison,
                             nbAppart, prixMoyen,
-                            prixM2Moyen, SurfaceMoy, depensesCulturellesTotales, budgetTotal, population);
-                    String primaryKey = communeBase.getNomCommune() + " " + annees.getAnnee();
+                            prixM2Moyen, surfaceMoyResult, depensesCulturellesTotales, budgetTotal, population);
+                    String primaryKey = communeBase.getNomCommune() + " " + annees.getAnneeRepr();
                     toutesLesCommunesInfoParAnnee.put(primaryKey, nouvelleCommune);
                 }
             }
@@ -76,22 +78,6 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
         }
         return toutesLesCommunesInfoParAnnee;
     }
-
-    // public HashMap<String, CommunesInfoParAnnee> findAll() {
-    // HashMap<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = new
-    // HashMap<>();
-    // for (Annee annee : toutesLesAnnees.values()) {
-    // for (CommuneBase communeBase : toutesLesCommunesBase.values()) {
-    // CommunesInfoParAnnee communesInfoParAnnee = findByIDComplete(annee,
-    // communeBase);
-    // if (communesInfoParAnnee != null) {
-    // toutesLesCommunesInfoParAnnee.put(communesInfoParAnnee.getLaCommune().getNomCommune(),
-    // communesInfoParAnnee);
-    // }
-    // }
-    // }
-    // return toutesLesCommunesInfoParAnnee;
-    // }
 
     /**
      * Trouver les informations d'une commune pour une année donnée
@@ -102,20 +88,27 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
      */
     public CommunesInfoParAnnee findByIDComplete(Annee annees, CommuneBase communeBase) {
         CommunesInfoParAnnee communesInfoParAnnee = null;
-        long anneeCourante = annees.getAnnee();
+        long anneeCourante = annees.getAnneeRepr();
 
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("SELECT * FROM DonneesAnnuelles WHERE laCommune = ? AND lAnnee = ?")) {
+                        .prepareStatement(
+                                "SELECT nbMaison, nbAppart, prixMoyen, prixM2Moyen, SurfaceMoy, depensesCulturellesTotales, budgetTotal, population FROM DonneesAnnuelles WHERE laCommune = ? AND lAnnee = ?")) {
             statement.setLong(1, communeBase.getIdCommune());
             statement.setLong(2, anneeCourante);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    communesInfoParAnnee = new CommunesInfoParAnnee(communeBase, annees, resultSet.getInt("nbMaison"),
-                            resultSet.getInt("nbAppart"), resultSet.getDouble("prixMoyen"),
-                            resultSet.getInt("prixM2Moyen"), resultSet.getDouble("SurfaceMoy"),
-                            resultSet.getDouble("depensesCulturellesTotales"), resultSet.getDouble("budgetTotal"),
-                            resultSet.getInt("population"));
+                    int nbMaison = resultSet.getInt("nbMaison");
+                    int nbAppart = resultSet.getInt("nbAppart");
+                    double prixMoyen = resultSet.getDouble("prixMoyen");
+                    int prixM2Moyen = resultSet.getInt("prixM2Moyen");
+                    double surfaceMoy = resultSet.getDouble("SurfaceMoy");
+                    double depensesCulturellesTotales = resultSet.getDouble("depensesCulturellesTotales");
+                    double budgetTotal = resultSet.getDouble("budgetTotal");
+                    int population = resultSet.getInt("population");
+
+                    communesInfoParAnnee = new CommunesInfoParAnnee(communeBase, annees, nbMaison, nbAppart, prixMoyen,
+                            prixM2Moyen, surfaceMoy, depensesCulturellesTotales, budgetTotal, population);
                 }
             }
         } catch (SQLException e) {

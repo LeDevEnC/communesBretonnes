@@ -13,12 +13,12 @@ public abstract class DAO<T> {
     /**
      * &nbsp;
      */
-    public DAO() {
+    protected DAO() {
         this.username = "visitor";
         this.password = "";
     }
 
-    public DAO(String username, String password) {
+    protected DAO(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -26,11 +26,11 @@ public abstract class DAO<T> {
     /**
      * Nom de la classe du pilote
      */
-    private final static String driverClassName = "com.mysql.cj.jdbc.Driver";
+    private static final String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
     /**
      * URL de la base de données
      */
-    private final static String url = "jdbc:mysql://localhost:3306/bdsae";
+    private static final String URL = "jdbc:mysql://localhost:3306/bdsae";
     /**
      * Nom d'utilisateur de la base de données
      */
@@ -49,13 +49,13 @@ public abstract class DAO<T> {
     protected Connection getConnection() throws SQLException {
         // Charger la classe du pilote
         try {
-            Class.forName(driverClassName);
+            Class.forName(DRIVER_CLASS_NAME);
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
             return null;
         }
         // Obtenir la connection
-        return DriverManager.getConnection(url, username, password);
+        return DriverManager.getConnection(URL, username, password);
     }
 
     // /**
@@ -63,7 +63,7 @@ public abstract class DAO<T> {
     // *
     // * @return la liste des objets
     // */
-    // public abstract HashMap<String, T> findAll();
+    // public abstract Map<String, T> findAll();
 
     /**
      * Trouver un objet par son identifiant

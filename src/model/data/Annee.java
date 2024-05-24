@@ -7,7 +7,7 @@ public class Annee {
     /**
      * L'année qui est représentée
      */
-    private int annee;
+    private int anneeRepr;
 
     /**
      * Le taux d'inflation de l'année
@@ -26,7 +26,7 @@ public class Annee {
         if (annee < 0 || tauxInflation < 0) {
             throw new IllegalArgumentException("L'année ou le taux d'inflation est négatif");
         } else {
-            this.annee = annee;
+            this.anneeRepr = annee;
             this.tauxInflation = tauxInflation;
         }
 
@@ -37,8 +37,8 @@ public class Annee {
      * 
      * @return l'année
      */
-    public int getAnnee() {
-        return this.annee;
+    public int getAnneeRepr() {
+        return this.anneeRepr;
     }
 
     /**
@@ -56,11 +56,11 @@ public class Annee {
      * @param annee l'année à définir
      * @throws IllegalArgumentException si l'année est négative
      */
-    public void setAnnee(int annee) throws IllegalArgumentException {
+    public void setAnneeRepr(int annee) throws IllegalArgumentException {
         if (annee < 0) {
             throw new IllegalArgumentException("L'année est négative");
         } else {
-            this.annee = annee;
+            this.anneeRepr = annee;
         }
     }
 
@@ -106,7 +106,7 @@ public class Annee {
      * @return l'aéroport sous forme de csv "année","tauxInflation"
      */
     public String toString() {
-        return "\"" + this.annee + "\",\"" + this.tauxInflation + "\"";
+        return "\"" + this.anneeRepr + "\",\"" + this.tauxInflation + "\"";
     }
 
 }

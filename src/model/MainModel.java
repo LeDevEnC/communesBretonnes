@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import model.dao.AeroportDAO;
 import model.dao.AnneeDAO;
@@ -33,17 +33,17 @@ public class MainModel {
 
     GareDAO gareDAO;
 
-    HashMap<String, ArrayList<Aeroport>> tousAeroport;
+    Map<String, ArrayList<Aeroport>> tousAeroport;
 
-    HashMap<String, ArrayList<Gare>> toutesLesGares;
+    Map<String, ArrayList<Gare>> toutesLesGares;
 
-    HashMap<String, Departement> tousLesDepartements;
+    Map<String, Departement> tousLesDepartements;
 
-    HashMap<String, Annee> toutesLesAnnees;
+    Map<String, Annee> toutesLesAnnees;
 
-    HashMap<String, CommuneBase> toutesLesCommunesBase;
+    Map<String, CommuneBase> toutesLesCommunesBase;
 
-    HashMap<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee;
+    Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee;
 
     /**
      * Gère si l'utilisateur est connecté à la bdd (en écriture) ou non
@@ -147,54 +147,54 @@ public class MainModel {
     /**
      * Permet de récupérer tous les aéroports
      * 
-     * @return La HashMap contenant tous les aéroports
+     * @return La Map contenant tous les aéroports
      */
-    public HashMap<String, ArrayList<Aeroport>> getTousAeroport() {
+    public Map<String, ArrayList<Aeroport>> getTousAeroport() {
         return tousAeroport;
     }
 
     /**
      * Permet de récupérer toutes les gares
      * 
-     * @return La HashMap contenant toutes les gares
+     * @return La Map contenant toutes les gares
      */
-    public HashMap<String, ArrayList<Gare>> getToutesLesGares() {
+    public Map<String, ArrayList<Gare>> getToutesLesGares() {
         return toutesLesGares;
     }
 
     /**
      * Permet de récupérer tous les départements
      * 
-     * @return La HashMap contenant tous les départements
+     * @return La Map contenant tous les départements
      */
-    public HashMap<String, Departement> getTousLesDepartements() {
+    public Map<String, Departement> getTousLesDepartements() {
         return tousLesDepartements;
     }
 
     /**
      * Permet de récupérer toutes les années
      * 
-     * @return La HashMap contenant toutes les années
+     * @return La Map contenant toutes les années
      */
-    public HashMap<String, Annee> getToutesLesAnnees() {
+    public Map<String, Annee> getToutesLesAnnees() {
         return toutesLesAnnees;
     }
 
     /**
      * Permet de récupérer toutes les communes de base
      * 
-     * @return La HashMap contenant toutes les communes de base
+     * @return La Map contenant toutes les communes de base
      */
-    public HashMap<String, CommuneBase> getToutesLesCommunesBase() {
+    public Map<String, CommuneBase> getToutesLesCommunesBase() {
         return toutesLesCommunesBase;
     }
 
     /**
      * Permet de récupérer toutes les communes info par année
      * 
-     * @return La HashMap contenant toutes les communes info par année
+     * @return La Map contenant toutes les communes info par année
      */
-    public HashMap<String, CommunesInfoParAnnee> getToutesLesCommunesInfoParAnnee() {
+    public Map<String, CommunesInfoParAnnee> getToutesLesCommunesInfoParAnnee() {
         return toutesLesCommunesInfoParAnnee;
     }
 }

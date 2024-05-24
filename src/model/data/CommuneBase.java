@@ -1,6 +1,7 @@
 package model.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe CommuneBase représentant les informations de base d'une commune
@@ -24,12 +25,12 @@ public class CommuneBase {
     /**
      * Communes voisines de la commune
      */
-    private ArrayList<CommuneBase> lesVoisins;
+    private List<CommuneBase> lesVoisins;
 
     /**
      * ArrayList des gares de la commune
      */
-    private ArrayList<Gare> lesGares;
+    private List<Gare> lesGares;
 
     /**
      * Constructeur de la classe CommuneBase
@@ -40,21 +41,21 @@ public class CommuneBase {
      * @param lesVoisins    les communes voisines de la commune
      * @param laGare        la gare de la commune
      */
-    public CommuneBase(int idCommune, String nomCommune, Departement leDepartement, ArrayList<CommuneBase> lesVoisins,
-            ArrayList<Gare> lesGares) throws IllegalArgumentException {
+    public CommuneBase(int idCommune, String nomCommune, Departement leDepartement, List<CommuneBase> lesVoisins,
+            List<Gare> lesGares) throws IllegalArgumentException {
         if (idCommune < 0 || nomCommune == null || leDepartement == null) {
             throw new IllegalArgumentException(
                     "L'identifiant de la commune est négatif ou le nom de la commune ou le département sont null");
         } else {
             // Si aucun voisin
             if (lesVoisins == null) {
-                this.lesVoisins = new ArrayList<CommuneBase>();
+                this.lesVoisins = new ArrayList<>();
             } else {
                 this.lesVoisins = lesVoisins;
             }
             // Si aucune gare
             if (lesGares == null) {
-                this.lesGares = new ArrayList<Gare>();
+                this.lesGares = new ArrayList<>();
             } else {
                 this.lesGares = lesGares;
             }
@@ -88,7 +89,7 @@ public class CommuneBase {
      *
      * @return les communes voisines de la commune
      */
-    public ArrayList<CommuneBase> getLesVoisins() {
+    public List<CommuneBase> getLesVoisins() {
         return this.lesVoisins;
     }
 
@@ -106,7 +107,7 @@ public class CommuneBase {
      *
      * @return la gare de la commune
      */
-    public ArrayList<Gare> getLesGares() {
+    public List<Gare> getLesGares() {
         return this.lesGares;
     }
 

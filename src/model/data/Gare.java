@@ -165,7 +165,7 @@ public class Gare {
      *         "codeGare","nomGare","estFret","estVoyageur"
      */
     public String toString() {
-        return "\"" + this.codeGare + "\",\"" + this.nomGare + "\",\"" + this.estFret + "\",\"" + this.estVoyageur
-                + "\"";
+        return String.format("\"%s\",\"%s\",\"%s\",\"%s\"", this.codeGare, this.nomGare, this.estFret,
+                this.estVoyageur);
     }
 }

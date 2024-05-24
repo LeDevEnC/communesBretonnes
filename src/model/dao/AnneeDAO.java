@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Map;
 
 import model.data.Annee;
 
@@ -29,11 +30,11 @@ public class AnneeDAO extends DAO<Annee> {
      * 
      * @return la liste des années
      */
-    public HashMap<String, Annee> findAll() {
-        HashMap<String, Annee> annees = new HashMap<>();
+    public Map<String, Annee> findAll() {
+        Map<String, Annee> annees = new HashMap<>();
         try (Connection connection = getConnection();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM Annee")) {
+                ResultSet resultSet = statement.executeQuery("SELECT annee, tauxInflation FROM Annee")) {
             while (resultSet.next()) {
                 int anneeInt = resultSet.getInt("annee");
                 double tauxInflation = resultSet.getDouble("tauxInflation");
@@ -57,11 +58,13 @@ public class AnneeDAO extends DAO<Annee> {
     public Annee findByID(Long annee) {
         Annee anneeRet = null;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Annee WHERE annee = ?")) {
+                PreparedStatement statement = connection.prepareStatement("SELECT  FROM Annee WHERE annee = ?")) {
             statement.setLong(1, annee);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    anneeRet = new Annee(resultSet.getInt("annee"), resultSet.getDouble("tauxInflation"));
+                    int anneeInt = resultSet.getInt("annee");
+                    double tauxInflation = resultSet.getDouble("tauxInflation");
+                    anneeRet = new Annee(anneeInt, tauxInflation);
                 }
             }
         } catch (SQLException e) {
@@ -84,7 +87,7 @@ public class AnneeDAO extends DAO<Annee> {
                 PreparedStatement statement = connection
                         .prepareStatement("UPDATE Annee SET tauxInflation = ? WHERE annee = ?")) {
             statement.setDouble(1, annee.getTauxInflation());
-            statement.setInt(2, annee.getAnnee());
+            statement.setInt(2, annee.getAnneeRepr());
             result = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -105,7 +108,7 @@ public class AnneeDAO extends DAO<Annee> {
         int result = 0;
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement("DELETE FROM Annee WHERE annee = ?")) {
-            statement.setInt(1, annee.getAnnee());
+            statement.setInt(1, annee.getAnneeRepr());
             result = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,7 +129,7 @@ public class AnneeDAO extends DAO<Annee> {
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
                         .prepareStatement("INSERT INTO Annee (annee, tauxInflation) VALUES (?, ?)")) {
-            statement.setInt(1, annee.getAnnee());
+            statement.setInt(1, annee.getAnneeRepr());
             statement.setDouble(2, annee.getTauxInflation());
             result = statement.executeUpdate();
         } catch (SQLException e) {

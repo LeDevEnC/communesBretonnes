@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import model.data.Gare;
 
@@ -30,11 +32,12 @@ public class GareDAO extends DAO<Gare> {
      * 
      * @return la liste des gares
      */
-    public HashMap<String, ArrayList<Gare>> findAll() {
-        HashMap<String, ArrayList<Gare>> gares = new HashMap<>();
+    public Map<String, ArrayList<Gare>> findAll() {
+        Map<String, ArrayList<Gare>> gares = new HashMap<>();
         try (Connection connection = getConnection();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM Gare")) {
+                ResultSet resultSet = statement
+                        .executeQuery("SELECT codeGare, nomGare, estFret, estVoyageur FROM Gare")) {
             while (resultSet.next()) {
                 int codeGare = resultSet.getInt("codeGare");
                 Gare gare = new Gare(codeGare, resultSet.getString("nomGare"),
@@ -63,11 +66,12 @@ public class GareDAO extends DAO<Gare> {
     public Gare findByID(Long codeGare) {
         Gare gareRet = null;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Gare WHERE codeGare = ?")) {
+                PreparedStatement statement = connection
+                        .prepareStatement("SELECT nomGare, estFret, estVoyageur FROM Gare WHERE codeGare = ?")) {
             statement.setLong(1, codeGare);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    gareRet = new Gare(resultSet.getInt("codeGare"), resultSet.getString("nomGare"),
+                    gareRet = new Gare(Math.toIntExact(codeGare), resultSet.getString("nomGare"),
                             resultSet.getBoolean("estFret"), resultSet.getBoolean("estVoyageur"));
                 }
             }
@@ -84,10 +88,10 @@ public class GareDAO extends DAO<Gare> {
      * @param idCommune un identifiant de commune
      * @return la liste des gares
      */
-    public ArrayList<Gare> findByCommuneID(int idCommune) {
+    public List<Gare> findByCommuneID(int idCommune) {
         ArrayList<Gare> gares = new ArrayList<>();
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Gare WHERE laCommune = ?")) {
+                PreparedStatement statement = connection.prepareStatement("SELECT codeGare, nomGare, estFret, estVoyageur FROM Gare WHERE laCommune = ?")) {
             statement.setInt(1, idCommune);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -112,7 +116,7 @@ public class GareDAO extends DAO<Gare> {
     public Gare findByName(String nomGare) {
         Gare gareRet = null;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Gare WHERE nomGare = ?")) {
+                PreparedStatement statement = connection.prepareStatement("SELECT codeGare, nomGare, estFret, estVoyageur FROM Gare WHERE nomGare = ?")) {
             statement.setString(1, nomGare);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

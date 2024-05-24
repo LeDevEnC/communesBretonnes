@@ -40,8 +40,6 @@ public class ControllerLogin extends Controller {
     private void loginButtonPressed() {
         this.errorLabel.setText("Impossible de se connecter.");
         this.errorLabel.setVisible(true);
-        System.out.println("Email : " + emailTextField.getText() + "\nMot de passe : " + passwordTextField.getText()
-                + "\nCheckBox Coché ? : " + keepLoginCheckBox.isSelected());
         super.getModel().login(emailTextField.getText(), passwordTextField.getText());
         changeViewIfLogged();
     }
@@ -89,7 +87,7 @@ public class ControllerLogin extends Controller {
      * Redimensionne les éléments de la vue
      */
     protected void resize() {
-
+        throw new UnsupportedOperationException("Pas besoin de redimensionner la vue de connexion.");
     }
 
     /**

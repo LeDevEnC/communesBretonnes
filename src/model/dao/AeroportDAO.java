@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import model.data.Aeroport;
 
@@ -28,10 +29,10 @@ public class AeroportDAO extends DAO<Aeroport> {
     /**
      * Trouver tous les aéroports
      */
-    public HashMap<String, ArrayList<Aeroport>> findAll() {
-        HashMap<String, ArrayList<Aeroport>> aeroports = new HashMap<>();
+    public Map<String, ArrayList<Aeroport>> findAll() {
+        Map<String, ArrayList<Aeroport>> aeroports = new HashMap<>();
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Aeroport");
+                PreparedStatement statement = connection.prepareStatement("SELECT nom, adresse, leDepartement FROM Aeroport");
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
                 String nom = rs.getString("nom");
@@ -39,7 +40,7 @@ public class AeroportDAO extends DAO<Aeroport> {
                 int dep = rs.getInt("leDepartement");
                 Aeroport aeroport = new Aeroport(nom, adresse);
                 if (!aeroports.containsKey(String.valueOf(dep))) {
-                    aeroports.put(String.valueOf(dep), new ArrayList<Aeroport>());
+                    aeroports.put(String.valueOf(dep), new ArrayList<>());
                 }
                 aeroports.get(String.valueOf(dep)).add(aeroport);
             }
@@ -60,7 +61,7 @@ public class AeroportDAO extends DAO<Aeroport> {
     public Aeroport findByName(String name) {
         Aeroport aeroport = null;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Aeroport WHERE nom = ?")) {
+                PreparedStatement statement = connection.prepareStatement("SELECT nom, adresse FROM Aeroport WHERE nom = ?")) {
             statement.setString(1, name);
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {

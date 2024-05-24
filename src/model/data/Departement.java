@@ -1,6 +1,7 @@
 package model.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe Departement représentant les informations d'un département
@@ -19,12 +20,12 @@ public class Departement {
     /**
      * Investissement culturel du département en 2019 représenté par une constante
      */
-    private final long INVESCULTUREL2019;
+    private final long invesCulturel2019; // Note : constante d'instance, suis les conventions de nommage Java standard
 
     /**
      * Liste des aéroports du département
      */
-    private ArrayList<Aeroport> aeroports;
+    private List<Aeroport> aeroports;
 
     /**
      * Constructeur de la classe Departement
@@ -37,20 +38,20 @@ public class Departement {
      *                                  du département, l'investissement culturel ou
      *                                  la liste des aéroports est null
      */
-    public Departement(int idDep, String nomDep, long invesCulturel, ArrayList<Aeroport> aeroports)
+    public Departement(int idDep, String nomDep, long invesCulturel, List<Aeroport> aeroports)
             throws IllegalArgumentException {
         if (idDep < 0 || nomDep == null || invesCulturel < 0) {
             throw new IllegalArgumentException(
                     "L'identifiant du département est négatif ou le nom du département ou l'investissement culturel sont null");
         } else {
             if (aeroports == null) {
-                this.aeroports = new ArrayList<Aeroport>();
+                this.aeroports = new ArrayList<>();
             } else {
                 this.aeroports = aeroports;
             }
             this.idDep = idDep;
-            this.nomDep = nomDep.toString();
-            this.INVESCULTUREL2019 = invesCulturel;
+            this.nomDep = nomDep;
+            this.invesCulturel2019 = invesCulturel;
         }
     }
 
@@ -78,7 +79,7 @@ public class Departement {
      * @return l'investissement culturel du département
      */
     public long getInvestCulturel2019() {
-        return this.INVESCULTUREL2019;
+        return this.invesCulturel2019;
     }
 
     /**
@@ -86,7 +87,7 @@ public class Departement {
      *
      * @return la liste des aéroports du département
      */
-    public ArrayList<Aeroport> getAeroports() {
+    public List<Aeroport> getAeroports() {
         return this.aeroports;
     }
 
@@ -137,9 +138,9 @@ public class Departement {
             throw new IllegalArgumentException("Le département à comparer est null");
         } else {
             int res = 0;
-            if (this.INVESCULTUREL2019 > autreDep.getInvestCulturel2019()) {
+            if (this.invesCulturel2019 > autreDep.getInvestCulturel2019()) {
                 return 1;
-            } else if (this.INVESCULTUREL2019 < autreDep.getInvestCulturel2019()) {
+            } else if (this.invesCulturel2019 < autreDep.getInvestCulturel2019()) {
                 return -1;
             }
             return res;
@@ -154,6 +155,6 @@ public class Departement {
      *         "idDep","nomDep","invesCulturel2019"
      */
     public String toString() {
-        return "\"" + this.idDep + "\",\"" + this.nomDep + "\",\"" + this.INVESCULTUREL2019 + "\"";
+        return "\"" + this.idDep + "\",\"" + this.nomDep + "\",\"" + this.invesCulturel2019 + "\"";
     }
 }

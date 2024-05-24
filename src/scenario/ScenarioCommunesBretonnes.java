@@ -1,7 +1,7 @@
 package scenario;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import model.dao.AeroportDAO;
 import model.dao.AnneeDAO;
@@ -19,23 +19,23 @@ import model.data.Gare;
 public class ScenarioCommunesBretonnes {
     public static void main(String[] args) {
         AeroportDAO aeroportDAO = new AeroportDAO();
-        HashMap<String, ArrayList<Aeroport>> tousAeroport = aeroportDAO.findAll();
+        Map<String, ArrayList<Aeroport>> tousAeroport = aeroportDAO.findAll();
 
         AnneeDAO anneeDAO = new AnneeDAO();
-        HashMap<String, Annee> toutesLesAnnees = anneeDAO.findAll();
+        Map<String, Annee> toutesLesAnnees = anneeDAO.findAll();
 
         DepartementDAO departementDAO = new DepartementDAO(tousAeroport);
-        HashMap<String, Departement> tousLesDepartements = departementDAO.findAll();
+        Map<String, Departement> tousLesDepartements = departementDAO.findAll();
 
         GareDAO gareDAO = new GareDAO();
-        HashMap<String, ArrayList<Gare>> toutesLesGares = gareDAO.findAll();
+        Map<String, ArrayList<Gare>> toutesLesGares = gareDAO.findAll();
 
         CommuneBaseDAO communeBaseDAO = new CommuneBaseDAO(tousLesDepartements, toutesLesGares);
-        HashMap<String, CommuneBase> toutesLesCommunesBase = communeBaseDAO.findAll();
+        Map<String, CommuneBase> toutesLesCommunesBase = communeBaseDAO.findAll();
 
         CommunesInfoParAnneeDAO communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(toutesLesAnnees,
                 toutesLesCommunesBase);
-        HashMap<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = communesInfoParAnneeDAO.findAll();
+        Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = communesInfoParAnneeDAO.findAll();
 
         System.out.println(toutesLesCommunesInfoParAnnee.get("RENNES 2021"));
         Annee annee = new Annee(2025, 100000);

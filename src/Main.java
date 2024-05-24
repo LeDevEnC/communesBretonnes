@@ -22,7 +22,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         System.out.println("Starting application");
         long startTime = System.currentTimeMillis();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("views/main.fxml"));
+        final String defaultView = "/views/main.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(defaultView));
         Parent root = loader.load();
         MainModel mainModel = new MainModel();
         System.out.println("Loading time: " + (System.currentTimeMillis() - startTime) + "ms");
@@ -37,11 +38,11 @@ public class Main extends Application {
         controller.setApp(this);
 
         Map<String, Node> viewCache = new HashMap<>();
-        viewCache.put("views/main.fxml", root);
+        viewCache.put(defaultView, root);
         controller.setViewCache(viewCache);
 
         Map<String, Controller> controllerCache = new HashMap<>();
-        controllerCache.put("views/main.fxml", controller);
+        controllerCache.put(defaultView, controller);
         controller.setControllerCache(controllerCache);
 
         controller.setModel(mainModel);
