@@ -78,6 +78,7 @@ public class ControllerBoard extends Controller {
         Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = super.getModel()
                 .getToutesLesCommunesInfoParAnnee();
 
+
         int scoreGlobalTotal = 0;
         for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
             scoreGlobalTotal += communesInfoParAnnee.scoreCompute();
