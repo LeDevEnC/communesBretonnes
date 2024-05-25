@@ -56,11 +56,11 @@ public class ControllerDataSee extends Controller {
     protected void resize() {
         ReadOnlyDoubleProperty width = tableView.widthProperty();
 
-        setColumnWidth(colCodePostal, width, 0.15);
-        setColumnWidth(colDepartement, width, 0.15);
-        setColumnWidth(colAnnee, width, 0.15);
-        setColumnWidth(depCulturel, width, 0.15);
-        setColumnWidth(colNb, width, 0.15);
+        setColumnWidth(colCodePostal, width, 0.13);
+        setColumnWidth(colDepartement, width, 0.13);
+        setColumnWidth(colAnnee, width, 0.13);
+        setColumnWidth(depCulturel, width, 0.13);
+        setColumnWidth(colNb, width, 0.13);
     }
 
     /**

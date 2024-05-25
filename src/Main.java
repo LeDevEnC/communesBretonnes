@@ -31,8 +31,8 @@ public class Main extends Application {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight() - 40);
         scene.getStylesheets().add(getClass().getResource("ressources/styles.css").toExternalForm());
-        primaryStage.setMinWidth(800);
-        primaryStage.setMinHeight(600);
+        primaryStage.setMinWidth(830);
+        primaryStage.setMinHeight(650);
         ControllerMenu controller = loader.getController();
 
         controller.setApp(this);

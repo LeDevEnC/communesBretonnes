@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Set;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,7 +15,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
+import javafx.scene.layout.GridPane;
 import model.data.CommunesInfoParAnnee;
 
 public class ControllerBoard extends Controller {
@@ -21,6 +23,12 @@ public class ControllerBoard extends Controller {
      * Score global de l'attractivité de la Bretagne
      */
     private int scoreGlobal;
+
+    /**
+     * GridPane contenant les éléments de la vue
+     */
+    @FXML
+    private GridPane gridPane;
 
     /**
      * PieChart représentant le score global de l'attractivité de la Bretagne
@@ -45,29 +53,47 @@ public class ControllerBoard extends Controller {
      */
     @Override
     public void initialize() {
-        // TODO : Appel resize() lorsque resize sera implémenté
-
+        resize();
     }
 
     /**
      * Méthode appelée lors de l'ouverture de la vue
      */
     public void onViewOpened() {
+        resize();
         this.pieChartBretagneAtt.setVisible(true);
         if (!graphCharged[0]) {
             initPieChart();
-        } 
+        }
         if (!graphCharged[1]) {
             initBarChartDep();
-        } 
+        }
         if (!graphCharged[2]) {
             initLineChart();
         }
 
     }
 
+    /**
+     * Change la taille des éléments de la vue en fonction de la taille de la
+     * fenêtre
+     * Change la taille du titre de chaque graphes,
+     */
     protected void resize() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // Créer un binding pour la taille de la police en fonction de la largeur de
+        // gridPane
+        DoubleBinding fontSize = Bindings.createDoubleBinding(
+                () -> this.gridPane.getWidth() / 65.0,
+                this.gridPane.widthProperty());
+
+        // Change la taille des différents éléments
+        this.gridPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            final String TITRE_STYLE = "-fx-font-size: " + fontSize.get() + "px;";
+            final String TITRE_LOOKUP = ".chart-title";
+            pieChartBretagneAtt.lookup(TITRE_LOOKUP).setStyle(TITRE_STYLE);
+            barChartBretagneAtt.lookup(TITRE_LOOKUP).setStyle(TITRE_STYLE);
+            lineChartBretagneAtt.lookup(TITRE_LOOKUP).setStyle(TITRE_STYLE);
+        });
     }
 
     /**
@@ -89,7 +115,6 @@ public class ControllerBoard extends Controller {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
                 new PieChart.Data("Bretagne : " + this.scoreGlobal + " %", this.scoreGlobal),
                 new PieChart.Data("", (100 - this.scoreGlobal)));
-
         this.pieChartBretagneAtt.setData(pieChartData);
         this.pieChartBretagneAtt.setTitle("% d'attractivité de la Bretagne");
         this.pieChartBretagneAtt.setStartAngle(90);
@@ -181,8 +206,6 @@ public class ControllerBoard extends Controller {
         }
     }
 
-
-
     private void setupBarChart() {
         this.barChartBretagneAtt.setTitle("Scores Moyens par Département en 2021");
         this.barChartBretagneAtt.getXAxis().setLabel("Département");
@@ -194,25 +217,21 @@ public class ControllerBoard extends Controller {
         ((NumberAxis) barChartBretagneAtt.getYAxis()).setUpperBound(maxYValue);
     }
 
-
-
     private void addDataToChart(int[] scores) {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
 
-        series.getData().add(new XYChart.Data<>("Finistère : " + scores[0] + " %", scores[0]));
-        series.getData().add(new XYChart.Data<>("Côtes d'Armor : " + scores[1] + " %", scores[1]));
-        series.getData().add(new XYChart.Data<>("Morbihan : " + scores[2] + " %", scores[2]));
-        series.getData().add(new XYChart.Data<>("Ille-et-Vilaine : " + scores[3] + " %", scores[3]));
-
+        series.getData().add(new XYChart.Data<>("Finistère\n" + scores[0] + " %", scores[0]));
+        series.getData().add(new XYChart.Data<>("Côtes d'Armor\n" + scores[1] + " %", scores[1]));
+        series.getData().add(new XYChart.Data<>("Morbihan\n" + scores[2] + " %", scores[2]));
+        series.getData().add(new XYChart.Data<>("Ille-et-Vilaine\n" + scores[3] + " %", scores[3]));
         this.barChartBretagneAtt.getData().add(series);
         applySingleColorToSeries(series, "#2eb82e");
         graphCharged[0] = true;
     }
 
-
     /**
      * Appliquer une couleur unique à une série
-     * 
+     *
      * @param series la série
      * @param color  la couleur
      */
@@ -222,21 +241,35 @@ public class ControllerBoard extends Controller {
             bar.setStyle("-fx-bar-fill: " + color + ";");
         }
     }
-    
+
     private void setupLineChart() {
         NumberAxis xAxis = (NumberAxis) this.lineChartBretagneAtt.getXAxis();
         NumberAxis yAxis = (NumberAxis) this.lineChartBretagneAtt.getYAxis();
-        this.lineChartBretagneAtt.setTitle("Score d'Attractivité de la Bretagne en Fonction des Années");
+        this.lineChartBretagneAtt.setTitle("Score d'Attractivité moyen par Années");
 
         xAxis.setAutoRanging(false);
         xAxis.setLowerBound(2018);
         xAxis.setUpperBound(2022);
         xAxis.setTickUnit(1);
 
+        yAxis.setAutoRanging(false);
+        yAxis.setLowerBound(0);
+        yAxis.setUpperBound(100);
+        yAxis.setTickUnit(10);
+
         xAxis.setLabel("Année");
         yAxis.setLabel("Score d'Attractivité");
+
+        this.lineChartBretagneAtt.setLegendVisible(false);
+
     }
 
+    /**
+     * Permet de calculer les scores moyens par année
+     * 
+     * @param scores Les scores totaux par année
+     * @param nb     Le nombre de communes par année
+     */
     private void normalizeScoresLineChart(int[] scores, int[] nb) {
         for (int i = 0; i < 3; i++) {
             if (nb[i] == 0) {
@@ -246,6 +279,7 @@ public class ControllerBoard extends Controller {
             }
         }
     }
+
     private void addDataToLineChart(int[] scores) {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
 
@@ -254,8 +288,7 @@ public class ControllerBoard extends Controller {
         series.getData().add(new XYChart.Data<>(2021, scores[2]));
 
         series.setName("Score d'Attractivité");
-        Platform.runLater(()
-                -> {
+        Platform.runLater(() -> {
 
             Set<Node> nodes = this.lineChartBretagneAtt.lookupAll(".series" + 0);
             for (Node n : nodes) {
