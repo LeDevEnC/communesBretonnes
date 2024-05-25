@@ -44,12 +44,12 @@
             </BarChart>
             <LineChart fx:id="lineChartBretagneAtt" title="Attractivité de la Bretagne par année"
                GridPane.rowIndex="1">
-               <xAxis>
-                  <CategoryAxis side="BOTTOM" />
-               </xAxis>
-               <yAxis>
-                  <NumberAxis side="LEFT" />
-               </yAxis>
+                <xAxis>
+                     <NumberAxis label="Année" />
+                </xAxis>
+                <yAxis>
+                      <NumberAxis label="Score d'Attractivité" />
+                </yAxis>
                <GridPane.margin>
                   <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                </GridPane.margin>

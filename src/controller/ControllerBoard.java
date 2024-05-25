@@ -1,15 +1,19 @@
 package controller;
 
 import java.util.Map;
+import java.util.Set;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 import model.data.CommunesInfoParAnnee;
 
 public class ControllerBoard extends Controller {
@@ -31,12 +35,18 @@ public class ControllerBoard extends Controller {
     @FXML
     private BarChart<String, Number> barChartBretagneAtt;
 
+    @FXML
+    private LineChart<Number, Number> lineChartBretagneAtt;
+
     /**
      * Méthode appelée lors de la première initialisation de la vue
      */
     @Override
     public void initialize() {
         // TODO : Appel resize() lorsque resize sera implémenté
+        initPieChart();
+        initBarChartDep();
+        initLineChart();
     }
 
     /**
@@ -44,9 +54,7 @@ public class ControllerBoard extends Controller {
      */
     public void onViewOpened() {
         this.pieChartBretagneAtt.setVisible(true);
-        initPieChart();
-        initBarChartDep();
-        initLineChart();
+ 
     }
 
     protected void resize() {
@@ -58,7 +66,8 @@ public class ControllerBoard extends Controller {
      */
     private void initPieChart() {
 
-        Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = super.getModel().getToutesLesCommunesInfoParAnnee();
+        Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = super.getModel()
+                .getToutesLesCommunesInfoParAnnee();
 
         int scoreGlobalTotal = 0;
         for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
@@ -128,6 +137,30 @@ public class ControllerBoard extends Controller {
         }
     }
 
+    private void computeScoresAndNbByYear(Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee, int[] scores,
+            int[] nb) {
+        for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
+            int annee = communesInfoParAnnee.getLannee().getAnneeRepr();
+
+            switch (annee) {
+                case 2019:
+                    scores[0] += communesInfoParAnnee.scoreCompute();
+                    nb[0]++;
+                    break;
+                case 2020:
+                    scores[1] += communesInfoParAnnee.scoreCompute();
+                    nb[1]++;
+                    break;
+                case 2021:
+                    scores[2] += communesInfoParAnnee.scoreCompute();
+                    nb[2]++;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     private void normalizeScores(int[] scores, int[] nb) {
         for (int i = 0; i < 4; i++) {
             if (nb[i] == 0) {
@@ -137,6 +170,8 @@ public class ControllerBoard extends Controller {
             }
         }
     }
+
+
 
     private void setupBarChart() {
         this.barChartBretagneAtt.setTitle("Scores Moyens par Département en 2021");
@@ -148,6 +183,8 @@ public class ControllerBoard extends Controller {
         ((NumberAxis) barChartBretagneAtt.getYAxis()).setAutoRanging(false);
         ((NumberAxis) barChartBretagneAtt.getYAxis()).setUpperBound(maxYValue);
     }
+
+
 
     private void addDataToChart(int[] scores) {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -161,6 +198,7 @@ public class ControllerBoard extends Controller {
         applySingleColorToSeries(series, "#2eb82e");
     }
 
+
     /**
      * Appliquer une couleur unique à une série
      * 
@@ -173,8 +211,64 @@ public class ControllerBoard extends Controller {
             bar.setStyle("-fx-bar-fill: " + color + ";");
         }
     }
+    
+    private void setupLineChart() {
+        NumberAxis xAxis = (NumberAxis) this.lineChartBretagneAtt.getXAxis();
+        NumberAxis yAxis = (NumberAxis) this.lineChartBretagneAtt.getYAxis();
+        this.lineChartBretagneAtt.setTitle("Score d'Attractivité de la Bretagne en Fonction des Années");
+
+        xAxis.setAutoRanging(false);
+        xAxis.setLowerBound(2018);
+        xAxis.setUpperBound(2022);
+        xAxis.setTickUnit(1);
+
+        xAxis.setLabel("Année");
+        yAxis.setLabel("Score d'Attractivité");
+    }
+
+    private void normalizeScoresLineChart(int[] scores, int[] nb) {
+        for (int i = 0; i < 3; i++) {
+            if (nb[i] == 0) {
+                scores[i] = 0;
+            } else {
+                scores[i] = scores[i] / nb[i];
+            }
+        }
+    }
+    private void addDataToLineChart(int[] scores) {
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+
+        series.getData().add(new XYChart.Data<>(2019, scores[0]));
+        series.getData().add(new XYChart.Data<>(2020, scores[1]));
+        series.getData().add(new XYChart.Data<>(2021, scores[2]));
+
+        series.setName("Score d'Attractivité");
+        Platform.runLater(()
+                -> {
+
+            Set<Node> nodes = this.lineChartBretagneAtt.lookupAll(".series" + 0);
+            for (Node n : nodes) {
+                n.setStyle("-fx-background-color: green;");
+            }
+
+            series.getNode().lookup(".chart-series-line").setStyle("-fx-stroke: #2eb82e;");
+        });
+        this.lineChartBretagneAtt.getData().add(series);
+    }
 
     private void initLineChart() {
-        // TODO : Implémenter le LineChart
+        Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = super.getModel()
+                .getToutesLesCommunesInfoParAnnee();
+        int[] scores = new int[3];
+        int[] nb = new int[3];
+
+        computeScoresAndNbByYear(toutesLesCommunesInfoParAnnee, scores, nb);
+
+        normalizeScoresLineChart(scores, nb);
+
+        setupLineChart();
+
+        addDataToLineChart(scores);
+
     }
 }
