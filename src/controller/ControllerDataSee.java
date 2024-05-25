@@ -48,6 +48,8 @@ public class ControllerDataSee extends Controller {
     @FXML
     private TableColumn<TableauModel, Integer> colNb;
 
+    private boolean dataCharged = false;
+
     /**
      * Redimensionne les colonnes du tableau en fonction de la taille de la fenêtre
      */
@@ -85,9 +87,13 @@ public class ControllerDataSee extends Controller {
      * Rempli le tableau avec les données des communes
      */
     public void onViewOpened() {
-        for (CommunesInfoParAnnee commune : super.getModel().getToutesLesCommunesInfoParAnnee().values()) {
-            TableauModel tableauModel = new TableauModel(commune);
-            tableView.getItems().add(tableauModel);
+        if (!dataCharged) {
+            for (CommunesInfoParAnnee commune : super.getModel().getToutesLesCommunesInfoParAnnee().values()) {
+                TableauModel tableauModel = new TableauModel(commune);
+                tableView.getItems().add(tableauModel);
+            }
+            dataCharged = true;
         }
+
     }
 }
