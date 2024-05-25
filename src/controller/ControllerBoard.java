@@ -38,15 +38,15 @@ public class ControllerBoard extends Controller {
     @FXML
     private LineChart<Number, Number> lineChartBretagneAtt;
 
+    private boolean[] graphCharged = new boolean[3];
+
     /**
      * Méthode appelée lors de la première initialisation de la vue
      */
     @Override
     public void initialize() {
         // TODO : Appel resize() lorsque resize sera implémenté
-        initPieChart();
-        initBarChartDep();
-        initLineChart();
+
     }
 
     /**
@@ -54,7 +54,16 @@ public class ControllerBoard extends Controller {
      */
     public void onViewOpened() {
         this.pieChartBretagneAtt.setVisible(true);
- 
+        if (!graphCharged[0]) {
+            initPieChart();
+        } 
+        if (!graphCharged[1]) {
+            initBarChartDep();
+        } 
+        if (!graphCharged[2]) {
+            initLineChart();
+        }
+
     }
 
     protected void resize() {
@@ -104,6 +113,7 @@ public class ControllerBoard extends Controller {
         setupBarChart();
 
         addDataToChart(scores);
+        graphCharged[1] = true;
     }
 
     private void computeScoresAndNb(Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee, int[] scores,
@@ -196,6 +206,7 @@ public class ControllerBoard extends Controller {
 
         this.barChartBretagneAtt.getData().add(series);
         applySingleColorToSeries(series, "#2eb82e");
+        graphCharged[0] = true;
     }
 
 
@@ -269,6 +280,7 @@ public class ControllerBoard extends Controller {
         setupLineChart();
 
         addDataToLineChart(scores);
+        graphCharged[2] = true;
 
     }
 }
