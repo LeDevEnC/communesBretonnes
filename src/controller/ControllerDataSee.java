@@ -115,9 +115,6 @@ public class ControllerDataSee extends Controller {
      * Les filtres ne sont pas obligatoirement dans l'ordre ni complet
      * Si on met "re" dans le filtre, toutes les communes contenant "re" dans leur
      * nom seront affichées
-     *
-     * Attention : Mettre un nombre comme juste 21 prendra en compte les années 2021
-     * et les codes postaux contenant le nombre 21
      */
     @FXML
     private void searchBarTextEntered() {
@@ -125,7 +122,6 @@ public class ControllerDataSee extends Controller {
         String search = searchBar.getText();
         String[] filters = search.split(" ");
         boolean ok;
-
         for (CommunesInfoParAnnee commune : super.getModel().getToutesLesCommunesInfoParAnnee().values()) {
             ok = true;
             int i = 0;
@@ -134,12 +130,11 @@ public class ControllerDataSee extends Controller {
                 String nomCommune = commune.getLaCommune().getNomCommune();
                 String codePostal = String.valueOf(commune.getLaCommune().getIdCommune());
                 String nomDep = commune.getLaCommune().getLeDepartement().getNomDep();
-                String annee = String.valueOf(commune.getLannee());
-
-                if (!(nomCommune.toLowerCase().contains(filter.toLowerCase())
-                        || codePostal.toLowerCase().contains(filter.toLowerCase())
-                        || nomDep.toLowerCase().contains(filter.toLowerCase())
-                        || annee.toLowerCase().contains(filter.toLowerCase()))) {
+                String annee = String.valueOf(commune.getLannee().getAnneeRepr());
+                if (!(nomCommune.toLowerCase().startsWith(filter.toLowerCase())
+                        || codePostal.toLowerCase().startsWith(filter.toLowerCase())
+                        || nomDep.toLowerCase().startsWith(filter.toLowerCase())
+                        || annee.toLowerCase().startsWith(filter.toLowerCase()))) {
                     ok = false;
                 }
                 i++;
