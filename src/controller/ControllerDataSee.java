@@ -156,33 +156,27 @@ public class ControllerDataSee extends Controller {
         }
     }
 
-    public class TableRowClickHandler
-            implements EventHandler<MouseEvent>, Callback<TableView<TableauModel>, TableRow<TableauModel>> {
-        private TableRow<TableauModel> row;
-
-        @Override
-        public TableRow<TableauModel> call(TableView<TableauModel> param) {
-            row = new TableRow<>();
-            row.setOnMouseClicked(this);
-            return row;
-        }
-
-        @Override
-        public void handle(MouseEvent event) {
-            if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                TableauModel clickedRow = row.getItem();
-                System.out.println(clickedRow.getLaCommune());
-            }
-        }
-    }
-
+    /**
+     * Permet de cliquer sur une ligne du tableau pour afficher les informations
+     */
     private class TableRowFactory implements Callback<TableView<TableauModel>, TableRow<TableauModel>> {
+        /**
+         * Stocke le contrôleur de la vue
+         */
         private final ControllerDataSee controller;
 
+        /**
+         * Constructeur de la classe
+         *
+         * @param controller Le contrôleur de la vue
+         */
         public TableRowFactory(ControllerDataSee controller) {
             this.controller = controller;
         }
 
+        /**
+         * Définit le comportement lorsqu'une ligne est cliquée
+         */
         @Override
         public TableRow<TableauModel> call(TableView<TableauModel> tableView) {
             TableRow<TableauModel> row = new TableRow<>();
@@ -190,13 +184,27 @@ public class ControllerDataSee extends Controller {
             return row;
         }
 
-        public class TableRowClickHandler implements EventHandler<MouseEvent> {
+        /**
+         * Classe interne permettant de gérer le clic sur une ligne
+         */
+        private class TableRowClickHandler implements EventHandler<MouseEvent> {
+            /**
+             * Stocke la ligne cliquée
+             */
             private final TableRow<TableauModel> row;
 
+            /**
+             * Constructeur de la classe
+             *
+             * @param row La ligne cliquée
+             */
             public TableRowClickHandler(TableRow<TableauModel> row) {
                 this.row = row;
             }
 
+            /**
+             * Définit le comportement lorsqu'une ligne est cliquée
+             */
             @Override
             public void handle(MouseEvent event) {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
