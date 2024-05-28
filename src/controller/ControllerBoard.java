@@ -16,6 +16,9 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import model.data.CommunesInfoParAnnee;
 
 public class ControllerBoard extends Controller {
@@ -24,6 +27,17 @@ public class ControllerBoard extends Controller {
      */
     private int scoreGlobal;
 
+    /**
+     * Texte contenant le titre "Conseil"
+     */
+    @FXML
+    private Text conseilText;
+
+    /**
+     * TextFlow contenant le texte du conseil
+     */
+    @FXML
+    private TextFlow conseilTextFlow;
     /**
      * GridPane contenant les éléments de la vue
      */
@@ -53,6 +67,8 @@ public class ControllerBoard extends Controller {
      */
     @Override
     public void initialize() {
+        // TODO : Implémenter le conseilText
+        setConseilText(new String[]{"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "Aenean gravida justo vitae consequat venenatis.", "Aenean euismod nibh sit amet ullamcorper varius."});
         resize();
     }
 
@@ -314,6 +330,19 @@ public class ControllerBoard extends Controller {
 
         addDataToLineChart(scores);
         graphCharged[2] = true;
+    }
 
+    /**
+     * Permet de changer le conseils affichés
+     * @param conseils Les conseils à afficher
+     */
+    private void setConseilText(String[] conseils) {
+        this.conseilTextFlow.getChildren().clear();
+        Font font = new Font(20);
+        for (int i = 0; i < conseils.length; i++) {
+            Text text = new Text("➤ " + conseils[i] + "\n");
+            text.setFont(font);
+            this.conseilTextFlow.getChildren().add(text);
+        }
     }
 }
