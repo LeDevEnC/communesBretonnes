@@ -68,7 +68,9 @@ public class ControllerBoard extends Controller {
     @Override
     public void initialize() {
         // TODO : Implémenter le conseilText
-        setConseilText(new String[]{"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "Aenean gravida justo vitae consequat venenatis.", "Aenean euismod nibh sit amet ullamcorper varius."});
+        setConseilText(new String[] { "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                "Aenean gravida justo vitae consequat venenatis.",
+                "Aenean euismod nibh sit amet ullamcorper varius." });
         resize();
     }
 
@@ -124,9 +126,11 @@ public class ControllerBoard extends Controller {
         for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
             scoreGlobalTotal += communesInfoParAnnee.scoreCompute();
         }
-
-        this.scoreGlobal = scoreGlobalTotal / toutesLesCommunesInfoParAnnee.size();
-
+        if (toutesLesCommunesInfoParAnnee.size() == 0) {
+            this.scoreGlobal = 0;
+        } else {
+            this.scoreGlobal = scoreGlobalTotal / toutesLesCommunesInfoParAnnee.size();
+        }
         // Ajouter deux segments au PieChart : un pour le score, un pour le reste
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
                 new PieChart.Data("Bretagne : " + this.scoreGlobal + " %", this.scoreGlobal),
@@ -334,6 +338,7 @@ public class ControllerBoard extends Controller {
 
     /**
      * Permet de changer le conseils affichés
+     * 
      * @param conseils Les conseils à afficher
      */
     private void setConseilText(String[] conseils) {
