@@ -9,6 +9,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.MainModel;
@@ -48,6 +49,8 @@ public class Main extends Application {
         controller.setModel(mainModel);
         controller.onViewOpened();
 
+        Image applicationIcon = new Image(getClass().getResourceAsStream("ressources/appIcon.png"));
+        primaryStage.getIcons().add(applicationIcon);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
