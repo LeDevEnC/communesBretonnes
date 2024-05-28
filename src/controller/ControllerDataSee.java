@@ -1,11 +1,16 @@
 package controller;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 import model.TableauModel;
 import model.data.CommunesInfoParAnnee;
 
@@ -74,6 +79,10 @@ public class ControllerDataSee extends Controller {
         resize();
     }
 
+    public void lineClicked(CommunesInfoParAnnee commune) {
+        System.out.println(commune);
+    }
+
     /**
      * Redimensionne une colonne en fonction de la taille de la fenêtre
      *
@@ -92,6 +101,7 @@ public class ControllerDataSee extends Controller {
      */
     public void onViewOpened() {
         if (!dataCharged) {
+            tableView.setRowFactory(new TableRowFactory(this));
             for (CommunesInfoParAnnee commune : super.getModel().getToutesLesCommunesInfoParAnnee().values()) {
                 TableauModel tableauModel = new TableauModel(commune);
                 tableView.getItems().add(tableauModel);
@@ -142,6 +152,26 @@ public class ControllerDataSee extends Controller {
             if (ok) {
                 TableauModel tableauModel = new TableauModel(commune);
                 tableView.getItems().add(tableauModel);
+            }
+        }
+    }
+
+    public class TableRowClickHandler
+            implements EventHandler<MouseEvent>, Callback<TableView<TableauModel>, TableRow<TableauModel>> {
+        private TableRow<TableauModel> row;
+
+        @Override
+        public TableRow<TableauModel> call(TableView<TableauModel> param) {
+            row = new TableRow<>();
+            row.setOnMouseClicked(this);
+            return row;
+        }
+
+        @Override
+        public void handle(MouseEvent event) {
+            if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                TableauModel clickedRow = row.getItem();
+                System.out.println(clickedRow.getLaCommune());
             }
         }
     }
