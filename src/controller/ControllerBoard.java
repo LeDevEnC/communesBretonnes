@@ -158,6 +158,14 @@ public class ControllerBoard extends Controller {
         graphCharged[1] = true;
     }
 
+
+    /**
+     * Permet de calculer les scores moyens par département
+     * 
+     * @param toutesLesCommunesInfoParAnnee Les communes
+     * @param scores                        Les scores totaux par département
+     * @param nb                            Le nombre de communes par département
+     */
     private void computeScoresAndNb(Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee, int[] scores,
             int[] nb) {
         for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
@@ -189,6 +197,13 @@ public class ControllerBoard extends Controller {
         }
     }
 
+    /**
+     * Permet de calculer le score moyen de toute les communes par année
+     * 
+     * @param toutesLesCommunesInfoParAnnee Les communes
+     * @param scores                        Les scores totaux par année
+     * @param nb                            Le nombre d'années
+     */
     private void computeScoresAndNbByYear(Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee, int[] scores,
             int[] nb) {
         for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
@@ -213,6 +228,12 @@ public class ControllerBoard extends Controller {
         }
     }
 
+    /**
+     * Permet de normaliser les scores
+     * 
+     * @param scores Les scores totaux
+     * @param nb     Le nombre de communes
+     */
     private void normalizeScores(int[] scores, int[] nb) {
         for (int i = 0; i < 4; i++) {
             if (nb[i] == 0) {
@@ -223,6 +244,9 @@ public class ControllerBoard extends Controller {
         }
     }
 
+    /**
+     * Initialiser le BarChart
+     */
     private void setupBarChart() {
         this.barChartBretagneAtt.setTitle("Scores Moyens par Département en 2021");
         this.barChartBretagneAtt.getXAxis().setLabel("Département");
@@ -234,6 +258,11 @@ public class ControllerBoard extends Controller {
         ((NumberAxis) barChartBretagneAtt.getYAxis()).setUpperBound(maxYValue);
     }
 
+    /**
+     * Ajouter les données au BarChart
+     * 
+     * @param scores Les scores par département
+     */
     private void addDataToChart(int[] scores) {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
 
@@ -259,6 +288,9 @@ public class ControllerBoard extends Controller {
         }
     }
 
+    /**
+     * Initialiser le LineChart en termes de paramètres
+     */
     private void setupLineChart() {
         NumberAxis xAxis = (NumberAxis) this.lineChartBretagneAtt.getXAxis();
         NumberAxis yAxis = (NumberAxis) this.lineChartBretagneAtt.getYAxis();
@@ -282,10 +314,10 @@ public class ControllerBoard extends Controller {
     }
 
     /**
-     * Permet de calculer les scores moyens par année
+     * Permet de normaliser les scores pour le lineChart
      * 
-     * @param scores Les scores totaux par année
-     * @param nb     Le nombre de communes par année
+     * @param scores Les scores totaux
+     * @param nb     Le nombre de communes
      */
     private void normalizeScoresLineChart(int[] scores, int[] nb) {
         for (int i = 0; i < 3; i++) {
@@ -297,6 +329,11 @@ public class ControllerBoard extends Controller {
         }
     }
 
+    /**
+     * Ajouter les données au LineChart
+     * 
+     * @param scores Les scores par année
+     */
     private void addDataToLineChart(int[] scores) {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
 
@@ -317,6 +354,9 @@ public class ControllerBoard extends Controller {
         this.lineChartBretagneAtt.getData().add(series);
     }
 
+    /**
+     * Initialiser le LineChart en termes de valeurs réélles
+     */
     private void initLineChart() {
         Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = super.getModel()
                 .getToutesLesCommunesInfoParAnnee();
@@ -334,7 +374,7 @@ public class ControllerBoard extends Controller {
     }
 
     /**
-     * Permet de changer le conseils affichés
+     * Permet de changer les conseils affichés
      * @param conseils Les conseils à afficher
      */
     private void setConseilText(String[] conseils) {

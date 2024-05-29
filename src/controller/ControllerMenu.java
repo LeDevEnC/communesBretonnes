@@ -209,7 +209,7 @@ public class ControllerMenu extends Controller {
         this.mainButtonStats.setStyle(CLICKED_BUTTON_STYLE);
 
         try {
-            changeView(appView, "/views/template.fxml");
+            changeView(appView, "/views/stats.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
