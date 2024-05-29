@@ -50,7 +50,7 @@ public class ControllerLogin extends Controller {
     private void changeViewIfLogged() {
         if (super.getModel().isLogged()) {
             try {
-                super.changeView(toReplace, "/views/template.fxml");
+                super.changeView(toReplace, "/views/editMenu.fxml");
                 this.loginGridPane.setVisible(false);
                 this.emailTextField.clear();
                 this.passwordTextField.clear();

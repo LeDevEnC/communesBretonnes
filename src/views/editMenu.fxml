@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="window" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerEditMenu">
+    <children>
+        <HBox prefHeight="1080.0" prefWidth="1920.0">
+            <!-- Menu de gauche -->
+            <VBox fillWidth="false" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="300.0">
+                <children>
+                    <Button fx:id="prixParCommuneButton" mnemonicParsing="false" onMouseClicked="#prixParCommuneButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                        <graphic>
+                            <Label fx:id="prixParCommuneButtonLabel" text="Prix par commune" textAlignment="CENTER">
+                                <font>
+                                    <Font name="System Bold" size="20.0" />
+                                </font>
+                            </Label>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="invCulturelDepButton" mnemonicParsing="false" onMouseClicked="#invCulturelDepButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                        <graphic>
+                            <Label fx:id="invCulturelDepButtonLabel" text="Investissement culturel&#10;par département" textAlignment="CENTER">
+                                <font>
+                                    <Font name="System Bold" size="20.0" />
+                                </font>
+                            </Label>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="gareButton" mnemonicParsing="false" onMouseClicked="#gareButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                        <graphic>
+                            <Label fx:id="gareButtonLabel" text="Gare par commune"
+                                textAlignment="CENTER">
+                                <font>
+                                    <Font name="System Bold" size="20.0" />
+                                </font>
+                            </Label>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="invCulturelCommButton" mnemonicParsing="false" onMouseClicked="#invCulturelCommButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                        <graphic>
+                            <Label fx:id="invCulturelCommButtonLabel"
+                                text="Dépenses culturelles&#10;par commune" textAlignment="CENTER">
+                                <font>
+                                    <Font name="System Bold" size="20.0" />
+                                </font>
+                            </Label>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="aeroButton" mnemonicParsing="false" onMouseClicked="#aeroButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                        <graphic>
+                            <Label fx:id="aeroButtonLabel" text="Aéroports par&#10;département"
+                                textAlignment="CENTER">
+                                <font>
+                                    <Font name="System Bold" size="20.0" />
+                                </font>
+                            </Label>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="tauxInfButton" mnemonicParsing="false" onMouseClicked="#tauxInfButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                        <graphic>
+                            <Label fx:id="tauxInfButtonLabel" text="Taux inflation par an"
+                                textAlignment="CENTER">
+                                <font>
+                                    <Font name="System Bold" size="20.0" />
+                                </font>
+                            </Label>
+                        </graphic>
+                    </Button>
+                </children>
+            </VBox>
+
+            <!-- Zone de contenu de droite -->
+            <StackPane HBox.hgrow="ALWAYS">
+                <children>
+                    <VBox prefHeight="200.0" prefWidth="100.0">
+                        <children>
+                     <StackPane fx:id="titreStackPane" maxHeight="-Infinity" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: dddddd;">
+                        <children>
+                                  <Label fx:id="titleLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="180.0" prefWidth="201.0" text="Edition des données de la base">
+                                      <font>
+                                          <Font name="System Bold" size="70.0" />
+                                      </font>
+                                  </Label>
+                        </children>
+                     </StackPane>
+                            <Line fx:id="separatorLine" endX="1000.0" />
+                            <StackPane fx:id="toReplaceStackPane" VBox.vgrow="ALWAYS" />
+                        </children>
+                    </VBox>
+                </children>
+            </StackPane>
+        </HBox>
+    </children>
+</StackPane>
