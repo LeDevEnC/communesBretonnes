@@ -1,9 +1,5 @@
 package model;
 
-import javafx.application.Platform;
-import javafx.scene.chart.*;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,7 +7,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.application.Platform;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.XYChart;
+
 public class GraphGenerator {
+
+    /**
+     * Evite l'instantiation de cette classe
+     */
+    private GraphGenerator() {
+    }
 
     /**
      * Génère un graphique en nuage de points à partir des valeurs x et y fournies.
@@ -21,9 +31,7 @@ public class GraphGenerator {
      * @param yLabel le label de l'axe y
      * @return le graphique en nuage de points généré
      */
-    public static ScatterChart<Number, Number> generateScatterChart(ArrayList<Double> xValues,
-            ArrayList<Double> yValues,
-            String xLabel, String yLabel) {
+    public static ScatterChart<Number, Number> generateScatterChart(List<Double> xValues, List<Double> yValues, String xLabel, String yLabel) {
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel(xLabel);
@@ -54,7 +62,7 @@ public class GraphGenerator {
      * @param yLabel le label de l'axe y
      * @return le graphique en barres généré
      */
-    public static BarChart<String, Number> generateBarChart(ArrayList<Double> values, String xLabel, String yLabel) {
+    public static BarChart<String, Number> generateBarChart(List<Double> values, String xLabel, String yLabel) {
         double minValue = Collections.min(values);
         double maxValue = Collections.max(values);
         double valueRange = maxValue - minValue;
@@ -102,9 +110,8 @@ public class GraphGenerator {
      * @param yLabel le label de l'axe y
      * @return le graphique en ligne généré
      */
-    public static LineChart<Number, Number> generateLineChart(ArrayList<Double> xValues,
-            ArrayList<Double> yValues,
-            String xLabel, String yLabel) {
+    public static LineChart<Number, Number> generateLineChart(List<Double> xValues,
+            List<Double> yValues, String xLabel, String yLabel) {
                 
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -163,7 +170,7 @@ public class GraphGenerator {
      * @param axis l'axe pour lequel définir la taille de l'unité de graduation
      * @param values les valeurs de l'axe
      */
-    private static void setDynamicTickUnit(NumberAxis axis, ArrayList<Double> values) {
+    private static void setDynamicTickUnit(NumberAxis axis, List<Double> values) {
         double minValue = Collections.min(values);
         double maxValue = Collections.max(values);
         double valueRange = maxValue - minValue;
@@ -195,7 +202,7 @@ public class GraphGenerator {
      * @param values the list of values
      * @return the mean of the values
      */
-    public static double calculateMean(ArrayList<Double> values) {
+    public static double calculateMean(List<Double> values) {
         double sum = 0;
         for (double value : values) {
             sum += value;
@@ -209,32 +216,11 @@ public class GraphGenerator {
      * @param mean the mean of the values
      * @return the variance of the values
      */
-    public static double calculateVariance(ArrayList<Double> values, double mean) {
+    public static double calculateVariance(List<Double> values, double mean) {
         double sum = 0;
         for (double value : values) {
             sum += Math.pow(value - mean, 2);
         }
         return sum / values.size();
-    }
-
-    /**
-     * Display statistics (mean and variance) in a given Pane.
-     * @param pane the Pane to display the statistics
-     * @param values the list of values to calculate statistics for
-     */
-    public static void displayStatistics(TextFlow textFlow, ArrayList<Double> xValues, ArrayList<Double> yValues,
-            String xLabel, String yLabel) {
-        double meanX = calculateMean(xValues);
-        double varianceX = calculateVariance(xValues, meanX);
-        double meanY = calculateMean(yValues);
-        double varianceY = calculateVariance(yValues, meanY);
-
-        Text meanXLabel = new Text("Moyenne de : " + String.format("%.1f", meanX) + "\n");
-        Text varianceXLabel = new Text("Variance de : " + String.format("%.1f", varianceX) + "\n");
-        Text meanYLabel = new Text("Moyenne de : " + String.format("%.1f", meanY) + "\n");
-        Text varianceYLabel = new Text("Variance de : " + String.format("%.1f", varianceY) + "\n");
-
-        textFlow.getChildren().clear(); // Clear any existing text
-        textFlow.getChildren().addAll(meanXLabel, varianceXLabel, meanYLabel, varianceYLabel);
     }
 }
