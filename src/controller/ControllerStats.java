@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.math3.stat.regression.SimpleRegression;
+import org.apache.commons.math4.legacy.stat.regression.SimpleRegression;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
