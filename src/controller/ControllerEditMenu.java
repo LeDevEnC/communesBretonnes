@@ -40,6 +40,12 @@ public class ControllerEditMenu extends Controller {
     private Button prixParCommuneButton;
 
     @FXML
+    private Button communeVoisineButton;
+
+    @FXML
+    private Label communeVoisineButtonLabel;
+
+    @FXML
     private Label aeroButtonLabel;
 
     @FXML
@@ -76,6 +82,7 @@ public class ControllerEditMenu extends Controller {
         invCulturelDepButton.prefWidthProperty().bind(autoResizeButton);
         prixParCommuneButton.prefWidthProperty().bind(autoResizeButton);
         tauxInfButton.prefWidthProperty().bind(autoResizeButton);
+        communeVoisineButton.prefWidthProperty().bind(autoResizeButton);
 
         DoubleBinding fontSize = scale.multiply(30);
 
@@ -88,6 +95,7 @@ public class ControllerEditMenu extends Controller {
         invCulturelDepButtonLabel.styleProperty().bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
         prixParCommuneButtonLabel.styleProperty().bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
         tauxInfButtonLabel.styleProperty().bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
+        communeVoisineButtonLabel.styleProperty().bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
 
         titreStackPane.minHeightProperty().bind(prixParCommuneButton.heightProperty());
         titleLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", autoResizeTitleLabel.asString(), ";-fx-font-weight: bold;"));
@@ -102,19 +110,31 @@ public class ControllerEditMenu extends Controller {
     }
 
     public void onViewOpened() {
-        this.prixParCommuneButtonClicked();
+        this.communeVoisineButtonClicked();
     }
 
     /**
      * Réinitialise la couleur des boutons du menu
      */
     private void resetButtonColor() {
+        this.communeVoisineButton.setStyle("");
         this.aeroButton.setStyle("");
         this.gareButton.setStyle("");
         this.invCulturelCommButton.setStyle("");
         this.invCulturelDepButton.setStyle("");
         this.prixParCommuneButton.setStyle("");
         this.tauxInfButton.setStyle("");
+    }
+
+    @FXML
+    private void communeVoisineButtonClicked() {
+        resetButtonColor();
+        this.communeVoisineButton.setStyle(CLICKED_BUTTON_STYLE);
+        try {
+            super.changeView(toReplaceStackPane, "/views/template.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
