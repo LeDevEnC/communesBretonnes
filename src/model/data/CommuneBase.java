@@ -185,6 +185,6 @@ public class CommuneBase {
      * @return la commune sous forme de csv "idCommune","nomCommune","leDepartement"
      */
     public String toString() {
-        return "\"" + this.idCommune + "\",\"" + this.nomCommune + "\",\"" + this.leDepartement + "\"";
+        return "\"" + this.idCommune + "\",\"" + this.nomCommune + "\",\"" + this.leDepartement.getNomDep() + "\"";
     }
 }

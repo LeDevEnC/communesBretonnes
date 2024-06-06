@@ -10,7 +10,7 @@ public class TableauModel {
 
     private SimpleStringProperty score;
     private SimpleStringProperty ville;
-    private SimpleIntegerProperty codePostal;
+    private SimpleIntegerProperty codeInsee;
     private SimpleStringProperty departement;
     private SimpleIntegerProperty annee;
     private SimpleDoubleProperty culturel;
@@ -21,7 +21,7 @@ public class TableauModel {
 
         this.score = new SimpleStringProperty(communesInfoParAnnee.scoreCompute()+"%");
         this.ville = new SimpleStringProperty(communesInfoParAnnee.getLaCommune().getNomCommune());
-        this.codePostal = new SimpleIntegerProperty(communesInfoParAnnee.getLaCommune().getIdCommune());
+        this.codeInsee = new SimpleIntegerProperty(communesInfoParAnnee.getLaCommune().getIdCommune());
         this.departement = new SimpleStringProperty(communesInfoParAnnee.getLaCommune().getLeDepartement().getNomDep());
         this.annee = new SimpleIntegerProperty(communesInfoParAnnee.getLannee().getAnneeRepr());
         this.culturel = new SimpleDoubleProperty(communesInfoParAnnee.getDepCulturellesTotales());
@@ -36,8 +36,8 @@ public class TableauModel {
         return ville.get();
     }
 
-    public int getCodePostal() {
-        return codePostal.get();
+    public int getCodeInsee() {
+        return codeInsee.get();
     }
 
     public String getDepartement() {

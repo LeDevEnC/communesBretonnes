@@ -28,9 +28,9 @@
                   <PropertyValueFactory property="ville" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="colCodePostal" text="Code Postal">
+            <TableColumn fx:id="colCodeInsee" text="Code INSEE">
                <cellValueFactory>
-                  <PropertyValueFactory property="codePostal" />
+                  <PropertyValueFactory property="codeInsee" />
                </cellValueFactory>
             </TableColumn>
             <TableColumn fx:id="colDepartement" text="Département">

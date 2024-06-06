@@ -43,7 +43,7 @@ public class ControllerDataSee extends Controller {
     private TableColumn<TableauModel, String> colVille;
 
     @FXML
-    private TableColumn<TableauModel, String> colCodePostal;
+    private TableColumn<TableauModel, String> colCodeInsee;
 
     @FXML
     private TableColumn<TableauModel, String> colDepartement;
@@ -65,7 +65,7 @@ public class ControllerDataSee extends Controller {
     protected void resize() {
         ReadOnlyDoubleProperty width = tableView.widthProperty();
 
-        setColumnWidth(colCodePostal, width, 0.13);
+        setColumnWidth(colCodeInsee, width, 0.13);
         setColumnWidth(colDepartement, width, 0.13);
         setColumnWidth(colAnnee, width, 0.13);
         setColumnWidth(depCulturel, width, 0.13);
@@ -138,11 +138,11 @@ public class ControllerDataSee extends Controller {
             while (ok && i < filters.length) {
                 String filter = filters[i];
                 String nomCommune = commune.getLaCommune().getNomCommune();
-                String codePostal = String.valueOf(commune.getLaCommune().getIdCommune());
+                String codeInsee = String.valueOf(commune.getLaCommune().getIdCommune());
                 String nomDep = commune.getLaCommune().getLeDepartement().getNomDep();
                 String annee = String.valueOf(commune.getLannee().getAnneeRepr());
                 if (!(nomCommune.toLowerCase().startsWith(filter.toLowerCase())
-                        || codePostal.toLowerCase().startsWith(filter.toLowerCase())
+                        || codeInsee.toLowerCase().startsWith(filter.toLowerCase())
                         || nomDep.toLowerCase().startsWith(filter.toLowerCase())
                         || annee.toLowerCase().startsWith(filter.toLowerCase()))) {
                     ok = false;

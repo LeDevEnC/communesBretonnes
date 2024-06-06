@@ -8,12 +8,13 @@ import java.util.Map;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.Chart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import model.GraphGenerator;
@@ -32,6 +33,7 @@ public class ControllerStats extends Controller {
 
     @FXML
     private Pane graphDisplayPane;
+
     @FXML
     private ComboBox<String> graphChoice;
 
@@ -41,7 +43,11 @@ public class ControllerStats extends Controller {
     @FXML
     private TextFlow analyseTextFlow;
 
+    @FXML
+    private StackPane window;
+
     public void initialize() {
+        resize();
 
         List<String> items = Arrays.asList("prixMCarreMoyen", "surfaceMoy", "prixMoyen", "population", "nbMaison",
                 "nbAppart", "depCulturellesTotales", "budgetTotal");
@@ -50,15 +56,22 @@ public class ControllerStats extends Controller {
         this.secondVarChoice.getItems().addAll(items);
 
         this.graphChoice.getItems().addAll("Barre", "Ligne", "Nuage de points");
-
-        crossFactors.setOnAction(event -> handleCrossFactors());
     }
 
+    @FXML
+    private void handleEnterPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            handleCrossFactors();
+        }
+    }
+
+    @FXML
     private void handleCrossFactors() {
         String firstVar = firstVarChoice.getValue();
         String secondVar = secondVarChoice.getValue();
+        String graphValue = graphChoice.getValue();
 
-        if (firstVar != null && secondVar != null) {
+        if (firstVar != null && secondVar != null && graphValue != null) {
             Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = super.getModel()
                     .getToutesLesCommunesInfoParAnnee();
             ArrayList<Double> firstVarValues = new ArrayList<>();
@@ -74,28 +87,26 @@ public class ControllerStats extends Controller {
             }
 
             graphDisplayPane.getChildren().clear();
-            if (graphChoice.getValue() == null) {
-                System.out.println("Veuillez sélectionner un type de graphique.");
-                return;
-            } else if (graphChoice.getValue().equals("Barre")) {
-                BarChart<String, Number> barChart = GraphGenerator.generateBarChart(firstVarValues, firstVar,
-                        secondVar);
-                graphDisplayPane.getChildren().add(barChart);
-            } else if (graphChoice.getValue().equals("Ligne")) {
-                LineChart<Number, Number> lineChart = GraphGenerator.generateLineChart(firstVarValues, secondVarValues,
-                        firstVar, secondVar);
-                graphDisplayPane.getChildren().add(lineChart);
-            } else if (graphChoice.getValue().equals("Nuage de points")) {
-                ScatterChart<Number, Number> scatterChart = GraphGenerator.generateScatterChart(firstVarValues,
-                        secondVarValues, firstVar, secondVar);
-                graphDisplayPane.getChildren().add(scatterChart);
+
+            Chart elem = null;
+
+            if (graphValue.equals("Barre")) {
+                elem = GraphGenerator.generateBarChart(firstVarValues, firstVar, secondVar);
+            } else if (graphValue.equals("Ligne")) {
+                elem = GraphGenerator.generateLineChart(firstVarValues, secondVarValues, firstVar, secondVar);
+            } else if (graphValue.equals("Nuage de points")) {
+                elem = GraphGenerator.generateScatterChart(firstVarValues, secondVarValues, firstVar, secondVar);
+            }
+
+            if (elem != null) {
+                elem.prefWidthProperty().bind(graphDisplayPane.widthProperty());
+                elem.prefHeightProperty().bind(graphDisplayPane.heightProperty());
+                graphDisplayPane.getChildren().add(elem);
             }
 
             // Display statistics
             this.displayStatistics(this.dataTextFlow, firstVarValues, secondVarValues, firstVar, secondVar);
             this.displayAnalysis(this.analyseTextFlow, firstVarValues, secondVarValues);
-        } else {
-            System.out.println("Veuillez sélectionner des valeurs dans les deux ComboBox.");
         }
     }
 
