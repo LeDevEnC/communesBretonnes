@@ -15,7 +15,7 @@ public class Departement {
     /**
      * Nom du département
      */
-    private String nomDep;
+    private DepPossibles nomDep;
 
     /**
      * Investissement culturel du département en 2019 représenté par une constante
@@ -38,7 +38,7 @@ public class Departement {
      *                                  du département, l'investissement culturel ou
      *                                  la liste des aéroports est null
      */
-    public Departement(int idDep, String nomDep, long invesCulturel, List<Aeroport> aeroports)
+    public Departement(int idDep, DepPossibles nomDep, long invesCulturel, List<Aeroport> aeroports)
             throws IllegalArgumentException {
         if (idDep < 0 || nomDep == null || invesCulturel < 0) {
             throw new IllegalArgumentException(
@@ -70,7 +70,7 @@ public class Departement {
      * @return le nom du département
      */
     public String getNomDep() {
-        return this.nomDep;
+        return this.nomDep.toString();
     }
 
     /**
@@ -116,11 +116,7 @@ public class Departement {
         if (nomDep == null) {
             throw new IllegalArgumentException("Le nom du département est null");
         } else {
-            try {
-                this.nomDep = DepPossibles.valueOf(nomDep.toString()).toString();
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Le nom du département n'est pas valide");
-            }
+            this.nomDep = nomDep;
         }
     }
 
