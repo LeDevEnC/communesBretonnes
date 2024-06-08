@@ -7,7 +7,10 @@ import java.util.Map;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.chart.Chart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -47,8 +50,6 @@ public class ControllerStats extends Controller {
     private StackPane window;
 
     public void initialize() {
-        resize();
-
         List<String> items = Arrays.asList("prixMCarreMoyen", "surfaceMoy", "prixMoyen", "population", "nbMaison",
                 "nbAppart", "depCulturellesTotales", "budgetTotal");
 
@@ -107,6 +108,7 @@ public class ControllerStats extends Controller {
             // Display statistics
             this.displayStatistics(this.dataTextFlow, firstVarValues, secondVarValues, firstVar, secondVar);
             this.displayAnalysis(this.analyseTextFlow, firstVarValues, secondVarValues);
+            this.resize();
         }
     }
 
@@ -128,7 +130,7 @@ public class ControllerStats extends Controller {
         Text meanYLabel = new Text("Moyenne de : " + String.format("%.1f", meanY) + "\n");
         Text varianceYLabel = new Text("Variance de : " + String.format("%.1f", varianceY) + "\n");
 
-        textFlow.getChildren().clear(); // Clear any existing text
+        textFlow.getChildren().clear(); // Réinitialise le contenu du TextFlow
         textFlow.getChildren().addAll(meanXLabel, varianceXLabel, meanYLabel, varianceYLabel);
     }
 
@@ -194,11 +196,29 @@ public class ControllerStats extends Controller {
 
     @Override
     protected void resize() {
-        // TODO : faire la responsive
+        DoubleBinding scale = super.getScale(window);
+
+        DoubleBinding fontSize = scale.multiply(30);
+
+        final String buttonLabelStyle = "-fx-font-size: %.2f;";
+
+        for (Node node : this.dataTextFlow.getChildren()) {
+            if (node instanceof Text) {
+                Text text = (Text) node;
+                text.styleProperty().bind(Bindings.format(buttonLabelStyle, fontSize));
+            }
+        }
+
+        for (Node node : this.analyseTextFlow.getChildren()) {
+            if (node instanceof Text) {
+                Text text = (Text) node;
+                text.styleProperty().bind(Bindings.format(buttonLabelStyle, fontSize));
+            }
+        }
     }
 
     @Override
     public void onViewOpened() {
-        // Inutilisé
+        resize();
     }
 }
