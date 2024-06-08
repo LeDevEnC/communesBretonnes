@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,6 +12,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import model.TableauModel;
 import model.data.CommunesInfoParAnnee;
@@ -57,6 +61,12 @@ public class ControllerDataSee extends Controller {
     @FXML
     private TableColumn<TableauModel, Integer> colNb;
 
+    @FXML
+    private BorderPane viewBorderPane;
+
+    @FXML
+    private StackPane viewReplace;
+
     private boolean dataCharged = false;
 
     /**
@@ -79,8 +89,23 @@ public class ControllerDataSee extends Controller {
         resize();
     }
 
+    
+    /**
+     * Affiche les informations de la commune sélectionnée
+     * @param commune
+     */
+    @SuppressWarnings("unchecked")
     public void lineClicked(CommunesInfoParAnnee commune) {
-        System.out.println(commune);
+        try {
+            this.viewBorderPane.setVisible(false);
+            this.viewReplace.setVisible(true);
+            Controller newController = super.changeView(this.viewReplace, "/views/dataDetail.fxml");
+            if (newController instanceof ReceiveInfo) {
+                ((ReceiveInfo<CommunesInfoParAnnee>) newController).receiveInfo(commune);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -100,6 +125,9 @@ public class ControllerDataSee extends Controller {
      * Rempli le tableau avec les données des communes
      */
     public void onViewOpened() {
+        this.viewReplace.getChildren().clear();
+        this.viewReplace.setVisible(false);
+        this.viewBorderPane.setVisible(true);
         if (!dataCharged) {
             tableView.setRowFactory(new TableRowFactory(this));
             for (CommunesInfoParAnnee commune : super.getModel().getToutesLesCommunesInfoParAnnee().values()) {

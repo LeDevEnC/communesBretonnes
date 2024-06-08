@@ -120,13 +120,14 @@ public abstract class Controller {
      * 
      * @param elem     L'élément à modifier
      * @param fxmlPath Le chemin du fichier FXML
+     * @return Le contrôleur de la vue
      * @throws IllegalArgumentException Si l'élément ou le chemin du fichier FXML
      *                                  est null
      * @throws IllegalStateException    Si la variable contenant les vues déjà
      *                                  chargées est null
      * @throws IOException              Si le chargement du fichier FXML a échoué
      */
-    protected void changeView(Pane elem, String fxmlPath)
+    protected Controller changeView(Pane elem, String fxmlPath)
             throws IllegalArgumentException, IllegalStateException, IOException {
         if (elem == null) {
             throw new IllegalArgumentException("Element cannot be null");
@@ -161,6 +162,7 @@ public abstract class Controller {
         }
         elem.getChildren().clear();
         elem.getChildren().add(view);
+        return controller;
     }
 
     /**
