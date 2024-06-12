@@ -16,9 +16,17 @@ public class ScenarioAeroport {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testConstructor() {
+    public void testConstructorNullName() {
         new Aeroport(null, "123 Rue Test");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorNullAddress() {
         new Aeroport("Aeroport Test", null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructorNullNameAndAddress() {
         new Aeroport(null, null);
     }
 

@@ -14,9 +14,9 @@ public class ScenarioCommunesBretonnes {
         }
 
         if (result.wasSuccessful()) {
-            System.out.println("All tests passed successfully.");
+            System.out.println("Tous les tests ont réussi.");
         } else {
-            System.out.println("Some tests failed.");
+            System.out.println("Certains tests ont échoué !");
         }
     }
 }
