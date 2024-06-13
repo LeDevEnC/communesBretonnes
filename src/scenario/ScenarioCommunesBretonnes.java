@@ -16,6 +16,9 @@ import model.data.CommunesInfoParAnnee;
 import model.data.Departement;
 import model.data.Gare;
 
+/**
+ * Scénario des communes bretonnes
+ */
 public class ScenarioCommunesBretonnes {
     public static void main(String[] args) {
         AeroportDAO aeroportDAO = new AeroportDAO();

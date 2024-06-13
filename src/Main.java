@@ -14,11 +14,25 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.MainModel;
 
+/**
+ * Main class
+ */
 public class Main extends Application {
+    /**
+     * Main method
+     * 
+     * @param args Arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Start method
+     * 
+     * @param primaryStage Primary stage
+     * @throws Exception Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         System.out.println("Starting application");

@@ -22,6 +22,12 @@ public class AeroportDAO extends DAO<Aeroport> {
         super();
     }
 
+    /**
+     * &nbsp;
+     * 
+     * @param username &nbsp;
+     * @param password &nbsp;
+     */
     public AeroportDAO(String username, String password) {
         super(username, password);
     }
@@ -144,6 +150,7 @@ public class AeroportDAO extends DAO<Aeroport> {
     /**
      * Méthode de création non implémentée car l'objet aéroport ne dispose pas
      * d'attribut département et la table aéroport a un attribut département
+     * @param aeroport l'aéroport
      */
     @Override
     public int create(Aeroport aeroport) {
@@ -153,6 +160,7 @@ public class AeroportDAO extends DAO<Aeroport> {
     /**
      * Méthode de recherche non implémentée car l'objet aéroport ne dispose pas
      * d'attribut long et la table aéroport n'a pas d'attribut long
+     * @param id l'id
      */
     @Override
     public Aeroport findByID(Long id) {

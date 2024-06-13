@@ -17,6 +17,9 @@ import model.data.Departement;
  */
 public class DepartementDAO extends DAO<Departement> {
 
+    /**
+     * Cache de Tous les aéroports
+     */
     private Map<String, ArrayList<Aeroport>> tousAeroport;
 
     /**
@@ -31,6 +34,12 @@ public class DepartementDAO extends DAO<Departement> {
         this.tousAeroport = aeroports;
     }
 
+    /**
+     * &nbsp;
+     * 
+     * @param username &nbsp;
+     * @param password &nbsp;
+     */
     public DepartementDAO(String username, String password, Map<String, ArrayList<Aeroport>> aeroports) {
         super(username, password);
         if (aeroports == null) {

@@ -19,30 +19,69 @@ import model.data.CommunesInfoParAnnee;
 import model.data.Departement;
 import model.data.Gare;
 
+/**
+ * Modèle principal de l'application
+ */
 public class MainModel {
 
+    /**
+     * DAO de l'aéroport
+     */
     AeroportDAO aeroportDAO;
 
+    /**
+     * DAO de l'année
+     */
     AnneeDAO anneeDAO;
 
+    /**
+     * DAO de la commune de base
+     */
     CommuneBaseDAO communeBaseDAO;
 
+    /**
+     * DAO de la commune info par année
+     */
     CommunesInfoParAnneeDAO communesInfoParAnneeDAO;
 
+    /**
+     * DAO du département
+     */
     DepartementDAO departementDAO;
 
+    /**
+     * DAO de la gare
+     */
     GareDAO gareDAO;
 
+    /**
+     * Cache des aéroports
+     */
     Map<String, ArrayList<Aeroport>> tousAeroport;
 
+    /**
+     * Cache des gares
+     */
     Map<String, ArrayList<Gare>> toutesLesGares;
 
+    /**
+     * Cache des départements
+     */
     Map<String, Departement> tousLesDepartements;
 
+    /**
+     * Cache des années
+     */
     Map<String, Annee> toutesLesAnnees;
 
+    /**
+     * Cache des communes de base
+     */
     Map<String, CommuneBase> toutesLesCommunesBase;
 
+    /**
+     * Cache des communes info par année
+     */
     Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee;
 
     /**
@@ -54,10 +93,16 @@ public class MainModel {
      * Nom d'utilisateur
      */
     private String username;
+
+    /**
+     * Mot de passe
+     */
     private String password;
 
     /**
      * Permet de connecter l'utilisateur à la bdd
+     * @param username Nom d'utilisateur
+     * @param password Mot de passe
      */
     public void login(String username, String password) {
         // Replace with your database url, username, and password
@@ -102,6 +147,9 @@ public class MainModel {
         return username;
     }
 
+    /**
+     * Initialise les différents DAO et récupère les données de la bdd
+     */
     private void initData() {
         this.aeroportDAO = new AeroportDAO(this.username, this.password);
         this.tousAeroport = this.aeroportDAO.findAll();
@@ -124,6 +172,9 @@ public class MainModel {
         this.toutesLesCommunesInfoParAnnee = this.communesInfoParAnneeDAO.findAll();
     }
 
+    /**
+     * Recrée les DAO
+     */
     private void reCreateDAO() {
         if (this.tousAeroport == null || tousLesDepartements == null || toutesLesGares == null
                 || toutesLesAnnees == null || toutesLesCommunesBase == null || toutesLesCommunesInfoParAnnee == null) {
@@ -140,6 +191,9 @@ public class MainModel {
         }
     }
 
+    /**
+     * Constructeur de MainModel
+     */
     public MainModel() {
         logout(); // Applique le mode visiteur par défaut et initialise les DAO
     }

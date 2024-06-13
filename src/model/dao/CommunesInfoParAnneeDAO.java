@@ -11,13 +11,23 @@ import model.data.Annee;
 import model.data.CommuneBase;
 import model.data.CommunesInfoParAnnee;
 
+/**
+ * Classe DAO pour les informations des communes par année
+ */
 public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
 
+    /**
+     * Cache de Toutes les années
+     */
     private Map<String, Annee> toutesLesAnnees;
+    /**
+     * Cache de Toutes les communes de base
+     */
     private Map<String, CommuneBase> toutesLesCommunesBase;
 
     /**
      * &nbsp;
+     * 
      */
     public CommunesInfoParAnneeDAO(Map<String, Annee> annees, Map<String, CommuneBase> communesBase) {
         super();
@@ -31,6 +41,12 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
         this.toutesLesCommunesBase = communesBase;
     }
 
+    /**
+     * &nbsp;
+     * 
+     * @param username &nbsp;
+     * @param password &nbsp;
+     */
     public CommunesInfoParAnneeDAO(String username, String password, Map<String, Annee> annees,
             Map<String, CommuneBase> communesBase) {
         super(username, password);
@@ -44,6 +60,11 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
         this.toutesLesCommunesBase = communesBase;
     }
 
+    /**
+     * Trouver tous les informations des communes par année
+     * 
+     * @return la liste des informations des communes par année
+     */
     public Map<String, CommunesInfoParAnnee> findAll() {
         Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = new HashMap<>();
 
