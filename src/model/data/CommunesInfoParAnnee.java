@@ -338,7 +338,7 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Calcule le score d'attractivité de la commune cette année.
+     *  Calcule le score d'attractivité de la commune cette année.
      * Ce score est calculé en fonction de :
      * - la population
      * - le nombre de maisons

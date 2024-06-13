@@ -41,7 +41,8 @@ public class ControllerLogin extends Controller {
         this.errorLabel.setText("Impossible de se connecter.");
         this.errorLabel.setVisible(true);
         super.getModel().login(emailTextField.getText(), passwordTextField.getText());
-        changeViewIfLogged();
+        // Appel changeViewIfLogged pour changer la vue si l'utilisateur est connecté
+        // automatiquement grâce à la propriété isLoggedProperty
     }
 
     /**
@@ -98,6 +99,10 @@ public class ControllerLogin extends Controller {
      */
     public void onViewOpened() {
         this.errorLabel.setVisible(false);
+        super.getModel().isLoggedProperty().addListener((observable, oldValue, newValue) -> {
+            this.errorLabel.setVisible(false);
+            changeViewIfLogged();
+        });
         changeViewIfLogged();
     }
 }

@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import model.dao.AeroportDAO;
 import model.dao.AnneeDAO;
 import model.dao.CommuneBaseDAO;
@@ -47,8 +49,10 @@ public class MainModel {
 
     /**
      * Gère si l'utilisateur est connecté à la bdd (en écriture) ou non
+     *
+     * Utilise une propriété pour pouvoir être écouté par les contrôleurs
      */
-    private boolean isLogged;
+    private BooleanProperty isLogged;
 
     /**
      * Nom d'utilisateur
@@ -65,12 +69,11 @@ public class MainModel {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             reCreateDAO();
             // If connection is successful
-            isLogged = true;
+            this.isLogged.set(true);
             this.username = username;
             this.password = password;
         } catch (SQLException e) {
-            System.out.println("Connection failed");
-            e.printStackTrace();
+            System.out.println("Connection failed : " + e.getMessage());
         }
     }
 
@@ -80,7 +83,7 @@ public class MainModel {
     public void logout() {
         this.username = "visitor";
         this.password = "";
-        this.isLogged = false;
+        this.isLogged.set(false);
         this.reCreateDAO();
     }
 
@@ -90,9 +93,13 @@ public class MainModel {
      * @return true si l'utilisateur est connecté, false sinon
      */
     public boolean isLogged() {
-        return isLogged;
+        return isLogged.get();
     }
 
+    public BooleanProperty isLoggedProperty() {
+        return isLogged;
+    }
+    
     /**
      * Permet de récupérer le nom d'utilisateur
      * 
@@ -141,6 +148,7 @@ public class MainModel {
     }
 
     public MainModel() {
+        this.isLogged = new SimpleBooleanProperty();
         logout(); // Applique le mode visiteur par défaut et initialise les DAO
     }
 

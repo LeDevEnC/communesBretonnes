@@ -3,13 +3,13 @@ package controller;
 import java.io.IOException;
 import java.util.Map;
 
-import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import main.Main;
 import model.MainModel;
 
 /**
@@ -19,7 +19,7 @@ public abstract class Controller {
     /**
      * Contient l'application JavaFX
      */
-    private Application app = null;
+    private Main app = null;
 
     /**
      * Contient les vues déjà chargées
@@ -60,7 +60,7 @@ public abstract class Controller {
      * 
      * @param app L'application JavaFX
      */
-    public void setApp(Application app) {
+    public void setApp(Main app) {
         this.app = app; // Peut être null
     }
 
@@ -172,6 +172,10 @@ public abstract class Controller {
      */
     public MainModel getModel() {
         return model;
+    }
+
+    public Main getApp() {
+        return app;
     }
 
     /**
