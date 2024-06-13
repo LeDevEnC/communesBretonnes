@@ -59,6 +59,7 @@ public class ControllerLogin extends Controller {
                 e.printStackTrace();
             }
         } else {
+            this.toReplace.getChildren().clear();
             this.loginGridPane.setVisible(true);
         }
     }
