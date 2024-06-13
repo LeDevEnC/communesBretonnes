@@ -5,6 +5,7 @@ import java.io.File;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -109,9 +110,25 @@ public class ControllerSettings extends Controller {
     private void btExporterPress() {
         Stage primaryStage = super.getApp().getPrimaryStage();
         DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setInitialDirectory(new File("src"));
+        String userHome = System.getProperty("user.home");
+        directoryChooser.setInitialDirectory(new File(userHome));
         File selectedDirectory = directoryChooser.showDialog(primaryStage);
-        System.out.println(selectedDirectory.getAbsolutePath());
+        if (selectedDirectory != null) {
+            boolean result = super.getModel().exportData(selectedDirectory.getAbsolutePath());
+            Alert alert;
+            if (result) {
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Exportation réussie");
+                alert.setHeaderText("Exportation réussie");
+                alert.setContentText("Les données ont été exportées avec succès");
+            } else {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Exportation échouée");
+                alert.setHeaderText("Exportation échouée");
+                alert.setContentText("Une erreur est survenue lors de l'exportation des données");
+            }
+            alert.show();
+        }
     }
 
     @FXML

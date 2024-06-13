@@ -1,5 +1,8 @@
 package model;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -99,7 +102,7 @@ public class MainModel {
     public BooleanProperty isLoggedProperty() {
         return isLogged;
     }
-    
+
     /**
      * Permet de récupérer le nom d'utilisateur
      * 
@@ -144,6 +147,76 @@ public class MainModel {
                     this.password, this.tousLesDepartements, this.toutesLesGares);
             this.communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(this.username, this.password,
                     this.toutesLesAnnees, this.toutesLesCommunesBase);
+        }
+    }
+
+    private void exportSpecificDataWithArrayList(String filePath, Map<String, ? extends ArrayList<?>> data,
+            String header) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(header);
+            writer.newLine();
+            for (ArrayList<?> objArrayList : data.values()) {
+                for (Object obj : objArrayList) {
+                    writer.write(obj.toString());
+                    writer.newLine();
+                }
+            }
+        }
+    }
+
+    private void exportSpecificData(String filePath, Map<String, ?> data, String header) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(header);
+            writer.newLine();
+            for (Object obj : data.values()) {
+                writer.write(obj.toString());
+                writer.newLine();
+            }
+        }
+    }
+
+    /**
+     * Exporte les données des classes POJO dans un dossier
+     * 
+     * @param path Le chemin du dossier
+     */
+    public boolean exportData(String path) {
+        try {
+            String filePath;
+            String header;
+            // Aeroport
+            filePath = path + "/aeroport.csv";
+            header = "nom,adresse";
+            exportSpecificDataWithArrayList(filePath, tousAeroport, header);
+
+            // Annee
+            filePath = path + "/annee.csv";
+            header = "annee,tauxInflation";
+            exportSpecificData(filePath, toutesLesAnnees, header);
+
+            // Departement
+            filePath = path + "/departement.csv";
+            header = "idDep,nomDep,investCulturel2019";
+            exportSpecificData(filePath, tousLesDepartements, header);
+
+            // Gare
+            filePath = path + "/gare.csv";
+            header = "codeGare,nomGare,estFret,estVoyageur";
+            exportSpecificDataWithArrayList(filePath, toutesLesGares, header);
+
+            // CommuneBase
+            filePath = path + "/communeBase.csv";
+            header = "idCommune,nomCommune,leDepartement";
+            exportSpecificData(filePath, toutesLesCommunesBase, header);
+
+            // CommunesInfoParAnnee
+            filePath = path + "/communesInfoParAnnee.csv";
+            header = "NomCommune,Annee,NbMaison,NbAppart,PrixMoyen,PrixMCarreMoyen,SurfaceMoyen,DepCulturellesTotales,BudgetTotal,Population";
+            exportSpecificData(filePath, toutesLesCommunesInfoParAnnee, header);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
