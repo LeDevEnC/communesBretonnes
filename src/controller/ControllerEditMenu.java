@@ -14,6 +14,8 @@ public class ControllerEditMenu extends Controller {
 
     private static final String CLICKED_BUTTON_STYLE = "-fx-background-color: #d3d3d3;";
 
+    private String currentSelection;
+
     @FXML
     private StackPane window;
 
@@ -42,46 +44,46 @@ public class ControllerEditMenu extends Controller {
     private Button aeroButton;
 
     @FXML
+    private Button communeButton;
+
+    @FXML
     private Button gareButton;
 
     @FXML
-    private Button invCulturelCommButton;
+    private Button departementButton;
 
     @FXML
-    private Button invCulturelDepButton;
+    private Button voisinageButton;
 
     @FXML
-    private Button prixParCommuneButton;
+    private Button donneesAnnuellesButton;
 
     @FXML
-    private Button communeVoisineButton;
-
-    @FXML
-    private Label communeVoisineButtonLabel;
+    private Label donneesAnnuellesButtonLabel;
 
     @FXML
     private Label aeroButtonLabel;
 
     @FXML
+    private Label communeButtonLabel;
+
+    @FXML
     private Label gareButtonLabel;
 
     @FXML
-    private Label invCulturelCommButtonLabel;
+    private Label departementButtonLabel;
 
     @FXML
-    private Label invCulturelDepButtonLabel;
+    private Label voisinageButtonLabel;
 
     @FXML
-    private Label prixParCommuneButtonLabel;
-
-    @FXML
-    private Label tauxInfButtonLabel;
+    private Label anneeButtonLabel;
 
     @FXML
     private Line separatorLine;
 
     @FXML
-    private Button tauxInfButton;
+    private Button anneeButton;
 
     @FXML
     private Button insertButton;
@@ -101,12 +103,16 @@ public class ControllerEditMenu extends Controller {
     @FXML
     private ImageView editButtonImg;
 
+    @SuppressWarnings("unchecked")
     @FXML
     private void insertButtonClicked() {
         this.selectStackPane.setVisible(false);
         this.toReplaceStackPane.setVisible(true);
         try {
-            super.changeView(toReplaceStackPane, "/views/editInsert.fxml");
+            Controller controller = super.changeView(toReplaceStackPane, "/views/editInsert.fxml");
+            if (controller instanceof ReceiveInfo) {
+                ((ReceiveInfo<String>) controller).receiveInfo(this.currentSelection);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -136,12 +142,12 @@ public class ControllerEditMenu extends Controller {
         DoubleBinding autoResizeTitleLabel = scale.multiply(50);
 
         aeroButton.prefWidthProperty().bind(autoResizeButton);
+        communeButton.prefWidthProperty().bind(autoResizeButton);
         gareButton.prefWidthProperty().bind(autoResizeButton);
-        invCulturelCommButton.prefWidthProperty().bind(autoResizeButton);
-        invCulturelDepButton.prefWidthProperty().bind(autoResizeButton);
-        prixParCommuneButton.prefWidthProperty().bind(autoResizeButton);
-        tauxInfButton.prefWidthProperty().bind(autoResizeButton);
-        communeVoisineButton.prefWidthProperty().bind(autoResizeButton);
+        departementButton.prefWidthProperty().bind(autoResizeButton);
+        voisinageButton.prefWidthProperty().bind(autoResizeButton);
+        anneeButton.prefWidthProperty().bind(autoResizeButton);
+        donneesAnnuellesButton.prefWidthProperty().bind(autoResizeButton);
 
         DoubleBinding fontSize = scale.multiply(30);
 
@@ -149,19 +155,19 @@ public class ControllerEditMenu extends Controller {
         final String fontSizeSuffix = "px; -fx-font-weight: bold;";
 
         aeroButtonLabel.styleProperty().bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
-        gareButtonLabel.styleProperty().bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
-        invCulturelCommButtonLabel.styleProperty()
+        communeButtonLabel.styleProperty().bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
+        gareButtonLabel.styleProperty()
                 .bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
-        invCulturelDepButtonLabel.styleProperty()
+        departementButtonLabel.styleProperty()
                 .bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
-        prixParCommuneButtonLabel.styleProperty()
+        voisinageButtonLabel.styleProperty()
                 .bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
-        tauxInfButtonLabel.styleProperty().bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
-        communeVoisineButtonLabel.styleProperty()
+        anneeButtonLabel.styleProperty().bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
+        donneesAnnuellesButtonLabel.styleProperty()
                 .bind(Bindings.concat(fontSizeStyle, fontSize.asString(), fontSizeSuffix));
 
-        titreStackPane.minHeightProperty().bind(prixParCommuneButton.heightProperty());
-        titreStackPane.maxHeightProperty().bind(prixParCommuneButton.heightProperty());
+        titreStackPane.minHeightProperty().bind(voisinageButton.heightProperty());
+        titreStackPane.maxHeightProperty().bind(voisinageButton.heightProperty());
         titleLabel.styleProperty()
                 .bind(Bindings.concat("-fx-font-size: ", autoResizeTitleLabel.asString(), ";-fx-font-weight: bold;"));
 
@@ -192,20 +198,20 @@ public class ControllerEditMenu extends Controller {
 
     public void onViewOpened() {
         this.userText.setText(super.getModel().getUsername() + "\n");
-        this.communeVoisineButtonClicked();
+        this.donneesAnnuellesButtonClicked();
     }
 
     /**
      * Réinitialise la couleur des boutons du menu
      */
     private void resetButtonColor() {
-        this.communeVoisineButton.setStyle("");
+        this.donneesAnnuellesButton.setStyle("");
         this.aeroButton.setStyle("");
+        this.communeButton.setStyle("");
         this.gareButton.setStyle("");
-        this.invCulturelCommButton.setStyle("");
-        this.invCulturelDepButton.setStyle("");
-        this.prixParCommuneButton.setStyle("");
-        this.tauxInfButton.setStyle("");
+        this.departementButton.setStyle("");
+        this.voisinageButton.setStyle("");
+        this.anneeButton.setStyle("");
     }
 
     private void resetStackPane() {
@@ -215,9 +221,10 @@ public class ControllerEditMenu extends Controller {
     }
 
     @FXML
-    private void communeVoisineButtonClicked() {
+    private void donneesAnnuellesButtonClicked() {
         resetButtonColor();
-        this.communeVoisineButton.setStyle(CLICKED_BUTTON_STYLE);
+        this.donneesAnnuellesButton.setStyle(CLICKED_BUTTON_STYLE);
+        this.currentSelection = "donneesannuelles";
         this.resetStackPane();
     }
 
@@ -225,6 +232,15 @@ public class ControllerEditMenu extends Controller {
     private void aeroButtonClicked() {
         resetButtonColor();
         this.aeroButton.setStyle(CLICKED_BUTTON_STYLE);
+        this.currentSelection = "aeroport";
+        this.resetStackPane();
+    }
+
+    @FXML
+    private void communeButtonClicked() {
+        resetButtonColor();
+        this.communeButton.setStyle(CLICKED_BUTTON_STYLE);
+        this.currentSelection = "commune";
         this.resetStackPane();
     }
 
@@ -232,34 +248,31 @@ public class ControllerEditMenu extends Controller {
     private void gareButtonClicked() {
         resetButtonColor();
         this.gareButton.setStyle(CLICKED_BUTTON_STYLE);
+        this.currentSelection = "gare";
         this.resetStackPane();
     }
 
     @FXML
-    private void invCulturelCommButtonClicked() {
+    private void departementButtonClicked() {
         resetButtonColor();
-        this.invCulturelCommButton.setStyle(CLICKED_BUTTON_STYLE);
+        this.departementButton.setStyle(CLICKED_BUTTON_STYLE);
+        this.currentSelection = "departement";
         this.resetStackPane();
     }
 
     @FXML
-    private void invCulturelDepButtonClicked() {
+    private void voisinageButtonClicked() {
         resetButtonColor();
-        this.invCulturelDepButton.setStyle(CLICKED_BUTTON_STYLE);
+        this.voisinageButton.setStyle(CLICKED_BUTTON_STYLE);
+        this.currentSelection = "voisinage";
         this.resetStackPane();
     }
 
     @FXML
-    private void prixParCommuneButtonClicked() {
+    private void anneeButtonClicked() {
         resetButtonColor();
-        this.prixParCommuneButton.setStyle(CLICKED_BUTTON_STYLE);
-        this.resetStackPane();
-    }
-
-    @FXML
-    private void tauxInfButtonClicked() {
-        resetButtonColor();
-        this.tauxInfButton.setStyle(CLICKED_BUTTON_STYLE);
+        this.anneeButton.setStyle(CLICKED_BUTTON_STYLE);
+        this.currentSelection = "annee";
         this.resetStackPane();
     }
 }

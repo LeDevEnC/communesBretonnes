@@ -20,27 +20,36 @@
             <!-- Menu de gauche -->
             <VBox fillWidth="false" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="300.0">
                 <children>
-               <Button fx:id="communeVoisineButton" mnemonicParsing="false" onMouseClicked="#communeVoisineButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+               <Button fx:id="donneesAnnuellesButton" mnemonicParsing="false" onMouseClicked="#donneesAnnuellesButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
                   <graphic>
-                     <Label fx:id="communeVoisineButtonLabel" text="Communes voisines" textAlignment="CENTER">
+                     <Label fx:id="donneesAnnuellesButtonLabel" text="Données Annuelles" textAlignment="CENTER">
                         <font>
                            <Font name="System Bold" size="20.0" />
                         </font>
                      </Label>
                   </graphic>
                </Button>
-                    <Button fx:id="prixParCommuneButton" mnemonicParsing="false" onMouseClicked="#prixParCommuneButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                    <Button fx:id="voisinageButton" mnemonicParsing="false" onMouseClicked="#voisinageButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
                         <graphic>
-                            <Label fx:id="prixParCommuneButtonLabel" text="Prix par commune" textAlignment="CENTER">
+                            <Label fx:id="voisinageButtonLabel" text="Voisinage" textAlignment="CENTER">
                                 <font>
                                     <Font name="System Bold" size="20.0" />
                                 </font>
                             </Label>
                         </graphic>
                     </Button>
-                    <Button fx:id="invCulturelDepButton" mnemonicParsing="false" onMouseClicked="#invCulturelDepButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                    <Button fx:id="departementButton" mnemonicParsing="false" onMouseClicked="#departementButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
                         <graphic>
-                            <Label fx:id="invCulturelDepButtonLabel" text="Investissement culturel&#10;par département" textAlignment="CENTER">
+                            <Label fx:id="departementButtonLabel" text="Département" textAlignment="CENTER">
+                                <font>
+                                    <Font name="System Bold" size="20.0" />
+                                </font>
+                            </Label>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="communeButton" mnemonicParsing="false" onMouseClicked="#communeButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                        <graphic>
+                            <Label fx:id="communeButtonLabel" text="Commune" textAlignment="CENTER">
                                 <font>
                                     <Font name="System Bold" size="20.0" />
                                 </font>
@@ -49,16 +58,7 @@
                     </Button>
                     <Button fx:id="gareButton" mnemonicParsing="false" onMouseClicked="#gareButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
                         <graphic>
-                            <Label fx:id="gareButtonLabel" text="Gare par commune" textAlignment="CENTER">
-                                <font>
-                                    <Font name="System Bold" size="20.0" />
-                                </font>
-                            </Label>
-                        </graphic>
-                    </Button>
-                    <Button fx:id="invCulturelCommButton" mnemonicParsing="false" onMouseClicked="#invCulturelCommButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
-                        <graphic>
-                            <Label fx:id="invCulturelCommButtonLabel" text="Dépenses culturelles&#10;par commune" textAlignment="CENTER">
+                            <Label fx:id="gareButtonLabel" text="Gare" textAlignment="CENTER">
                                 <font>
                                     <Font name="System Bold" size="20.0" />
                                 </font>
@@ -67,16 +67,16 @@
                     </Button>
                     <Button fx:id="aeroButton" mnemonicParsing="false" onMouseClicked="#aeroButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
                         <graphic>
-                            <Label fx:id="aeroButtonLabel" text="Aéroports par&#10;département" textAlignment="CENTER">
+                            <Label fx:id="aeroButtonLabel" text="Aéroport" textAlignment="CENTER">
                                 <font>
                                     <Font name="System Bold" size="20.0" />
                                 </font>
                             </Label>
                         </graphic>
                     </Button>
-                    <Button fx:id="tauxInfButton" mnemonicParsing="false" onMouseClicked="#tauxInfButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                    <Button fx:id="anneeButton" mnemonicParsing="false" onMouseClicked="#anneeButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
                         <graphic>
-                            <Label fx:id="tauxInfButtonLabel" text="Taux inflation par an" textAlignment="CENTER">
+                            <Label fx:id="anneeButtonLabel" text="Année" textAlignment="CENTER">
                                 <font>
                                     <Font name="System Bold" size="20.0" />
                                 </font>
