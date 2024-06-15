@@ -100,6 +100,11 @@ public class MainModel {
     private String password;
 
     /**
+     * Ligne cliquée dans dataSee
+     */
+    private CommunesInfoParAnnee lineClicked;
+
+    /**
      * Permet de connecter l'utilisateur à la bdd
      * @param username Nom d'utilisateur
      * @param password Mot de passe
@@ -136,6 +141,28 @@ public class MainModel {
      */
     public boolean isLogged() {
         return isLogged;
+    }
+
+    /**
+     * Permet de setter la ligne cliquée
+     * @param lineClicked La ligne cliquée
+     * @throws IllegalArgumentException si la ligne cliquée est null
+     */
+    public void setLineClicked(CommunesInfoParAnnee lineClicked) throws IllegalArgumentException{
+        if (lineClicked != null){
+            this.lineClicked = lineClicked;
+        } else {
+            throw new IllegalArgumentException("Null");
+        }
+    }
+
+    /**
+     * Permet de récupérer la ligne cliquée
+     * 
+     * @return la ligne cliquée
+     */
+    public CommunesInfoParAnnee getLineClicked() {
+        return this.lineClicked;
     }
 
     /**

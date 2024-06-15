@@ -500,7 +500,7 @@ public class CommunesInfoParAnnee {
      * Calcule le score d'attractivité de la commune cette année en fonction du prix moyen par mètre carré.
      * @return le score d'attractivité de la commune cette année en fonction du prix moyen par mètre carré
      */
-    private int calculateScorePrixM2Moyen() {
+    public int calculateScorePrixM2Moyen() {
         int tempScore = 0;
         double prixM2MoyenCheck = this.getPrixMCarreMoyen();
         if (prixM2MoyenCheck < 800) {
@@ -519,7 +519,7 @@ public class CommunesInfoParAnnee {
      * Calcule le score d'attractivité de la commune cette année en fonction de la surface moyenne.
      * @return le score d'attractivité de la commune cette année en fonction de la surface moyenne
      */
-    private int calculateScoreSurfaceMoy() {
+    public int calculateScoreSurfaceMoy() {
         int tempScore = 0;
         double surfaceMoyCheck = this.getSurfaceMoy();
         if (surfaceMoyCheck < 40) {
@@ -538,7 +538,7 @@ public class CommunesInfoParAnnee {
      * Calcule le score d'attractivité de la commune cette année en fonction des dépenses culturelles totales.
      * @return le score d'attractivité de la commune cette année en fonction des dépenses culturelles totales
      */
-    private int calculateScoreDepensesCulturelles() {
+    public int calculateScoreDepensesCulturelles() {
         int tempScore = 0;
         double depensesCulturellesTotalesCheck = this.getDepCulturellesTotales();
         if (depensesCulturellesTotalesCheck < 80) {
@@ -557,7 +557,7 @@ public class CommunesInfoParAnnee {
      * Calcule le score d'attractivité de la commune cette année en fonction du budget total.
      * @return le score d'attractivité de la commune cette année en fonction du budget total
      */
-    private int calculateScoreBudgetTotal() {
+    public int calculateScoreBudgetTotal() {
         int tempScore = 0;
         double budgetTotalCheck = this.getBudgetTotal();
         if (budgetTotalCheck < 800) {
