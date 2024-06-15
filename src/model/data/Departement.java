@@ -20,7 +20,7 @@ public class Departement {
     /**
      * Investissement culturel du département en 2019 représenté par une constante
      */
-    private final long invesCulturel2019; // Note : constante d'instance, suis les conventions de nommage Java standard
+    private final long invesCulturel2019; // Note : constante d'instance, suit les conventions de nommage Java standard
 
     /**
      * Liste des aéroports du département

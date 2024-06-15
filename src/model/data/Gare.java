@@ -66,9 +66,9 @@ public class Gare {
     }
 
     /**
-     * Getter si la gare est un gare de
+     * Getter si la gare est un gare de voyageurss
      *
-     * @return si la gare est un gare de fret
+     * @return si la gare est un gare de voyageur
      */
     public boolean getEstVoyageur() {
         return this.estVoyageur;

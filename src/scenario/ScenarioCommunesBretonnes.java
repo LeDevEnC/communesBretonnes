@@ -43,6 +43,5 @@ public class ScenarioCommunesBretonnes {
         System.out.println(toutesLesCommunesInfoParAnnee.get("RENNES 2021"));
         Annee annee = new Annee(2025, 100000);
         anneeDAO.create(annee);
-
     }
 }

@@ -89,10 +89,10 @@ public class AeroportDAO extends DAO<Aeroport> {
      * @return le nombre de lignes modifiées
      */
     @Override
-    public int update(Aeroport aeroport) { // JE SAIS PAS QUOI UPDATE PUTAIN DE MERDE NIQUEZ VOS MERES
+    public int update(Aeroport aeroport) { 
         int rowsUpdated = 0;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("DELTE * FROM * FROM XOR")) {
+                PreparedStatement statement = connection.prepareStatement("UPDATE Aeroport SET adresse = ? WHERE nom = ?")) {
             statement.setString(1, aeroport.getNom());
             statement.setString(2, aeroport.getAdresse());
 
@@ -114,9 +114,8 @@ public class AeroportDAO extends DAO<Aeroport> {
         int rowsDeleted = 0;
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("DELETE FROM Aeroport WHERE nom = ? AND adresse = ?")) {
+                        .prepareStatement("DELETE FROM Aeroport WHERE nom = ?")) {
             statement.setString(1, aeroport.getNom());
-            statement.setString(2, aeroport.getAdresse());
             rowsDeleted = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

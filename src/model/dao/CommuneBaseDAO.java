@@ -131,7 +131,6 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
     public CommuneBase findByID(Long idCommune, boolean loadNeighbors) {
         CommuneBase communeRet = null;
 
-        // First pass: create all CommuneBase objects without setting their neighbors
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
                         .prepareStatement("SELECT nomCommune, leDepartement FROM Commune WHERE idCommune = ?")) {
@@ -151,7 +150,6 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
             e.printStackTrace();
         }
 
-        // Second pass: set the neighbors for each CommuneBase
         if (loadNeighbors && communeRet != null) {
             try (Connection connection = getConnection();
                     PreparedStatement statement = connection
@@ -181,7 +179,6 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
     public CommuneBase findByName(String name, boolean loadNeighbors) {
         CommuneBase communeRet = null;
 
-        // First pass: create the CommuneBase object without setting its neighbors
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
                         .prepareStatement("SELECT idCommune, nomCommune FROM Commune WHERE nomCommune = ?")) {
@@ -201,8 +198,6 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        // Second pass: set the neighbors for the CommuneBase
         if (loadNeighbors && communeRet != null) {
             try (Connection connection = getConnection();
                     PreparedStatement statement = connection

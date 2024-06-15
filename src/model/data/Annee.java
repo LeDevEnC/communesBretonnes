@@ -20,10 +20,10 @@ public class Annee {
      * @param annee         l'année en question
      * @param tauxInflation le taux d'inflation de l'année
      * @throws IllegalArgumentException si l'année ou le taux d'inflation est
-     *                                  négatif
+     *                                  négatif ou nul
      */
     public Annee(int annee, double tauxInflation) throws IllegalArgumentException {
-        if (annee < 0 || tauxInflation < 0) {
+        if (annee <= 0 || tauxInflation <= 0) {
             throw new IllegalArgumentException("L'année ou le taux d'inflation est négatif");
         } else {
             this.anneeRepr = annee;
@@ -54,10 +54,10 @@ public class Annee {
      * Setter de l'année
      * 
      * @param annee l'année à définir
-     * @throws IllegalArgumentException si l'année est négative
+     * @throws IllegalArgumentException si l'année est négative ou nulle
      */
     public void setAnneeRepr(int annee) throws IllegalArgumentException {
-        if (annee < 0) {
+        if (annee <= 0) {
             throw new IllegalArgumentException("L'année est négative");
         } else {
             this.anneeRepr = annee;
@@ -68,10 +68,10 @@ public class Annee {
      * Setter du taux d'inflation
      * 
      * @param tauxInflation le taux d'inflation à définir
-     * @throws IllegalArgumentException si le taux d'inflation est négatif
+     * @throws IllegalArgumentException si le taux d'inflation est négatif ou nul
      */
     public void setTauxInflation(double tauxInflation) throws IllegalArgumentException {
-        if (tauxInflation < 0) {
+        if (tauxInflation <= 0) {
             throw new IllegalArgumentException("Le taux d'inflation est négatif");
         } else {
             this.tauxInflation = tauxInflation;

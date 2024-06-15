@@ -138,19 +138,86 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
         return communesInfoParAnnee;
     }
 
+    /**
+     * Mettre à jour une entrée de la base de données
+     * 
+     * @param info les informations à mettre à jour
+     * @return le nombre de lignes affectées
+     */
     @Override
-    public int update(CommunesInfoParAnnee user) {
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public int update(CommunesInfoParAnnee info) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE DonneesAnnuelles SET nbMaison = ?, nbAppart = ?, prixMoyen = ?, prixM2Moyen = ?, SurfaceMoy = ?, depensesCulturellesTotales = ?, budgetTotal = ?, population = ? WHERE laCommune = ? AND lAnnee = ?");
+            statement.setInt(1, info.getNbMaison());
+            statement.setInt(2, info.getNbAppart());
+            statement.setDouble(3, info.getPrixMoyen());
+            statement.setDouble(4, info.getPrixMCarreMoyen());
+            statement.setDouble(5, info.getSurfaceMoy());
+            statement.setDouble(6, info.getDepCulturellesTotales());
+            statement.setDouble(7, info.getBudgetTotal());
+            statement.setDouble(8, info.getPopulation());
+            statement.setInt(9, info.getLaCommune().getIdCommune());
+            statement.setInt(10, info.getLannee().getAnneeRepr());
+            int result = statement.executeUpdate();
+            connection.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
+    /**
+     * Supprimer une entrée de la base de données
+     * @param info les informations à supprimer
+     * @return le nombre de lignes affectées
+     */
     @Override
-    public int delete(CommunesInfoParAnnee user) {
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    public int delete(CommunesInfoParAnnee info) {
+        try{
+            Connection connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM DonneesAnnuelles WHERE laCommune = ? AND lAnnee = ?");
+            statement.setInt(1, info.getLaCommune().getIdCommune());
+            statement.setInt(2, info.getLannee().getAnneeRepr());
+            int result = statement.executeUpdate();
+            connection.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
+    /**
+     * Créer une nouvelle entrée dans la base de données
+     * @param info les informations à ajouter
+     * @return le nombre de lignes affectées
+     */
     @Override
-    public int create(CommunesInfoParAnnee user) {
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+    public int create(CommunesInfoParAnnee info) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO DonneesAnnuelles (laCommune, lAnnee, nbMaison, nbAppart, prixMoyen, prixM2Moyen, SurfaceMoy, depensesCulturellesTotales, budgetTotal, population) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            statement.setInt(1, info.getLaCommune().getIdCommune());
+            statement.setInt(2, info.getLannee().getAnneeRepr());
+            statement.setInt(3, info.getNbMaison());
+            statement.setInt(4, info.getNbAppart());
+            statement.setDouble(5, info.getPrixMoyen());
+            statement.setDouble(6, info.getPrixMCarreMoyen());
+            statement.setDouble(7, info.getSurfaceMoy());
+            statement.setDouble(8, info.getDepCulturellesTotales());
+            statement.setDouble(9, info.getBudgetTotal());
+            statement.setDouble(10, info.getPopulation());
+            int result = statement.executeUpdate();
+            connection.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     /**

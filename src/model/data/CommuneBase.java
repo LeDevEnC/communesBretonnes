@@ -40,10 +40,11 @@ public class CommuneBase {
      * @param leDepartement le département de la commune
      * @param lesVoisins    les communes voisines de la commune
      * @param laGare        la gare de la commune
+     * @throws IllegalArgumentException si l'identifiant de la commune est inférieur à 0 ou null ou le nom de la commune ou le département est null
      */
     public CommuneBase(int idCommune, String nomCommune, Departement leDepartement, List<CommuneBase> lesVoisins,
             List<Gare> lesGares) throws IllegalArgumentException {
-        if (idCommune < 0 || nomCommune == null || leDepartement == null) {
+        if (idCommune <= 0 || nomCommune == null || leDepartement == null) {
             throw new IllegalArgumentException(
                     "L'identifiant de la commune est négatif ou le nom de la commune ou le département sont null");
         } else {
@@ -144,7 +145,7 @@ public class CommuneBase {
     /**
      * Setter du département de la commune
      *
-     * @param leDepartement le département de la commune
+     * @param neighbor le département de la commune
      * @throws IllegalArgumentException si le département de la commune est null
      */
     public void addNeighbor(CommuneBase neighbor) throws IllegalArgumentException {

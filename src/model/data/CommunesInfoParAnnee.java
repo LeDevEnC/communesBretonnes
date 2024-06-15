@@ -69,6 +69,7 @@ public class CommunesInfoParAnnee {
      * @param depCulturellesTotales les dépenses culturelles totales
      * @param budgetTotal           le budget total
      * @param population            la population
+     * @throws IllegalArgumentException si la commune, l'année, le nombre de maisons, le nombre d'appartements, le prix moyen, le prix au mètre carré moyen, la surface moyenne sont négatif ou null
      */
     public CommunesInfoParAnnee(CommuneBase laCommune, Annee lAnnee, int nbMaison, int nbAppart, double prixMoyen,
             double prixMCarreMoyen, double surfaceMoy, double depCulturellesTotales, double budgetTotal, int population)
@@ -356,16 +357,16 @@ public class CommunesInfoParAnnee {
      */
     public int scoreCompute() {
         Map<String, Double> coeffs = Map.of(
-                "nbGares", 0.12, // Augmenté pour valoriser davantage les transports en commun
-                "nbAeroports", 0.08, // Augmenté pour les connexions internationales
+                "nbGares", 0.12,
+                "nbAeroports", 0.08,
                 "nbMaisons", 0.15,
-                "nbAppart", 0.12, // Augmenté pour les logements urbains
-                "prixMoyen", 0.18, // Légèrement diminué pour équilibrer
+                "nbAppart", 0.12, 
+                "prixMoyen", 0.18, 
                 "prixM2Moyen", 0.15,
                 "SurfaceMoy", 0.05,
                 "depensesCulturellesTotales", 0.1,
                 "budgetTotal", 0.05,
-                "population", 0.1 // Augmenté pour valoriser le dynamisme économique
+                "population", 0.1 
         );
 
         int scoreFinal = 0;
