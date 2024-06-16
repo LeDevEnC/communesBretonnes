@@ -1,4 +1,4 @@
-package scenario;
+package scenario.data;
 
 import static org.junit.Assert.*;
 
