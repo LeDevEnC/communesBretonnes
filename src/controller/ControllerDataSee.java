@@ -222,27 +222,8 @@ public class ControllerDataSee extends Controller {
             public void handle(MouseEvent event) {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     TableauModel clickedRow = row.getItem();
-        
-                    String nomCommune = clickedRow.getLaCommune().getLaCommune().getNomCommune();
-                    int annee = clickedRow.getAnnee();
-        
-                    CommunesInfoParAnnee commune = findCommuneInfo(nomCommune, annee);
-                    if (commune != null) {
-                        getModel().setLineClicked(commune);
-                        System.out.println(commune);
-                    } else {
-                        System.err.println("Commune not found for " + nomCommune + " in year " + annee);
-                    }
+                    controller.lineClicked(clickedRow.getLaCommune());
                 }
-            }
-
-            public CommunesInfoParAnnee findCommuneInfo(String nomCommune, int annee) {
-                for (CommunesInfoParAnnee commune : getModel().getToutesLesCommunesInfoParAnnee().values()) {
-                    if (commune.getLaCommune().getNomCommune().equals(nomCommune) && commune.getLannee().getAnneeRepr() == annee) {
-                        return commune;
-                    }
-                }
-                return null;
             }
         }
     }
