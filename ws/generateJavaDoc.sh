@@ -1,0 +1,2 @@
+sources=$(find ../src -name "*.java")
+javadoc -Xmaxwarns 65536 -Xmaxerrs 65536 -charset UTF8 -sourcepath src -private -d javaDoc --module-path ../lib --add-modules javafx.controls,javafx.fxml,commons.math3,junit $sources

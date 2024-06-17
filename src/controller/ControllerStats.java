@@ -23,32 +23,61 @@ import javafx.scene.text.TextFlow;
 import model.GraphGenerator;
 import model.data.CommunesInfoParAnnee;
 
+/**
+ * Permet de gérer la vue de stats.fxml
+ */
 public class ControllerStats extends Controller {
 
+    /**
+     * ComboBox permettant à l'utilisateur de choisir la première variable pour
+     * l'analyse croisée.
+     */
     @FXML
     private ComboBox<String> firstVarChoice;
 
+    /**
+     * ComboBox permettant à l'utilisateur de choisir la seconde variable pour
+     * l'analyse croisée.
+     */
     @FXML
     private ComboBox<String> secondVarChoice;
 
+    /** Bouton pour déclencher l'analyse croisée des facteurs sélectionnés. */
     @FXML
     private Button crossFactors;
 
+    /** Panneau destiné à afficher le graphique résultant de l'analyse croisée. */
     @FXML
     private Pane graphDisplayPane;
 
+    /**
+     * ComboBox permettant à l'utilisateur de choisir le type de graphique pour
+     * l'affichage des données.
+     */
     @FXML
     private ComboBox<String> graphChoice;
 
+    /**
+     * TextFlow pour l'affichage des données brutes ou des résultats de l'analyse.
+     */
     @FXML
     private TextFlow dataTextFlow;
 
+    /**
+     * TextFlow pour l'affichage de l'analyse textuelle des données ou des
+     * conclusions tirées.
+     */
     @FXML
     private TextFlow analyseTextFlow;
 
+    /** Fenêtre principale de l'interface utilisateur pour ce contrôleur. */
     @FXML
     private StackPane window;
 
+    /**
+     * Est appelée lorsque la vue est ouverte pour la première fois
+     * Initialise les éléments de la vue
+     */
     public void initialize() {
         List<String> items = Arrays.asList("prixMCarreMoyen", "surfaceMoy", "prixMoyen", "population", "nbMaison",
                 "nbAppart", "depCulturellesTotales", "budgetTotal");
@@ -59,6 +88,11 @@ public class ControllerStats extends Controller {
         this.graphChoice.getItems().addAll("Barre", "Ligne", "Nuage de points");
     }
 
+    /**
+     * Est appelée lorsque l'utilisateur appuie sur la touche Entrée
+     * 
+     * @param event L'événement déclenché par l'appui sur la touche
+     */
     @FXML
     private void handleEnterPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
@@ -66,6 +100,9 @@ public class ControllerStats extends Controller {
         }
     }
 
+    /**
+     * Est appelée lorsque l'utilisateur appuie sur le bouton pour lancer l'analyse
+     */
     @FXML
     private void handleCrossFactors() {
         String firstVar = firstVarChoice.getValue();
@@ -113,10 +150,13 @@ public class ControllerStats extends Controller {
     }
 
     /**
-     * Display statistics (mean and variance) in a given Pane.
+     * Affiche les statistiques des variables
      * 
-     * @param pane   the Pane to display the statistics
-     * @param values the list of values to calculate statistics for
+     * @param textFlow Le TextFlow où afficher les statistiques
+     * @param xValues  Les valeurs de la première variable
+     * @param yValues  Les valeurs de la deuxième variable
+     * @param xVar     Le nom de la première variable
+     * @param yVar     Le nom de la deuxième variable
      */
     public void displayStatistics(TextFlow textFlow, List<Double> xValues, List<Double> yValues, String xVar,
             String yVar) { // TODO : ajouter utilité des variables xVar et yVar
@@ -134,6 +174,13 @@ public class ControllerStats extends Controller {
         textFlow.getChildren().addAll(meanXLabel, varianceXLabel, meanYLabel, varianceYLabel);
     }
 
+    /**
+     * Affiche l'analyse des données
+     * 
+     * @param textFlow Le TextFlow où afficher l'analyse
+     * @param xValues  Les valeurs de la première variable
+     * @param yValues  Les valeurs de la deuxième variable
+     */
     public void displayAnalysis(TextFlow textFlow, List<Double> xValues, List<Double> yValues) {
         SimpleRegression regression = new SimpleRegression();
         int numPoints = xValues.size();
@@ -160,6 +207,13 @@ public class ControllerStats extends Controller {
         textFlow.getChildren().addAll(regrText, slopeText, slopeCoefText, stdErrText);
     }
 
+    /**
+     * Récupère la valeur d'une variable pour une commune
+     * 
+     * @param communeInfo L'objet contenant les informations de la commune
+     * @param variable    La variable à récupérer
+     * @return La valeur de la variable
+     */
     private double getVariableValue(CommunesInfoParAnnee communeInfo, String variable) {
         double value;
         switch (variable) {
@@ -194,6 +248,9 @@ public class ControllerStats extends Controller {
         return value;
     }
 
+    /**
+     * Redimensionne les éléments de la vue en fonction de la taille de la fenêtre
+     */
     @Override
     protected void resize() {
         DoubleBinding scale = super.getScale(window);
@@ -217,6 +274,9 @@ public class ControllerStats extends Controller {
         }
     }
 
+    /**
+     * Est appelée à chaque fois que la vue est ouverte
+     */
     @Override
     public void onViewOpened() {
         resize();

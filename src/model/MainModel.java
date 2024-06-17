@@ -27,32 +27,87 @@ import model.data.CommunesInfoParAnnee;
 import model.data.Departement;
 import model.data.Gare;
 
+/**
+ * Modèle principal de l'application
+ * Contient les données et les méthodes pour les manipuler
+ */
 public class MainModel {
 
+    /**
+     * Contient la DAO pour les aéroports
+     */
     AeroportDAO aeroportDAO;
 
+    /**
+     * Contient la DAO pour les années
+     */
     AnneeDAO anneeDAO;
 
+    /**
+     * Contient la DAO pour les communes
+     */
     CommuneBaseDAO communeBaseDAO;
 
+    /**
+     * Contient la DAO pour les informations des communes par année
+     */
     CommunesInfoParAnneeDAO communesInfoParAnneeDAO;
 
+    /**
+     * Contient la DAO pour les départements
+     */
     DepartementDAO departementDAO;
 
+    /**
+     * Contient la DAO pour les gares
+     */
     GareDAO gareDAO;
 
+    /**
+     * Stocke tous les aéroports
+     * Clé : Département
+     * Valeur : Liste des aéroports du département
+     */
     Map<String, ArrayList<Aeroport>> tousAeroport;
 
+    /**
+     * Stocke toutes les gares
+     * Clé : Commune
+     * Valeur : Liste des gares de la commune
+     */
     Map<String, ArrayList<Gare>> toutesLesGares;
 
+    /**
+     * Stocke tous les départements
+     * Clé : ID du département (numéro du département)
+     * Valeur : Objet département correspondant
+     */
     Map<String, Departement> tousLesDepartements;
 
+    /**
+     * Stocke toutes les années
+     * Clé : Année
+     * Valeur : Objet année correspondant
+     */
     Map<String, Annee> toutesLesAnnees;
 
+    /**
+     * Stocke toutes les communes de base
+     * Clé : ID de la commune
+     * Valeur : Objet commune correspondant
+     */
     Map<String, CommuneBase> toutesLesCommunesBase;
 
+    /**
+     * Stocke toutes les informations des communes par année
+     * Clé : Nom de la commune, Année
+     * Valeur : Objet commune info par année correspondant
+     */
     Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee;
 
+    /**
+     * Chemin du fichier de sauvegarde du login
+     */
     final String loginSavePath = System.getProperty("user.dir") + "/login.txt";
 
     /**
@@ -63,13 +118,20 @@ public class MainModel {
     private BooleanProperty isLogged;
 
     /**
-     * Nom d'utilisateur
+     * Nom d'utilisateur pour la connexion à la bdd
      */
     private String username;
+
+    /**
+     * Mot de passe pour la connexion à la bdd
+     */
     private String password;
 
     /**
      * Permet de connecter l'utilisateur à la bdd
+     * 
+     * @param username Nom d'utilisateur
+     * @param password Mot de passe
      */
     public void login(String username, String password) {
         // Replace with your database url, username, and password
@@ -116,6 +178,11 @@ public class MainModel {
         return isLogged.get();
     }
 
+    /**
+     * Permet de récupérer la propriété isLogged
+     * 
+     * @return la propriété isLogged
+     */
     public BooleanProperty isLoggedProperty() {
         return isLogged;
     }
@@ -129,6 +196,9 @@ public class MainModel {
         return username;
     }
 
+    /**
+     * Initialise les données des DAO
+     */
     private void initData() {
         this.aeroportDAO = new AeroportDAO(this.username, this.password);
         this.tousAeroport = this.aeroportDAO.findAll();
@@ -151,6 +221,11 @@ public class MainModel {
         this.toutesLesCommunesInfoParAnnee = this.communesInfoParAnneeDAO.findAll();
     }
 
+    /**
+     * Recrée les DAO
+     * Si les données ne sont pas déjà créer, les crées, sinon recrée juste les DAO
+     * Utilisé après une connexion/déconnexion
+     */
     private void reCreateDAO() {
         if (this.tousAeroport == null || tousLesDepartements == null || toutesLesGares == null
                 || toutesLesAnnees == null || toutesLesCommunesBase == null || toutesLesCommunesInfoParAnnee == null) {
@@ -167,6 +242,15 @@ public class MainModel {
         }
     }
 
+    /**
+     * Exporte les données dans un fichier
+     * 
+     * @param filePath Le chemin du fichier
+     * @param data     Les données à exporter, sous forme de Map possédant des
+     *                 ArrayList
+     * @param header   L'en-tête du fichier (correspond aux colonnes du fichier CSV)
+     * @throws IOException En cas d'erreur lors de l'écriture du fichier
+     */
     private void exportSpecificDataWithArrayList(String filePath, Map<String, ? extends ArrayList<?>> data,
             String header) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
@@ -181,6 +265,14 @@ public class MainModel {
         }
     }
 
+    /**
+     * Exporte les données dans un fichier
+     * 
+     * @param filePath Le chemin du fichier
+     * @param data     Les données à exporter, sous forme de Map
+     * @param header   L'en-tête du fichier (correspond aux colonnes du fichier CSV)
+     * @throws IOException En cas d'erreur lors de l'écriture du fichier
+     */
     private void exportSpecificData(String filePath, Map<String, ?> data, String header) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write(header);
@@ -196,6 +288,7 @@ public class MainModel {
      * Exporte les données des classes POJO dans un dossier
      * 
      * @param path Le chemin du dossier
+     * @return true si l'exportation a réussi, false sinon
      */
     public boolean exportData(String path) {
         try {
@@ -237,6 +330,11 @@ public class MainModel {
         }
     }
 
+    /**
+     * Génère un conseil pour l'utilisateur
+     * 
+     * @return Un tableau de 3 String contenant les conseils
+     */
     public String[] generateConseil() {
         String[] conseil = new String[3];
 
@@ -284,6 +382,9 @@ public class MainModel {
         return conseil;
     }
 
+    /**
+     * Sauvegarde le login dans un fichier
+     */
     public void saveLogin() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(loginSavePath))) {
             writer.write(this.username);
@@ -294,6 +395,9 @@ public class MainModel {
         }
     }
 
+    /**
+     * Charge le login depuis un fichier
+     */
     public void loadLogin() {
         File file = new File(loginSavePath);
         if (file.exists()) {
@@ -307,6 +411,9 @@ public class MainModel {
         }
     }
 
+    /**
+     * Supprime le fichier de sauvegarde du login
+     */
     public void deleteLogin() {
         File file = new File(loginSavePath);
         if (file.exists()) {
@@ -316,6 +423,10 @@ public class MainModel {
         }
     }
 
+    /**
+     * Constructeur de la classe MainModel, initialise les valeurs des attributs de
+     * la classe
+     */
     public MainModel() {
         this.isLogged = new SimpleBooleanProperty();
         logout(); // Applique le mode visiteur par défaut et initialise les DAO

@@ -91,7 +91,8 @@ public class GareDAO extends DAO<Gare> {
     public List<Gare> findByCommuneID(int idCommune) {
         ArrayList<Gare> gares = new ArrayList<>();
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT codeGare, nomGare, estFret, estVoyageur FROM Gare WHERE laCommune = ?")) {
+                PreparedStatement statement = connection.prepareStatement(
+                        "SELECT codeGare, nomGare, estFret, estVoyageur FROM Gare WHERE laCommune = ?")) {
             statement.setInt(1, idCommune);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -116,7 +117,8 @@ public class GareDAO extends DAO<Gare> {
     public Gare findByName(String nomGare) {
         Gare gareRet = null;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT codeGare, nomGare, estFret, estVoyageur FROM Gare WHERE nomGare = ?")) {
+                PreparedStatement statement = connection.prepareStatement(
+                        "SELECT codeGare, nomGare, estFret, estVoyageur FROM Gare WHERE nomGare = ?")) {
             statement.setString(1, nomGare);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

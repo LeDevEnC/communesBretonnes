@@ -32,7 +32,8 @@ public class AeroportDAO extends DAO<Aeroport> {
     public Map<String, ArrayList<Aeroport>> findAll() {
         Map<String, ArrayList<Aeroport>> aeroports = new HashMap<>();
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT nom, adresse, leDepartement FROM Aeroport");
+                PreparedStatement statement = connection
+                        .prepareStatement("SELECT nom, adresse, leDepartement FROM Aeroport");
                 ResultSet rs = statement.executeQuery()) {
             while (rs.next()) {
                 String nom = rs.getString("nom");
@@ -61,7 +62,8 @@ public class AeroportDAO extends DAO<Aeroport> {
     public Aeroport findByName(String name) {
         Aeroport aeroport = null;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT nom, adresse FROM Aeroport WHERE nom = ?")) {
+                PreparedStatement statement = connection
+                        .prepareStatement("SELECT nom, adresse FROM Aeroport WHERE nom = ?")) {
             statement.setString(1, name);
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {

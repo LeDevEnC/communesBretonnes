@@ -6,11 +6,20 @@ import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
-public class ControllerEditEditDelete extends Edit implements ReceiveInfo<String>{
-    
+/**
+ * Permet de gérer la vue de editEditDelete.fxml
+ */
+public class ControllerEditEditDelete extends Edit implements ReceiveInfo<String> {
+
+    /**
+     * Stocke le VBox contenant les champs à éditer
+     */
     @FXML
     private VBox editVBox;
 
+    /**
+     * Permet de recevoir quel est la table à éditer
+     */
     @Override
     public void receiveInfo(String info) {
         ArrayList<String[]> data = super.getFieldHashMap().get(info);
@@ -22,6 +31,9 @@ public class ControllerEditEditDelete extends Edit implements ReceiveInfo<String
         this.resize();
     }
 
+    /**
+     * Permet de gérer l'appui sur le bouton d'édition
+     */
     @FXML
     private void editButtonPressed() {
         Map<String, String> data = super.getData(this.editVBox);
@@ -31,6 +43,9 @@ public class ControllerEditEditDelete extends Edit implements ReceiveInfo<String
         }
     }
 
+    /**
+     * Permet de gérer l'appui sur le bouton de suppression
+     */
     @FXML
     private void deleteButtonPressed() {
         Map<String, String> data = super.getData(this.editVBox);
@@ -40,20 +55,30 @@ public class ControllerEditEditDelete extends Edit implements ReceiveInfo<String
         }
     }
 
+    /**
+     * Est appelée après que la vue ait été ouverte pour la première fois
+     */
     @Override
     public void initialize() {
         // Inutilisé
     }
 
+    /**
+     * Permet de redimensionner les éléments de la vue
+     */
     @Override
     public void resize() {
         // Inutilisé
     }
 
+    /**
+     * Méthode appeller à chaque fois que l'on ouvre la vue, permet de réinitialiser
+     * les champs
+     */
     @Override
     public void onViewOpened() {
         this.resetEditVBox(this.editVBox);
         this.resize();
     }
-    
+
 }

@@ -4,7 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import model.data.CommunesInfoParAnnee;
 
-public class ControllerDataDetail extends Controller implements ReceiveInfo<CommunesInfoParAnnee>{
+/**
+ * Permet de gérer la vue de dataDetail.fxml
+ */
+public class ControllerDataDetail extends Controller implements ReceiveInfo<CommunesInfoParAnnee> {
 
     @FXML
     Text txt; // Utilisé pour le template, à remplacer lorsque la vue sera implémentée
@@ -14,10 +17,11 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
      */
     private CommunesInfoParAnnee currentCommunesInfoParAnnee = null;
 
-
     @Override
     /**
-     * Permet de recevoir les infos de la commune pour une année donnée et de la traiter
+     * Permet de recevoir les infos de la commune pour une année donnée et de la
+     * traiter
+     * 
      * @param communeAnnee les informations de la commune pour une année donnée
      */
     public void receiveInfo(CommunesInfoParAnnee communeAnnee) {

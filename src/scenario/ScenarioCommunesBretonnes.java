@@ -11,7 +11,15 @@ import scenario.data.ScenarioCommunesInfoParAnnee;
 import scenario.data.ScenarioDepartement;
 import scenario.data.ScenarioGare;
 
+/**
+ * Classe de scénarios pour les communes bretonnes
+ */
 public class ScenarioCommunesBretonnes {
+    /**
+     * Méthode principale
+     * Exécute les scénarios de test
+     * @param args les arguments passés à l'application (non utilisés)
+     */
     public static void main(String[] args) {
         Result result = JUnitCore.runClasses(ScenarioAeroport.class, ScenarioAnnee.class, ScenarioCommuneBase.class,
                 ScenarioCommunesInfoParAnnee.class, ScenarioDepartement.class, ScenarioGare.class);

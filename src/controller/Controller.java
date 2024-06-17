@@ -64,6 +64,11 @@ public abstract class Controller {
         this.app = app; // Peut être null
     }
 
+    /**
+     * Permet de définir le modèle principal
+     * 
+     * @param model Le modèle principal
+     */
     public void setModel(MainModel model) {
         this.model = model;
     }
@@ -174,6 +179,11 @@ public abstract class Controller {
         return model;
     }
 
+    /**
+     * Permet de récupérer l'application JavaFX
+     * 
+     * @return L'application JavaFX
+     */
     public Main getApp() {
         return app;
     }

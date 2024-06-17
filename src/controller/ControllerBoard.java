@@ -21,11 +21,10 @@ import javafx.scene.text.TextFlow;
 import model.Calculator;
 import model.data.CommunesInfoParAnnee;
 
+/**
+ * Permet de gérer la vue de board.fxml
+ */
 public class ControllerBoard extends Controller {
-    /**
-     * Score global de l'attractivité de la Bretagne
-     */
-    private int scoreGlobal;
 
     /**
      * Texte contenant le titre "Conseil"
@@ -57,9 +56,16 @@ public class ControllerBoard extends Controller {
     @FXML
     private BarChart<String, Number> barChartBretagneAtt;
 
+    /**
+     * LineChart représentant l'évolution du score moyen de l'attractivité de la
+     * Bretagne par année
+     */
     @FXML
     private LineChart<Number, Number> lineChartBretagneAtt;
 
+    /**
+     * Tableau de booléens indiquant si les graphes ont été chargés
+     */
     private boolean[] graphCharged = new boolean[3];
 
     /**
@@ -110,7 +116,8 @@ public class ControllerBoard extends Controller {
         });
 
         // Change la taille de la police du conseil
-        this.conseilText.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.add(8).asString(), "px;", "-fx-font-weight: bold;"));
+        this.conseilText.styleProperty()
+                .bind(Bindings.concat("-fx-font-size: ", fontSize.add(8).asString(), "px;", "-fx-font-weight: bold;"));
 
         for (Node node : this.conseilTextFlow.getChildren()) {
             if (node instanceof Text) {
@@ -126,20 +133,20 @@ public class ControllerBoard extends Controller {
 
         Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = super.getModel()
                 .getToutesLesCommunesInfoParAnnee();
-
+        int scoreGlobal;
         int scoreGlobalTotal = 0;
         for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
             scoreGlobalTotal += communesInfoParAnnee.scoreCompute();
         }
         if (toutesLesCommunesInfoParAnnee.size() == 0) {
-            this.scoreGlobal = 0;
+            scoreGlobal = 0;
         } else {
-            this.scoreGlobal = scoreGlobalTotal / toutesLesCommunesInfoParAnnee.size();
+            scoreGlobal = scoreGlobalTotal / toutesLesCommunesInfoParAnnee.size();
         }
         // Ajouter deux segments au PieChart : un pour le score, un pour le reste
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Bretagne : " + this.scoreGlobal + " %", this.scoreGlobal),
-                new PieChart.Data("", (100 - this.scoreGlobal)));
+                new PieChart.Data("Bretagne : " + scoreGlobal + " %", scoreGlobal),
+                new PieChart.Data("", (100 - scoreGlobal)));
         this.pieChartBretagneAtt.setData(pieChartData);
         this.pieChartBretagneAtt.setTitle("% d'attractivité de la Bretagne");
         this.pieChartBretagneAtt.setStartAngle(90);

@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import model.data.Gare;
 
+/**
+ * Classe de test pour la classe Gare
+ */
 public class ScenarioGare {
 
     /**

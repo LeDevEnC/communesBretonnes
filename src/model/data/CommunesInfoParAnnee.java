@@ -69,7 +69,10 @@ public class CommunesInfoParAnnee {
      * @param depCulturellesTotales les dépenses culturelles totales
      * @param budgetTotal           le budget total
      * @param population            la population
-     * @throws IllegalArgumentException si la commune, l'année, le nombre de maisons, le nombre d'appartements, le prix moyen, le prix au mètre carré moyen, la surface moyenne sont négatif ou null
+     * @throws IllegalArgumentException si la commune, l'année, le nombre de
+     *                                  maisons, le nombre d'appartements, le prix
+     *                                  moyen, le prix au mètre carré moyen, la
+     *                                  surface moyenne sont négatif ou null
      */
     public CommunesInfoParAnnee(CommuneBase laCommune, Annee lAnnee, int nbMaison, int nbAppart, double prixMoyen,
             double prixMCarreMoyen, double surfaceMoy, double depCulturellesTotales, double budgetTotal, int population)
@@ -338,14 +341,13 @@ public class CommunesInfoParAnnee {
                 "nbGares", 0.12,
                 "nbAeroports", 0.08,
                 "nbMaisons", 0.15,
-                "nbAppart", 0.12, 
-                "prixMoyen", 0.18, 
+                "nbAppart", 0.12,
+                "prixMoyen", 0.18,
                 "prixM2Moyen", 0.15,
                 "SurfaceMoy", 0.05,
                 "depensesCulturellesTotales", 0.1,
                 "budgetTotal", 0.05,
-                "population", 0.1 
-        );
+                "population", 0.1);
 
         int scoreFinal = 0;
 
@@ -364,8 +366,11 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Calcule le score d'attractivité de la commune cette année en fonction du nombre de gares.
-     * @return le score d'attractivité de la commune cette année en fonction du nombre de gares
+     * Calcule le score d'attractivité de la commune cette année en fonction du
+     * nombre de gares.
+     * 
+     * @return le score d'attractivité de la commune cette année en fonction du
+     *         nombre de gares
      */
     private int calculateScoreGares() {
         int tempScore = 0;
@@ -391,8 +396,11 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Calcule le score d'attractivité de la commune cette année en fonction du nombre d'aéroports.
-     * @return le score d'attractivité de la commune cette année en fonction du nombre d'aéroports
+     * Calcule le score d'attractivité de la commune cette année en fonction du
+     * nombre d'aéroports.
+     * 
+     * @return le score d'attractivité de la commune cette année en fonction du
+     *         nombre d'aéroports
      */
     private int calculateScoreAeroports() {
         int tempScore = 0;
@@ -418,8 +426,11 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Calcule le score d'attractivité de la commune cette année en fonction du nombre de maisons.
-     * @return le score d'attractivité de la commune cette année en fonction du nombre de maisons
+     * Calcule le score d'attractivité de la commune cette année en fonction du
+     * nombre de maisons.
+     * 
+     * @return le score d'attractivité de la commune cette année en fonction du
+     *         nombre de maisons
      */
     private int calculateScoreMaisons() {
         int tempScore = 0;
@@ -437,8 +448,11 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Calcule le score d'attractivité de la commune cette année en fonction du nombre d'appartements.
-     * @return le score d'attractivité de la commune cette année en fonction du nombre d'appartements
+     * Calcule le score d'attractivité de la commune cette année en fonction du
+     * nombre d'appartements.
+     * 
+     * @return le score d'attractivité de la commune cette année en fonction du
+     *         nombre d'appartements
      */
     private int calculateScoreAppart() {
         int tempScore = 0;
@@ -456,8 +470,11 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Calcule le score d'attractivité de la commune cette année en fonction du prix moyen.
-     * @return le score d'attractivité de la commune cette année en fonction du prix moyen
+     * Calcule le score d'attractivité de la commune cette année en fonction du prix
+     * moyen.
+     * 
+     * @return le score d'attractivité de la commune cette année en fonction du prix
+     *         moyen
      */
     private int calculateScorePrixMoyen() {
         int tempScore = 0;
@@ -475,8 +492,11 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Calcule le score d'attractivité de la commune cette année en fonction du prix moyen par mètre carré.
-     * @return le score d'attractivité de la commune cette année en fonction du prix moyen par mètre carré
+     * Calcule le score d'attractivité de la commune cette année en fonction du prix
+     * moyen par mètre carré.
+     * 
+     * @return le score d'attractivité de la commune cette année en fonction du prix
+     *         moyen par mètre carré
      */
     public int calculateScorePrixM2Moyen() {
         int tempScore = 0;
@@ -494,8 +514,11 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Calcule le score d'attractivité de la commune cette année en fonction de la surface moyenne.
-     * @return le score d'attractivité de la commune cette année en fonction de la surface moyenne
+     * Calcule le score d'attractivité de la commune cette année en fonction de la
+     * surface moyenne.
+     * 
+     * @return le score d'attractivité de la commune cette année en fonction de la
+     *         surface moyenne
      */
     public int calculateScoreSurfaceMoy() {
         int tempScore = 0;
@@ -513,8 +536,11 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Calcule le score d'attractivité de la commune cette année en fonction des dépenses culturelles totales.
-     * @return le score d'attractivité de la commune cette année en fonction des dépenses culturelles totales
+     * Calcule le score d'attractivité de la commune cette année en fonction des
+     * dépenses culturelles totales.
+     * 
+     * @return le score d'attractivité de la commune cette année en fonction des
+     *         dépenses culturelles totales
      */
     public int calculateScoreDepensesCulturelles() {
         int tempScore = 0;
@@ -532,8 +558,11 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Calcule le score d'attractivité de la commune cette année en fonction du budget total.
-     * @return le score d'attractivité de la commune cette année en fonction du budget total
+     * Calcule le score d'attractivité de la commune cette année en fonction du
+     * budget total.
+     * 
+     * @return le score d'attractivité de la commune cette année en fonction du
+     *         budget total
      */
     public int calculateScoreBudgetTotal() {
         int tempScore = 0;
@@ -551,8 +580,11 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Calcule le score d'attractivité de la commune cette année en fonction de la population.
-     * @return le score d'attractivité de la commune cette année en fonction de la population
+     * Calcule le score d'attractivité de la commune cette année en fonction de la
+     * population.
+     * 
+     * @return le score d'attractivité de la commune cette année en fonction de la
+     *         population
      */
     private int calculateScorePopulation() {
         int tempScore = 0;

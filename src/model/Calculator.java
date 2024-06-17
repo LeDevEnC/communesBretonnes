@@ -4,6 +4,10 @@ import java.util.Map;
 
 import model.data.CommunesInfoParAnnee;
 
+/**
+ * Classe Calculator
+ * Utilisée pour calculer des scores moyens
+ */
 public class Calculator {
 
     /**
@@ -89,7 +93,8 @@ public class Calculator {
      * @param scores                        Les scores totaux par année
      * @param nb                            Le nombre d'années
      */
-    public static void computeScoresAndNbByYear(Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee, int[] scores,
+    public static void computeScoresAndNbByYear(Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee,
+            int[] scores,
             int[] nb) {
         for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
             int annee = communesInfoParAnnee.getLannee().getAnneeRepr();
