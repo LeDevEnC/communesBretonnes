@@ -1,3 +1,5 @@
+package main;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,25 +16,13 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.MainModel;
 
-/**
- * Main class
- */
 public class Main extends Application {
-    /**
-     * Main method
-     * 
-     * @param args Arguments
-     */
+    private Stage primaryStage;
+
     public static void main(String[] args) {
         launch(args);
     }
 
-    /**
-     * Start method
-     * 
-     * @param primaryStage Primary stage
-     * @throws Exception Exception
-     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         System.out.println("Starting application");
@@ -40,12 +30,13 @@ public class Main extends Application {
         final String defaultView = "/views/main.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(defaultView));
         Parent root = loader.load();
+        this.primaryStage = primaryStage;
         MainModel mainModel = new MainModel();
         System.out.println("Loading time: " + (System.currentTimeMillis() - startTime) + "ms");
 
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight() - 40);
-        scene.getStylesheets().add(getClass().getResource("ressources/styles.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/ressources/styles.css").toExternalForm());
         primaryStage.setMinWidth(830);
         primaryStage.setMinHeight(650);
         ControllerMenu controller = loader.getController();
@@ -63,9 +54,13 @@ public class Main extends Application {
         controller.setModel(mainModel);
         controller.onViewOpened();
 
-        Image applicationIcon = new Image(getClass().getResourceAsStream("ressources/appIcon.png"));
+        Image applicationIcon = new Image(getClass().getResourceAsStream("/ressources/appIcon.png"));
         primaryStage.getIcons().add(applicationIcon);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 }

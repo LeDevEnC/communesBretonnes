@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
 <StackPane fx:id="window" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerEditMenu">
     <children>
@@ -14,27 +20,36 @@
             <!-- Menu de gauche -->
             <VBox fillWidth="false" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="300.0">
                 <children>
-               <Button fx:id="communeVoisineButton" mnemonicParsing="false" onMouseClicked="#communeVoisineButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+               <Button fx:id="donneesAnnuellesButton" mnemonicParsing="false" onMouseClicked="#donneesAnnuellesButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
                   <graphic>
-                     <Label fx:id="communeVoisineButtonLabel" text="Communes voisines" textAlignment="CENTER">
+                     <Label fx:id="donneesAnnuellesButtonLabel" text="Données Annuelles" textAlignment="CENTER">
                         <font>
                            <Font name="System Bold" size="20.0" />
                         </font>
                      </Label>
                   </graphic>
                </Button>
-                    <Button fx:id="prixParCommuneButton" mnemonicParsing="false" onMouseClicked="#prixParCommuneButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                    <Button fx:id="voisinageButton" mnemonicParsing="false" onMouseClicked="#voisinageButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
                         <graphic>
-                            <Label fx:id="prixParCommuneButtonLabel" text="Prix par commune" textAlignment="CENTER">
+                            <Label fx:id="voisinageButtonLabel" text="Voisinage" textAlignment="CENTER">
                                 <font>
                                     <Font name="System Bold" size="20.0" />
                                 </font>
                             </Label>
                         </graphic>
                     </Button>
-                    <Button fx:id="invCulturelDepButton" mnemonicParsing="false" onMouseClicked="#invCulturelDepButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                    <Button fx:id="departementButton" mnemonicParsing="false" onMouseClicked="#departementButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
                         <graphic>
-                            <Label fx:id="invCulturelDepButtonLabel" text="Investissement culturel&#10;par département" textAlignment="CENTER">
+                            <Label fx:id="departementButtonLabel" text="Département" textAlignment="CENTER">
+                                <font>
+                                    <Font name="System Bold" size="20.0" />
+                                </font>
+                            </Label>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="communeButton" mnemonicParsing="false" onMouseClicked="#communeButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                        <graphic>
+                            <Label fx:id="communeButtonLabel" text="Commune" textAlignment="CENTER">
                                 <font>
                                     <Font name="System Bold" size="20.0" />
                                 </font>
@@ -43,16 +58,7 @@
                     </Button>
                     <Button fx:id="gareButton" mnemonicParsing="false" onMouseClicked="#gareButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
                         <graphic>
-                            <Label fx:id="gareButtonLabel" text="Gare par commune" textAlignment="CENTER">
-                                <font>
-                                    <Font name="System Bold" size="20.0" />
-                                </font>
-                            </Label>
-                        </graphic>
-                    </Button>
-                    <Button fx:id="invCulturelCommButton" mnemonicParsing="false" onMouseClicked="#invCulturelCommButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
-                        <graphic>
-                            <Label fx:id="invCulturelCommButtonLabel" text="Dépenses culturelles&#10;par commune" textAlignment="CENTER">
+                            <Label fx:id="gareButtonLabel" text="Gare" textAlignment="CENTER">
                                 <font>
                                     <Font name="System Bold" size="20.0" />
                                 </font>
@@ -61,16 +67,16 @@
                     </Button>
                     <Button fx:id="aeroButton" mnemonicParsing="false" onMouseClicked="#aeroButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
                         <graphic>
-                            <Label fx:id="aeroButtonLabel" text="Aéroports par&#10;département" textAlignment="CENTER">
+                            <Label fx:id="aeroButtonLabel" text="Aéroport" textAlignment="CENTER">
                                 <font>
                                     <Font name="System Bold" size="20.0" />
                                 </font>
                             </Label>
                         </graphic>
                     </Button>
-                    <Button fx:id="tauxInfButton" mnemonicParsing="false" onMouseClicked="#tauxInfButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
+                    <Button fx:id="anneeButton" mnemonicParsing="false" onMouseClicked="#anneeButtonClicked" prefHeight="300.0" prefWidth="300.0" textAlignment="CENTER">
                         <graphic>
-                            <Label fx:id="tauxInfButtonLabel" text="Taux inflation par an" textAlignment="CENTER">
+                            <Label fx:id="anneeButtonLabel" text="Année" textAlignment="CENTER">
                                 <font>
                                     <Font name="System Bold" size="20.0" />
                                 </font>
@@ -95,7 +101,97 @@
                         </children>
                      </StackPane>
                             <Line fx:id="separatorLine" endX="1000.0" />
-                            <StackPane fx:id="toReplaceStackPane" VBox.vgrow="ALWAYS" />
+                            <StackPane VBox.vgrow="ALWAYS">
+                        <children>
+                           <StackPane fx:id="toReplaceStackPane" prefHeight="150.0" prefWidth="200.0" />
+                           <StackPane fx:id="selectStackPane" prefHeight="150.0" prefWidth="200.0">
+                              <children>
+                                 <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                    <center>
+                                       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                                          <children>
+                                             <Button fx:id="insertButton" mnemonicParsing="false" onMouseClicked="#insertButtonClicked" prefHeight="140.0" prefWidth="900.0" textAlignment="CENTER">
+                                                <VBox.margin>
+                                                   <Insets bottom="25.0" />
+                                                </VBox.margin>
+                                                <graphic>
+                                                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                      <children>
+                                                         <ImageView fx:id="insertButtonImg" fitHeight="73.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                               <Image url="@../ressources/icons/add.png" />
+                                                            </image>
+                                                            <HBox.margin>
+                                                               <Insets right="50.0" />
+                                                            </HBox.margin>
+                                                         </ImageView>
+                                                         <Label fx:id="insertButtonLabel" text="Insertion de données" textAlignment="CENTER">
+                                                            <font>
+                                                               <Font name="System Bold" size="40.0" />
+                                                            </font>
+                                                         </Label>
+                                                      </children>
+                                                   </HBox>
+                                                </graphic>
+                                             </Button>
+                                             <Button fx:id="editButton" mnemonicParsing="false" onMouseClicked="#editButtonClicked" prefHeight="140.0" prefWidth="900.0" textAlignment="CENTER">
+                                                <graphic>
+                                                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                      <children>
+                                                         <ImageView fx:id="editButtonImg" fitHeight="73.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                               <Image url="@../ressources/icons/edit.png" />
+                                                            </image>
+                                                            <HBox.margin>
+                                                               <Insets right="50.0" />
+                                                            </HBox.margin>
+                                                         </ImageView>
+                                                         <Label fx:id="editButtonLabel" text="Modification et suppression&#10;de données" textAlignment="CENTER">
+                                                            <font>
+                                                               <Font name="System Bold" size="40.0" />
+                                                            </font>
+                                                            <HBox.margin>
+                                                               <Insets />
+                                                            </HBox.margin>
+                                                         </Label>
+                                                      </children>
+                                                   </HBox>
+                                                </graphic>
+                                                <VBox.margin>
+                                                   <Insets bottom="20.0" top="25.0" />
+                                                </VBox.margin>
+                                             </Button>
+                                          </children>
+                                       </VBox>
+                                    </center>
+                                    <top>
+                                       <TextFlow prefHeight="200.0" prefWidth="1479.0" textAlignment="RIGHT" BorderPane.alignment="CENTER">
+                                          <children>
+                                             <Text fx:id="connectedAsText" strokeType="OUTSIDE" strokeWidth="0.0" text="Connecter en tant que :&#10;">
+                                                <font>
+                                                   <Font size="15.0" />
+                                                </font>
+                                             </Text>
+                                             <Text fx:id="userText" strokeType="OUTSIDE" strokeWidth="0.0" text="{utilisateur}&#10;" textAlignment="CENTER" underline="true">
+                                                <font>
+                                                   <Font size="15.0" />
+                                                </font>
+                                             </Text>
+                                             <Text fx:id="disconnectText" fill="#0008c6" onMousePressed="#disconnectTextPressed" strokeType="OUTSIDE" strokeWidth="0.0" text="Se déconnecter&#10;" textAlignment="CENTER">
+                                                <font>
+                                                   <Font size="15.0" />
+                                                </font>
+                                             </Text>
+                                          </children>
+                                          <BorderPane.margin>
+                                             <Insets bottom="5.0" left="20.0" right="20.0" top="20.0" />
+                                          </BorderPane.margin>
+                                       </TextFlow>
+                                    </top>
+                                 </BorderPane>
+                              </children>
+                           </StackPane>
+                        </children></StackPane>
                         </children>
                     </VBox>
                 </children>

@@ -94,7 +94,6 @@ public class GraphGenerator {
 
         for (String interval : sortedKeys) {
             series.getData().add(new XYChart.Data<>(interval, intervalCounts.get(interval)));
-            System.out.println(interval + ": " + intervalCounts.get(interval));
         }
 
         barChart.getData().add(series);

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -11,92 +10,86 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 
-<BorderPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerDataSee">
-   <center>
-      <TableView fx:id="tableView" BorderPane.alignment="CENTER">
-         <columns>
-            <TableColumn fx:id="colScore" text="Score">
-               <cellValueFactory>
-                  <PropertyValueFactory property="score" />
-               </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="colVille" text="Ville">
-               <cellValueFactory>
-                  <PropertyValueFactory property="ville" />
-               </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="colCodePostal" text="Code Postal">
-               <cellValueFactory>
-                  <PropertyValueFactory property="codePostal" />
-               </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="colDepartement" text="Département">
-               <cellValueFactory>
-                  <PropertyValueFactory property="departement" />
-               </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="colAnnee" text="Année">
-               <cellValueFactory>
-                  <PropertyValueFactory property="annee" />
-               </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="depCulturel" text="Dépense Culturel">
-               <cellValueFactory>
-                  <PropertyValueFactory property="culturel" />
-               </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="colNb" text="Nb Voisins">
-               <cellValueFactory>
-                  <PropertyValueFactory property="nbVoisins" />
-               </cellValueFactory>
-            </TableColumn>
-         </columns>
-         <BorderPane.margin>
-            <Insets left="10.0" right="10.0" />
-         </BorderPane.margin>
-      </TableView>
-   </center>
-   <bottom>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button styleClass="nav-button" text="Previous" />
-            <Button styleClass="page-button, selected" text="1" />
-            <Button styleClass="page-button" text="2" />
-            <Button styleClass="page-button" text="3" />
-            <Button styleClass="nav-button" text="Next" />
-         </children>
-      </HBox>
-   </bottom>
-   <top>
-      <GridPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <columnConstraints>
-            <ColumnConstraints hgrow="NEVER" />
-            <ColumnConstraints hgrow="ALWAYS" />
-         </columnConstraints>
-         <children>
-            <ImageView fitHeight="26.0" fitWidth="33.0" preserveRatio="true" GridPane.columnIndex="0">
-               <image>
-                  <Image url="@../ressources/icons/loopIcon.png" />
-               </image>
-               <GridPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </GridPane.margin>
-            </ImageView>
-            <TextField fx:id="searchBar" maxWidth="1.7976931348623157E308" minWidth="-Infinity" onKeyTyped="#searchBarTextEntered" promptText="Rechercher ..." GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </GridPane.margin>
-            </TextField>
-         </children>
-         <BorderPane.margin>
-            <Insets left="50.0" right="50.0" />
-         </BorderPane.margin>
-         <rowConstraints>
-            <RowConstraints />
-         </rowConstraints>
-      </GridPane>
-   </top>
-</BorderPane>
+<StackPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerDataSee">
+   <children>
+      <StackPane fx:id="viewReplace" prefHeight="1080.0" prefWidth="1920.0" />
+      <BorderPane fx:id="viewBorderPane" prefHeight="1080.0" prefWidth="1920.0">
+         <center>
+            <TableView fx:id="tableView" BorderPane.alignment="CENTER">
+               <columns>
+                  <TableColumn fx:id="colScore" text="Score">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="score" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="colVille" text="Ville">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="ville" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="colCodeInsee" text="Code INSEE">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="codeInsee" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="colDepartement" text="Département">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="departement" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="colAnnee" text="Année">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="annee" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="depCulturel" text="Dépense Culturel">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="culturel" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="colNb" text="Nb Voisins">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="nbVoisins" />
+                     </cellValueFactory>
+                  </TableColumn>
+               </columns>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </BorderPane.margin>
+            </TableView>
+         </center>
+         <top>
+            <GridPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+               <children>
+                  <ImageView fitHeight="26.0" fitWidth="33.0" preserveRatio="true" GridPane.columnIndex="0">
+                     <image>
+                        <Image url="@../ressources/icons/loopIcon.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <TextField fx:id="searchBar" maxWidth="1.7976931348623157E308" minWidth="-Infinity" onKeyTyped="#searchBarTextEntered" promptText="Rechercher ..." GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin>
+                  </TextField>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="50.0" right="50.0" />
+               </BorderPane.margin>
+               <rowConstraints>
+                  <RowConstraints />
+               </rowConstraints>
+            </GridPane>
+         </top>
+      </BorderPane>
+   </children>
+</StackPane>

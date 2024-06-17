@@ -1,35 +1,24 @@
 package controller;
 
+import java.io.IOException;
+
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import model.TableauModel;
 import model.data.CommunesInfoParAnnee;
 
 public class ControllerDataSee extends Controller {
-    @FXML
-    private Button buttonSelectPrevious;
-
-    @FXML
-    private Button buttonSelectNext;
-
-    @FXML
-    private Button buttonSelectOne;
-
-    @FXML
-    private Button buttonSelectTwo;
-
-    @FXML
-    private Button buttonSelectThree;
-
+    
     @FXML
     private TextField searchBar;
 
@@ -43,7 +32,7 @@ public class ControllerDataSee extends Controller {
     private TableColumn<TableauModel, String> colVille;
 
     @FXML
-    private TableColumn<TableauModel, String> colCodePostal;
+    private TableColumn<TableauModel, String> colCodeInsee;
 
     @FXML
     private TableColumn<TableauModel, String> colDepartement;
@@ -57,6 +46,12 @@ public class ControllerDataSee extends Controller {
     @FXML
     private TableColumn<TableauModel, Integer> colNb;
 
+    @FXML
+    private BorderPane viewBorderPane;
+
+    @FXML
+    private StackPane viewReplace;
+
     private boolean dataCharged = false;
 
     /**
@@ -65,7 +60,7 @@ public class ControllerDataSee extends Controller {
     protected void resize() {
         ReadOnlyDoubleProperty width = tableView.widthProperty();
 
-        setColumnWidth(colCodePostal, width, 0.13);
+        setColumnWidth(colCodeInsee, width, 0.13);
         setColumnWidth(colDepartement, width, 0.13);
         setColumnWidth(colAnnee, width, 0.13);
         setColumnWidth(depCulturel, width, 0.13);
@@ -79,8 +74,23 @@ public class ControllerDataSee extends Controller {
         resize();
     }
 
+    
+    /**
+     * Affiche les informations de la commune sélectionnée
+     * @param commune
+     */
+    @SuppressWarnings("unchecked")
     public void lineClicked(CommunesInfoParAnnee commune) {
-        System.out.println(commune);
+        try {
+            this.viewBorderPane.setVisible(false);
+            this.viewReplace.setVisible(true);
+            Controller newController = super.changeView(this.viewReplace, "/views/dataDetail.fxml");
+            if (newController instanceof ReceiveInfo) {
+                ((ReceiveInfo<CommunesInfoParAnnee>) newController).receiveInfo(commune);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -100,6 +110,9 @@ public class ControllerDataSee extends Controller {
      * Rempli le tableau avec les données des communes
      */
     public void onViewOpened() {
+        this.viewReplace.getChildren().clear();
+        this.viewReplace.setVisible(false);
+        this.viewBorderPane.setVisible(true);
         if (!dataCharged) {
             tableView.setRowFactory(new TableRowFactory(this));
             for (CommunesInfoParAnnee commune : super.getModel().getToutesLesCommunesInfoParAnnee().values()) {
@@ -138,11 +151,11 @@ public class ControllerDataSee extends Controller {
             while (ok && i < filters.length) {
                 String filter = filters[i];
                 String nomCommune = commune.getLaCommune().getNomCommune();
-                String codePostal = String.valueOf(commune.getLaCommune().getIdCommune());
+                String codeInsee = String.valueOf(commune.getLaCommune().getIdCommune());
                 String nomDep = commune.getLaCommune().getLeDepartement().getNomDep();
                 String annee = String.valueOf(commune.getLannee().getAnneeRepr());
                 if (!(nomCommune.toLowerCase().startsWith(filter.toLowerCase())
-                        || codePostal.toLowerCase().startsWith(filter.toLowerCase())
+                        || codeInsee.toLowerCase().startsWith(filter.toLowerCase())
                         || nomDep.toLowerCase().startsWith(filter.toLowerCase())
                         || annee.toLowerCase().startsWith(filter.toLowerCase()))) {
                     ok = false;

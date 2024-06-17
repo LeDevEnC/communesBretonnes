@@ -39,7 +39,7 @@ public class CommuneBase {
      * @param nomCommune    le nom de la commune
      * @param leDepartement le département de la commune
      * @param lesVoisins    les communes voisines de la commune
-     * @param laGare        la gare de la commune
+     * @param lesGares      Les gares de la commune
      * @throws IllegalArgumentException si l'identifiant de la commune est inférieur à 0 ou null ou le nom de la commune ou le département est null
      */
     public CommuneBase(int idCommune, String nomCommune, Departement leDepartement, List<CommuneBase> lesVoisins,
@@ -186,6 +186,6 @@ public class CommuneBase {
      * @return la commune sous forme de csv "idCommune","nomCommune","leDepartement"
      */
     public String toString() {
-        return "\"" + this.idCommune + "\",\"" + this.nomCommune + "\",\"" + this.leDepartement + "\"";
+        return "\"" + this.idCommune + "\",\"" + this.nomCommune + "\",\"" + this.leDepartement.getNomDep() + "\"";
     }
 }

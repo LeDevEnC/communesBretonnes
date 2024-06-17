@@ -319,28 +319,6 @@ public class CommunesInfoParAnnee {
     }
 
     /**
-     * Compare le nombre d'habitants de la commune avec une autre commune
-     *
-     * @param uneAutreCommune l'autre commune à comparer
-     * @return 1 si la commune courante a plus d'habitants, -1 si elle en a moins et
-     *         0 si elles
-     * @throws IllegalArgumentException si la commune à comparer est null
-     */
-    public double compareNbHabitants(CommunesInfoParAnnee uneAutreCommune) throws IllegalArgumentException {
-        double ret = 0;
-        if (uneAutreCommune == null) {
-            throw new IllegalArgumentException("La commune à comparer est null");
-        } else {
-            if (this.population > uneAutreCommune.getPopulation()) {
-                return 1;
-            } else if (this.population < uneAutreCommune.getPopulation()) {
-                return -1;
-            }
-        }
-        return ret;
-    }
-
-    /**
      * Calcule le score d'attractivité de la commune cette année.
      * Ce score est calculé en fonction de :
      * - la population

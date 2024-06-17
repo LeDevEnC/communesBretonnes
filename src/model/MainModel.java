@@ -1,11 +1,16 @@
 package model;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import model.dao.AeroportDAO;
 import model.dao.AnneeDAO;
 import model.dao.CommuneBaseDAO;
@@ -86,8 +91,10 @@ public class MainModel {
 
     /**
      * Gère si l'utilisateur est connecté à la bdd (en écriture) ou non
+     *
+     * Utilise une propriété pour pouvoir être écouté par les contrôleurs
      */
-    private boolean isLogged;
+    private BooleanProperty isLogged;
 
     /**
      * Nom d'utilisateur
@@ -115,12 +122,11 @@ public class MainModel {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             reCreateDAO();
             // If connection is successful
-            isLogged = true;
+            this.isLogged.set(true);
             this.username = username;
             this.password = password;
         } catch (SQLException e) {
-            System.out.println("Connection failed");
-            e.printStackTrace();
+            System.out.println("Connection failed : " + e.getMessage());
         }
     }
 
@@ -130,7 +136,7 @@ public class MainModel {
     public void logout() {
         this.username = "visitor";
         this.password = "";
-        this.isLogged = false;
+        this.isLogged.set(false);
         this.reCreateDAO();
     }
 
@@ -140,6 +146,10 @@ public class MainModel {
      * @return true si l'utilisateur est connecté, false sinon
      */
     public boolean isLogged() {
+        return isLogged.get();
+    }
+
+    public BooleanProperty isLoggedProperty() {
         return isLogged;
     }
 
@@ -218,10 +228,78 @@ public class MainModel {
         }
     }
 
+    private void exportSpecificDataWithArrayList(String filePath, Map<String, ? extends ArrayList<?>> data,
+            String header) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(header);
+            writer.newLine();
+            for (ArrayList<?> objArrayList : data.values()) {
+                for (Object obj : objArrayList) {
+                    writer.write(obj.toString());
+                    writer.newLine();
+                }
+            }
+        }
+    }
+
+    private void exportSpecificData(String filePath, Map<String, ?> data, String header) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(header);
+            writer.newLine();
+            for (Object obj : data.values()) {
+                writer.write(obj.toString());
+                writer.newLine();
+            }
+        }
+    }
+
     /**
-     * Constructeur de MainModel
+     * Exporte les données des classes POJO dans un dossier
+     * 
+     * @param path Le chemin du dossier
      */
+    public boolean exportData(String path) {
+        try {
+            String filePath;
+            String header;
+            // Aeroport
+            filePath = path + "/aeroport.csv";
+            header = "nom,adresse";
+            exportSpecificDataWithArrayList(filePath, tousAeroport, header);
+
+            // Annee
+            filePath = path + "/annee.csv";
+            header = "annee,tauxInflation";
+            exportSpecificData(filePath, toutesLesAnnees, header);
+
+            // Departement
+            filePath = path + "/departement.csv";
+            header = "idDep,nomDep,investCulturel2019";
+            exportSpecificData(filePath, tousLesDepartements, header);
+
+            // Gare
+            filePath = path + "/gare.csv";
+            header = "codeGare,nomGare,estFret,estVoyageur";
+            exportSpecificDataWithArrayList(filePath, toutesLesGares, header);
+
+            // CommuneBase
+            filePath = path + "/communeBase.csv";
+            header = "idCommune,nomCommune,leDepartement";
+            exportSpecificData(filePath, toutesLesCommunesBase, header);
+
+            // CommunesInfoParAnnee
+            filePath = path + "/communesInfoParAnnee.csv";
+            header = "NomCommune,Annee,NbMaison,NbAppart,PrixMoyen,PrixMCarreMoyen,SurfaceMoyen,DepCulturellesTotales,BudgetTotal,Population";
+            exportSpecificData(filePath, toutesLesCommunesInfoParAnnee, header);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public MainModel() {
+        this.isLogged = new SimpleBooleanProperty();
         logout(); // Applique le mode visiteur par défaut et initialise les DAO
     }
 

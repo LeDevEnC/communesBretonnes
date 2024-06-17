@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import model.data.Aeroport;
+import model.data.DepPossibles;
 import model.data.Departement;
 
 /**
@@ -62,11 +63,19 @@ public class DepartementDAO extends DAO<Departement> {
                 while (resultSet.next()) {
                     int idDepartement = resultSet.getInt("idDep");
                     String nomDep = resultSet.getString("nomDep");
-                    Long investissementCulturel2019 = resultSet.getLong("investissementCulturel2019");
-                    ArrayList<Aeroport> aeroportsOfDept = tousAeroport.get(String.valueOf(idDepartement));
-                    Departement departement = new Departement(idDepartement, nomDep, investissementCulturel2019,
-                            aeroportsOfDept);
-                    departements.put(String.valueOf(idDepartement), departement);
+                    nomDep = nomDep.replace("-", "_"); // Ile et Vilaine et Cotes d'Armor
+                    nomDep = nomDep.replace("'", "_"); // Cotes d'Armor
+                    try {
+
+                        DepPossibles nomDepEnum = DepPossibles.valueOf(nomDep);
+                        Long investissementCulturel2019 = resultSet.getLong("investissementCulturel2019");
+                        ArrayList<Aeroport> aeroportsOfDept = tousAeroport.get(String.valueOf(idDepartement));
+                        Departement departement = new Departement(idDepartement, nomDepEnum, investissementCulturel2019,
+                                aeroportsOfDept);
+                        departements.put(String.valueOf(idDepartement), departement);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Nom de département non reconnu : " + nomDep);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -94,9 +103,16 @@ public class DepartementDAO extends DAO<Departement> {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     String nomDep = resultSet.getString("nomDep");
-                    Long investissementCulturel2019 = resultSet.getLong("investissementCulturel2019");
-                    departement = new Departement(Math.toIntExact(idDep), nomDep, investissementCulturel2019,
-                            aeroportsOfDept);
+                    nomDep = nomDep.replace("-", "_"); // Ile et Vilaine et Cotes d'Armor
+                    nomDep = nomDep.replace("'", "_"); // Cotes d'Armor
+                    try {
+                        DepPossibles nomDepEnum = DepPossibles.valueOf(nomDep);
+                        Long investissementCulturel2019 = resultSet.getLong("investissementCulturel2019");
+                        departement = new Departement(Math.toIntExact(idDep), nomDepEnum, investissementCulturel2019,
+                                aeroportsOfDept);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Nom de département non reconnu : " + nomDep);
+                    }
                 }
             }
         } catch (SQLException e) {
