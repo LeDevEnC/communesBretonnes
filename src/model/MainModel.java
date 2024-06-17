@@ -127,6 +127,7 @@ public class MainModel {
      */
     private String password;
 
+
     /**
      * Permet de connecter l'utilisateur à la bdd
      * 
@@ -187,6 +188,7 @@ public class MainModel {
         return isLogged;
     }
 
+
     /**
      * Permet de récupérer le nom d'utilisateur
      * 
@@ -197,7 +199,7 @@ public class MainModel {
     }
 
     /**
-     * Initialise les données des DAO
+     * Initialise les différents DAO et récupère les données de la bdd
      */
     private void initData() {
         this.aeroportDAO = new AeroportDAO(this.username, this.password);

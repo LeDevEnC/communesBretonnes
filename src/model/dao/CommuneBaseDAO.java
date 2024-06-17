@@ -16,14 +16,27 @@ import model.data.Gare;
 
 public class CommuneBaseDAO extends DAO<CommuneBase> {
 
+    /**
+     * Cache des départements
+     */
     Map<String, Departement> tousDepartements;
+    /**
+     * Cache des gares
+     */
     Map<String, ArrayList<Gare>> toutesGares;
+    /**
+     * Cache des communes
+     */
     Map<String, CommuneBase> toutesCommunes;
 
     /**
-     * &nbsp;
+     * Constructeur
+     * 
+     * @param username     le nom d'utilisateur
+     * @param password     le mot de passe
+     * @param departements les départements
+     * @param gares        les gares
      */
-
     public CommuneBaseDAO(String username, String password, Map<String, Departement> departements,
             Map<String, ArrayList<Gare>> gares) {
         super(username, password);
@@ -39,6 +52,12 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
         this.toutesCommunes = new HashMap<>();
     }
 
+    /**
+     * Constructeur
+     * 
+     * @param departements les départements
+     * @param gares        les gares
+     */
     public CommuneBaseDAO(Map<String, Departement> departements, Map<String, ArrayList<Gare>> gares) {
         super();
         if (departements == null) {
@@ -113,7 +132,6 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
     public CommuneBase findByID(Long idCommune, boolean loadNeighbors) {
         CommuneBase communeRet = null;
 
-        // First pass: create all CommuneBase objects without setting their neighbors
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
                         .prepareStatement("SELECT nomCommune, leDepartement FROM Commune WHERE idCommune = ?")) {
@@ -133,7 +151,6 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
             e.printStackTrace();
         }
 
-        // Second pass: set the neighbors for each CommuneBase
         if (loadNeighbors && communeRet != null) {
             try (Connection connection = getConnection();
                     PreparedStatement statement = connection
@@ -163,7 +180,6 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
     public CommuneBase findByName(String name, boolean loadNeighbors) {
         CommuneBase communeRet = null;
 
-        // First pass: create the CommuneBase object without setting its neighbors
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
                         .prepareStatement("SELECT idCommune, nomCommune FROM Commune WHERE nomCommune = ?")) {
@@ -183,8 +199,6 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        // Second pass: set the neighbors for the CommuneBase
         if (loadNeighbors && communeRet != null) {
             try (Connection connection = getConnection();
                     PreparedStatement statement = connection
@@ -265,6 +279,12 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
         }
     }
 
+    /**
+     * Trouver une commune par son ID
+     * 
+     * @param idCommune l'ID de la commune
+     * @return la commune
+     */
     @Override
     public CommuneBase findByID(Long idCommune) {
         return findByID(idCommune, true);

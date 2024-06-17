@@ -22,6 +22,12 @@ public class AeroportDAO extends DAO<Aeroport> {
         super();
     }
 
+    /**
+     * &nbsp;
+     * 
+     * @param username &nbsp;
+     * @param password &nbsp;
+     */
     public AeroportDAO(String username, String password) {
         super(username, password);
     }
@@ -85,10 +91,10 @@ public class AeroportDAO extends DAO<Aeroport> {
      * @return le nombre de lignes modifiées
      */
     @Override
-    public int update(Aeroport aeroport) { // JE SAIS PAS QUOI UPDATE PUTAIN DE MERDE NIQUEZ VOS MERES
+    public int update(Aeroport aeroport) { 
         int rowsUpdated = 0;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("DELTE * FROM * FROM XOR")) {
+                PreparedStatement statement = connection.prepareStatement("UPDATE Aeroport SET adresse = ? WHERE nom = ?")) {
             statement.setString(1, aeroport.getNom());
             statement.setString(2, aeroport.getAdresse());
 
@@ -110,9 +116,8 @@ public class AeroportDAO extends DAO<Aeroport> {
         int rowsDeleted = 0;
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("DELETE FROM Aeroport WHERE nom = ? AND adresse = ?")) {
+                        .prepareStatement("DELETE FROM Aeroport WHERE nom = ?")) {
             statement.setString(1, aeroport.getNom());
-            statement.setString(2, aeroport.getAdresse());
             rowsDeleted = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -146,6 +151,7 @@ public class AeroportDAO extends DAO<Aeroport> {
     /**
      * Méthode de création non implémentée car l'objet aéroport ne dispose pas
      * d'attribut département et la table aéroport a un attribut département
+     * @param aeroport l'aéroport
      */
     @Override
     public int create(Aeroport aeroport) {
@@ -155,6 +161,7 @@ public class AeroportDAO extends DAO<Aeroport> {
     /**
      * Méthode de recherche non implémentée car l'objet aéroport ne dispose pas
      * d'attribut long et la table aéroport n'a pas d'attribut long
+     * @param id l'id
      */
     @Override
     public Aeroport findByID(Long id) {

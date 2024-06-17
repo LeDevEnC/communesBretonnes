@@ -23,6 +23,12 @@ public class GareDAO extends DAO<Gare> {
         super();
     }
 
+    /**
+     * &nbsp;
+     * 
+     * @param username &nbsp;
+     * @param password &nbsp;
+     */
     public GareDAO(String username, String password) {
         super(username, password);
     }

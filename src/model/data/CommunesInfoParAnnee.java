@@ -2,6 +2,8 @@ package model.data;
 
 import java.util.Map;
 
+import javafx.scene.paint.Color;
+
 /**
  * Classe représentant les informations d'une commune pour une année donnée
  */
@@ -599,5 +601,22 @@ public class CommunesInfoParAnnee {
             tempScore = 100;
         }
         return tempScore;
+    }
+
+    
+    public Color getColorForScore(double score) {
+        if (score >= 90) {
+            return Color.rgb(0, 176, 80); // Vert foncé pour les scores très élevés
+        } else if (score >= 80) {
+            return Color.rgb(146, 208, 80); // Vert clair pour les scores élevés
+        } else if (score >= 70) {
+            return Color.rgb(255, 255, 0); // Jaune pour les scores moyens élevés
+        } else if (score >= 60) {
+            return Color.rgb(255, 192, 0); // Orange pour les scores moyens
+        } else if (score >= 50) {
+            return Color.rgb(255, 152, 0); // Orange foncé pour les scores moyens bas
+        } else {
+            return Color.rgb(255, 0, 0); // Rouge pour les scores bas
+        }
     }
 }
