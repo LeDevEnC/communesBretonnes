@@ -66,9 +66,9 @@ public class Gare {
     }
 
     /**
-     * Getter si la gare est un gare de
+     * Getter si la gare est un gare de voyageurs
      *
-     * @return si la gare est un gare de fret
+     * @return si la gare est un gare de voyageur
      */
     public boolean getEstVoyageur() {
         return this.estVoyageur;
@@ -146,8 +146,12 @@ public class Gare {
      * @return 1 si la gare courante est fret et voyageur et que l'autre gare n'est
      *         que l'un des deux, -1 si la gare courante est fret ou voyageur et que
      *         l'autre gare est fret et voyageur, 0 sinon
+     * @throws IllegalArgumentException si l'autre gare est null
      */
-    public int compareGares(Gare autreGare) {
+    public int compareGares(Gare autreGare) throws IllegalArgumentException {
+        if (autreGare == null) {
+            throw new IllegalArgumentException("La gare à comparer est null");
+        }
         int res = 0;
         if (this.estFret && this.estVoyageur && (!autreGare.estFret || !autreGare.estVoyageur)) {
             res = 1;

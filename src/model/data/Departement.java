@@ -15,12 +15,12 @@ public class Departement {
     /**
      * Nom du département
      */
-    private DepPossibles nomDep;
+    private String nomDep;
 
     /**
      * Investissement culturel du département en 2019 représenté par une constante
      */
-    private final long invesCulturel2019; // Note : constante d'instance, suis les conventions de nommage Java standard
+    private final long invesCulturel2019; // Note : constante d'instance, suit les conventions de nommage Java standard
 
     /**
      * Liste des aéroports du département
@@ -50,7 +50,7 @@ public class Departement {
                 this.aeroports = aeroports;
             }
             this.idDep = idDep;
-            this.nomDep = nomDep;
+            this.nomDep = nomDep.toString();
             this.invesCulturel2019 = invesCulturel;
         }
     }
@@ -70,7 +70,7 @@ public class Departement {
      * @return le nom du département
      */
     public String getNomDep() {
-        return this.nomDep.toString();
+        return this.nomDep;
     }
 
     /**
@@ -116,7 +116,7 @@ public class Departement {
         if (nomDep == null) {
             throw new IllegalArgumentException("Le nom du département est null");
         } else {
-            this.nomDep = nomDep;
+            this.nomDep = nomDep.toString();
         }
     }
 

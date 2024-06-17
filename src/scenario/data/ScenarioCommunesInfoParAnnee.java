@@ -277,30 +277,6 @@ public class ScenarioCommunesInfoParAnnee {
     }
 
     /**
-     * Teste la comparaison des investissements culturels avec une autre commune.
-     */
-    @Test
-    public void testCompareNbHabitants() {
-        Departement dep = new Departement(2, DepPossibles.COTES_D_ARMOR, 2000L, new ArrayList<>());
-        CommuneBase commune2 = new CommuneBase(2, "Test2", dep, new ArrayList<>(), new ArrayList<>());
-        Annee annee2 = new Annee(2022, 5);
-        CommunesInfoParAnnee communeInfo2 = new CommunesInfoParAnnee(commune2, annee2, 120, 60, 180000, 1800, 70, 1200,
-                6000, 180000);
-
-        assertEquals(1, communesInfoParAnnee.compareNbHabitants(communeInfo2), 0);
-        assertEquals(-1, communeInfo2.compareNbHabitants(communesInfoParAnnee), 0);
-        assertEquals(0, communesInfoParAnnee.compareNbHabitants(communesInfoParAnnee), 0);
-    }
-
-    /**
-     * Teste la réaction du système lors de la comparaison des investissements culturels avec une autre commune null.
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void testCompareNbHabitantsNull() {
-        communesInfoParAnnee.compareNbHabitants(null);
-    }
-
-    /**
      * Teste le calcul du score de la commune.
      */
     @Test

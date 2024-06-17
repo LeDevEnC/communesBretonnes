@@ -20,7 +20,7 @@ public class Annee {
      * @param annee         l'année en question
      * @param tauxInflation le taux d'inflation de l'année
      * @throws IllegalArgumentException si l'année ou le taux d'inflation est
-     *                                  négatif
+     *                                  négatif ou nul
      */
     public Annee(int annee, double tauxInflation) throws IllegalArgumentException {
         if (annee < 0 || tauxInflation < 0) {
@@ -54,7 +54,7 @@ public class Annee {
      * Setter de l'année
      * 
      * @param annee l'année à définir
-     * @throws IllegalArgumentException si l'année est négative
+     * @throws IllegalArgumentException si l'année est négative ou nulle
      */
     public void setAnneeRepr(int annee) throws IllegalArgumentException {
         if (annee < 0) {
@@ -68,7 +68,7 @@ public class Annee {
      * Setter du taux d'inflation
      * 
      * @param tauxInflation le taux d'inflation à définir
-     * @throws IllegalArgumentException si le taux d'inflation est négatif
+     * @throws IllegalArgumentException si le taux d'inflation est négatif ou nul
      */
     public void setTauxInflation(double tauxInflation) throws IllegalArgumentException {
         if (tauxInflation < 0) {
