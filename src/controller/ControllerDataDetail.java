@@ -3,10 +3,9 @@ package controller;
 import java.util.List;
 
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
-import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import model.data.Aeroport;
 import model.data.CommuneBase;
 import model.data.CommunesInfoParAnnee;
@@ -14,46 +13,42 @@ import model.data.CommunesInfoParAnnee;
 public class ControllerDataDetail extends Controller implements ReceiveInfo<CommunesInfoParAnnee>{
 
     @FXML
-    private Label aeroportLabel;
+    private TextFlow aeroportLabel;
+    @FXML
+    private Text aeroportValue;
 
     @FXML
-    private Label villeVoisineLabel;
+    private TextFlow villeVoisineLabel;
+    @FXML
+    private Text villeVoisineValue;
 
     @FXML
-    private Label prixM2MoyenLabel;
+    private TextFlow prixM2MoyenLabel;
+    @FXML
+    private Text prixM2MoyenValue;
 
     @FXML
-    private Label budgetDepCulRatioLabel;
+    private TextFlow budgetDepCulRatioLabel;
+    @FXML
+    private Text depCulturellesValue;
+    @FXML
+    private Text budgetTotalValue;
 
     @FXML
-    private Label surfaceMoyLabel;
-
-    @FXML 
-    private PieChart scoreVilleLabel;
+    private TextFlow surfaceMoyLabel;
+    @FXML
+    private Text surfaceMoyValue;
 
     private List<Aeroport> aeroports;
-
     private CommuneBase villeVoisine;
-
     private double prixM2Moyen;
-
     private double budgetTotal;
-
     private double surfaceMoy;
-
     private double depCulturellesTotales;
 
-    /**
-     * Stocke les informations de la commune pour une année donnée
-     */
     private CommunesInfoParAnnee currentCommunesInfoParAnnee = null;
 
-
     @Override
-    /**
-     * Permet de recevoir les infos de la commune pour une année donnée et de la traiter
-     * @param communeAnnee les informations de la commune pour une année donnée
-     */
     public void receiveInfo(CommunesInfoParAnnee communeAnnee) {
         if (communeAnnee == null) {
             throw new IllegalArgumentException("info cannot be null");
@@ -76,44 +71,50 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
             this.budgetTotal = this.currentCommunesInfoParAnnee.getBudgetTotal();
             this.surfaceMoy = this.currentCommunesInfoParAnnee.getSurfaceMoy();
             this.depCulturellesTotales = this.currentCommunesInfoParAnnee.getDepCulturellesTotales();
-    
+
             updateLabels();
         }
     }
 
-        
     private void updateLabels() {
-        aeroportLabel.setText("Aéroport : " + getPrimaryAeroportName());
-        villeVoisineLabel.setText("Ville voisine : " + this.villeVoisine.getNomCommune());
-        prixM2MoyenLabel.setText("Prix moyen du m² : " + colorizeValue(prixM2Moyen, "prixM2Moyen"));
-        budgetDepCulRatioLabel.setText("Dépenses culturelles / Budget : " + colorizeValue(depCulturellesTotales, "depCulturellesTotales") + " / " + colorizeValue(budgetTotal, "budgetTotal"));
-        surfaceMoyLabel.setText("Surface moyenne des logements : " + colorizeValue(surfaceMoy, "surfaceMoy") + " m²");
+        aeroportValue.setText(getPrimaryAeroportName());
+        villeVoisineValue.setText(this.villeVoisine.getNomCommune());
+        setColorizedValue(prixM2MoyenValue, prixM2Moyen, "prixM2Moyen");
+        setColorizedValue(depCulturellesValue, depCulturellesTotales, "depCulturellesTotales");
+        setColorizedValue(budgetTotalValue, budgetTotal, "budgetTotal");
+        setColorizedValue(surfaceMoyValue, surfaceMoy, "surfaceMoy");
     }
 
     private String getPrimaryAeroportName() {
         return aeroports.isEmpty() ? "Inconnu" : aeroports.get(0).getNom();
     }
 
-    private String colorizeValue(double value, String type) {
-        double score = 0;
-        switch (type) {
-            case "prixM2Moyen":
-                score = this.currentCommunesInfoParAnnee.calculateScorePrixM2Moyen();
-                break;
-            case "depCulturellesTotales":
-                score = this.currentCommunesInfoParAnnee.calculateScoreDepensesCulturelles();
-                break;
-            case "budgetTotal":
-                score = this.currentCommunesInfoParAnnee.calculateScoreBudgetTotal();
-                break;
-            case "surfaceMoy":
-                score = this.currentCommunesInfoParAnnee.calculateScoreSurfaceMoy();
-                break;
+    private void setColorizedValue(Text textNode, double value, String type) {
+        if (value == -1.0) {
+            textNode.setText("Inconnu");
+            textNode.setFill(Color.RED);
+        } else {
+            double score = calculateScore(type);
+            Color color = currentCommunesInfoParAnnee.getColorForScore(score);
+            textNode.setText(String.format("%.2f", value));
+            textNode.setFill(color);
         }
-        Color color = currentCommunesInfoParAnnee.getColorForScore(score);
-        return String.format("%s", color.toString(), value);
     }
 
+    private double calculateScore(String type) {
+        switch (type) {
+            case "prixM2Moyen":
+                return this.currentCommunesInfoParAnnee.calculateScorePrixM2Moyen();
+            case "depCulturellesTotales":
+                return this.currentCommunesInfoParAnnee.calculateScoreDepensesCulturelles();
+            case "budgetTotal":
+                return this.currentCommunesInfoParAnnee.calculateScoreBudgetTotal();
+            case "surfaceMoy":
+                return this.currentCommunesInfoParAnnee.calculateScoreSurfaceMoy();
+            default:
+                return 0;
+        }
+    }
 
     @Override
     protected void resize() {

@@ -1,11 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Text?>
+<!-- Fichier à sur lequel il faut se baser pour construire les différentes vues de l'applications. -->
 
-<StackPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21"
-   xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DataDetail">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<StackPane fx:id="appView" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerDataDetail">
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TEMPLATE FILE" fx:id="txt" />
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextFlow fx:id="aeroportLabel" prefHeight="103.0" prefWidth="592.0">
+                     <children>
+                        <Text text="Aéroport : " />
+                        <Text fx:id="aeroportValue" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </TextFlow>
+                  <TextFlow fx:id="villeVoisineLabel" prefHeight="86.0" prefWidth="472.0">
+                     <children>
+                        <Text text="Ville voisine principale : " />
+                        <Text fx:id="villeVoisineValue" />
+                     </children>
+                  </TextFlow>
+                  <TextFlow fx:id="prixM2MoyenLabel" prefHeight="98.0" prefWidth="366.0">
+                     <children>
+                        <Text text="Prix moyen du m² : " />
+                        <Text fx:id="prixM2MoyenValue" />
+                     </children>
+                  </TextFlow>
+                  <TextFlow fx:id="budgetDepCulRatioLabel" prefHeight="84.0" prefWidth="854.0">
+                     <children>
+                        <Text text="Dépenses culturelles / Budget : " />
+                        <Text fx:id="depCulturellesValue" />
+                        <Text text=" / " />
+                        <Text fx:id="budgetTotalValue" />
+                     </children>
+                  </TextFlow>
+                  <TextFlow fx:id="surfaceMoyLabel" prefHeight="101.0" prefWidth="438.0">
+                     <children>
+                        <Text text="Surface moyenne des logements : " />
+                        <Text fx:id="surfaceMoyValue" />
+                     </children>
+                  </TextFlow>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+               </BorderPane.margin>
+            </VBox>
+         </center>
+         <bottom>
+            <PieChart fx:id="pieChart" BorderPane.alignment="CENTER" />
+         </bottom>
+         <top>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" prefHeight="154.0" prefWidth="1922.0" text="Données Détails">
+                     <font>
+                        <Font name="System Bold" size="70.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" />
+               </children>
+            </VBox>
+         </top>
+      </BorderPane>
    </children>
 </StackPane>
