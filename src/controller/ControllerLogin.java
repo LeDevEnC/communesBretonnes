@@ -100,6 +100,10 @@ public class ControllerLogin extends Controller {
     public void onViewOpened() {
         this.errorLabel.setVisible(false);
         super.getModel().isLoggedProperty().addListener((observable, oldValue, newValue) -> {
+            if (keepLoginCheckBox.isSelected()) {
+                keepLoginCheckBox.setSelected(false);
+                super.getModel().saveLogin();
+            }
             this.errorLabel.setVisible(false);
             changeViewIfLogged();
         });

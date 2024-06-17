@@ -32,6 +32,7 @@ public class Main extends Application {
         Parent root = loader.load();
         this.primaryStage = primaryStage;
         MainModel mainModel = new MainModel();
+        mainModel.loadLogin();
         System.out.println("Loading time: " + (System.currentTimeMillis() - startTime) + "ms");
 
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();

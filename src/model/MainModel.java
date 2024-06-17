@@ -1,6 +1,9 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -50,6 +53,8 @@ public class MainModel {
 
     Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee;
 
+    final String loginSavePath = System.getProperty("user.dir") + "/login.txt";
+
     /**
      * Gère si l'utilisateur est connecté à la bdd (en écriture) ou non
      *
@@ -72,9 +77,9 @@ public class MainModel {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             reCreateDAO();
             // If connection is successful
-            this.isLogged.set(true);
             this.username = username;
             this.password = password;
+            this.isLogged.set(true);
         } catch (SQLException e) {
             System.out.println("Connection failed : " + e.getMessage());
         }
@@ -88,6 +93,18 @@ public class MainModel {
         this.password = "";
         this.isLogged.set(false);
         this.reCreateDAO();
+    }
+
+    /**
+     * Permet de déconnecter l'utilisateur de la bdd
+     * 
+     * @param deleteLogin Supprime le login enregistré
+     */
+    public void logout(boolean deleteLogin) {
+        if (deleteLogin) {
+            deleteLogin();
+        }
+        logout();
     }
 
     /**
@@ -243,7 +260,6 @@ public class MainModel {
 
         conseil[0] = "Le département possédant le pire score est " + pireDep;
 
-
         int[] scoresAnnee = new int[3];
         int[] nbAnnee = new int[3];
 
@@ -266,6 +282,38 @@ public class MainModel {
         }
 
         return conseil;
+    }
+
+    public void saveLogin() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(loginSavePath))) {
+            writer.write(this.username);
+            writer.newLine();
+            writer.write(this.password);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadLogin() {
+        File file = new File(loginSavePath);
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                this.username = reader.readLine();
+                this.password = reader.readLine();
+                login(this.username, this.password);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void deleteLogin() {
+        File file = new File(loginSavePath);
+        if (file.exists()) {
+            if (!file.delete()) {
+                System.err.println("Échec de la suppression du fichier : " + file.getPath());
+            }
+        }
     }
 
     public MainModel() {

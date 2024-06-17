@@ -135,7 +135,7 @@ public class ControllerEditMenu extends Controller {
 
     @FXML
     private void disconnectTextPressed() {
-        super.getModel().logout();
+        super.getModel().logout(true);
     }
 
     @Override

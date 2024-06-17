@@ -102,7 +102,7 @@ public class ControllerSettings extends Controller {
 
     @FXML
     private void btDeconnexionPress() {
-        super.getModel().logout();
+        super.getModel().logout(true);
         onViewOpened();
     }
 
