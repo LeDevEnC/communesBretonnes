@@ -220,6 +220,54 @@ public class MainModel {
         }
     }
 
+    public String[] generateConseil() {
+        String[] conseil = new String[3];
+
+        // Calcule le pire département
+        int[] scoresDep = new int[4];
+        int[] nbDep = new int[4];
+        String pireDep;
+
+        Calculator.computeScoresAndNb(toutesLesCommunesInfoParAnnee, scoresDep, nbDep);
+        Calculator.normalizeScores(scoresDep, nbDep);
+
+        if (scoresDep[0] > scoresDep[1] && scoresDep[0] > scoresDep[2] && scoresDep[0] > scoresDep[3]) {
+            pireDep = "Finistère";
+        } else if (scoresDep[1] > scoresDep[0] && scoresDep[1] > scoresDep[2] && scoresDep[1] > scoresDep[3]) {
+            pireDep = "Côtes-d'Armor";
+        } else if (scoresDep[2] > scoresDep[0] && scoresDep[2] > scoresDep[1] && scoresDep[2] > scoresDep[3]) {
+            pireDep = "Morbihan";
+        } else {
+            pireDep = "Ille-et-Vilaine";
+        }
+
+        conseil[0] = "Le département possédant le pire score est " + pireDep;
+
+
+        int[] scoresAnnee = new int[3];
+        int[] nbAnnee = new int[3];
+
+        Calculator.computeScoresAndNbByYear(toutesLesCommunesInfoParAnnee, scoresAnnee, nbAnnee);
+        Calculator.normalizeScoresLineChart(scoresAnnee, nbAnnee);
+
+        if (scoresAnnee[0] > scoresAnnee[1] && scoresAnnee[0] > scoresAnnee[2]) {
+            conseil[1] = "L'année possédant le pire score est 2017";
+        } else if (scoresAnnee[1] > scoresAnnee[0] && scoresAnnee[1] > scoresAnnee[2]) {
+            conseil[1] = "L'année possédant le pire score est 2018";
+        } else {
+            conseil[1] = "L'année possédant le pire score est 2019";
+        }
+
+        int tailleNbAnnee = nbAnnee.length;
+        if (scoresAnnee[tailleNbAnnee - 1] > scoresAnnee[tailleNbAnnee - 2]) {
+            conseil[2] = "L'année possède un meilleur score que l'année précédente";
+        } else {
+            conseil[2] = "L'année possède un moins bon score que l'année précédente";
+        }
+
+        return conseil;
+    }
+
     public MainModel() {
         this.isLogged = new SimpleBooleanProperty();
         logout(); // Applique le mode visiteur par défaut et initialise les DAO
