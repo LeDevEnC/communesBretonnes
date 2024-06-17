@@ -21,8 +21,11 @@ public class ControllerEditInsert extends Edit implements ReceiveInfo<String> {
 
     @FXML
     private void validateButtonPressed() {
-        Map<String, String> data = getData(this.editVBox);
-        System.out.println(data);
+        Map<String, String> data = super.getData(this.editVBox);
+        if (data.containsValue("")) {
+            // TODO
+            System.out.println(data);
+        }
     }
 
 

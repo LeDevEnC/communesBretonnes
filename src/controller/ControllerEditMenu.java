@@ -118,12 +118,16 @@ public class ControllerEditMenu extends Controller {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @FXML
     private void editButtonClicked() {
         this.selectStackPane.setVisible(false);
         this.toReplaceStackPane.setVisible(true);
         try {
-            super.changeView(toReplaceStackPane, "/views/editEditDelete.fxml");
+            Controller controller = super.changeView(toReplaceStackPane, "/views/editEditDelete.fxml");
+            if (controller instanceof ReceiveInfo) {
+                ((ReceiveInfo<String>) controller).receiveInfo(this.currentSelection);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

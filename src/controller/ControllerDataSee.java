@@ -5,7 +5,6 @@ import java.io.IOException;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -19,21 +18,7 @@ import model.TableauModel;
 import model.data.CommunesInfoParAnnee;
 
 public class ControllerDataSee extends Controller {
-    @FXML
-    private Button buttonSelectPrevious;
-
-    @FXML
-    private Button buttonSelectNext;
-
-    @FXML
-    private Button buttonSelectOne;
-
-    @FXML
-    private Button buttonSelectTwo;
-
-    @FXML
-    private Button buttonSelectThree;
-
+    
     @FXML
     private TextField searchBar;
 

@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -169,6 +170,7 @@ public abstract class Edit extends Controller {
         button.setPrefWidth(hbox.getPrefWidth() * 0.4);
         button.setText(nom);
         button.setMinWidth(100);
+        button.setTooltip(new Tooltip(nom));
         HBox.setMargin(button, new Insets(0.0, 30.0, 0.0, 0.0));
 
         TextField textField = new TextField();
