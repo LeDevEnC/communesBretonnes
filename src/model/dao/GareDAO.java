@@ -178,13 +178,36 @@ public class GareDAO extends DAO<Gare> {
      * Créer une gare
      * 
      * @param gare la gare
+     * @param idCommune la commune de la gare
+     */
+    public int create(Gare gare, int idCommune) {
+        int result = 0;
+        try (Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "INSERT INTO Gare (codeGare, nomGare, estFret, estVoyageur, laCommune) VALUES (?, ?, ?, ?, ?)")) {
+            statement.setInt(1, gare.getCodeGare());
+            statement.setString(2, gare.getNomGare());
+            statement.setBoolean(3, gare.getEstFret());
+            statement.setBoolean(4, gare.getEstVoyageur());
+            statement.setInt(5, idCommune);
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * Créer une gare
+     * 
+     * @param gare la gare
      */
     @Override
     public int create(Gare gare) {
         int result = 0;
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement(
-                        "INSERT INTO Gare (codeGare, nomGare, estFret, estVoyageur) VALUES (?, ?, ?, ?)")) {
+                        "INSERT INTO Gare (codeGare, nomGare, estFret, estVoyageur, laCommune) VALUES (?, ?, ?, ?, ?)")) {
             statement.setInt(1, gare.getCodeGare());
             statement.setString(2, gare.getNomGare());
             statement.setBoolean(3, gare.getEstFret());

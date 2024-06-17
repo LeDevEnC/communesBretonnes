@@ -137,11 +137,11 @@ public class MainModel {
         // Replace with your database url, username, and password
         String url = "jdbc:mysql://localhost:3306/bdsae";
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            reCreateDAO();
             // If connection is successful
             this.username = username;
             this.password = password;
             this.isLogged.set(true);
+            reCreateDAO();
         } catch (SQLException e) {
             System.out.println("Connection failed : " + e.getMessage());
         }
@@ -484,5 +484,59 @@ public class MainModel {
      */
     public Map<String, CommunesInfoParAnnee> getToutesLesCommunesInfoParAnnee() {
         return toutesLesCommunesInfoParAnnee;
+    }
+
+    /**
+     * Permet de récupérer la DAO pour les aéroports
+     * 
+     * @return La DAO pour les aéroports
+     */
+    public AeroportDAO getAeroportDAO() {
+        return aeroportDAO;
+    }
+
+    /**
+     * Permet de récupérer la DAO pour les années
+     * 
+     * @return La DAO pour les années
+     */
+    public AnneeDAO getAnneeDAO() {
+        return anneeDAO;
+    }
+
+    /**
+     * Permet de récupérer la DAO pour les communes
+     * 
+     * @return La DAO pour les communes
+     */
+    public CommuneBaseDAO getCommuneBaseDAO() {
+        return communeBaseDAO;
+    }
+
+    /**
+     * Permet de récupérer la DAO pour les informations des communes par année
+     * 
+     * @return La DAO pour les informations des communes par année
+     */
+    public CommunesInfoParAnneeDAO getCommunesInfoParAnneeDAO() {
+        return communesInfoParAnneeDAO;
+    }
+
+    /**
+     * Permet de récupérer la DAO pour les départements
+     * 
+     * @return La DAO pour les départements
+     */
+    public DepartementDAO getDepartementDAO() {
+        return departementDAO;
+    }
+
+    /**
+     * Permet de récupérer la DAO pour les gares
+     * 
+     * @return La DAO pour les gares
+     */
+    public GareDAO getGareDAO() {
+        return gareDAO;
     }
 }
