@@ -26,6 +26,13 @@ public class VoisinageDAO extends DAO<CommuneBase> {
         super(username, password);
     }
 
+    /**
+     * Crée une relation de voisinage entre deux communes
+     * 
+     * @param commune         Identifiant de la commune
+     * @param communeVoisine  Identifiant de la commune voisine
+     * @return                Nombre de lignes affectées par la requête
+     */
     public int create(int commune, int communeVoisine) {
         int result = 0;
         try (Connection connection = getConnection();
@@ -41,6 +48,13 @@ public class VoisinageDAO extends DAO<CommuneBase> {
         return result;
     }
 
+    /**
+     * Supprime une relation de voisinage entre deux communes
+     * 
+     * @param commune         Identifiant de la commune
+     * @param communeVoisine  Identifiant de la commune voisine
+     * @return                Nombre de lignes affectées par la requête
+     */
     public int delete(int commune, int communeVoisine) {
         int result = 0;
         try (Connection connection = getConnection();
@@ -56,22 +70,40 @@ public class VoisinageDAO extends DAO<CommuneBase> {
         return result;
     }
 
+    /**
+     * Recherche une commune par son identifiant
+     *
+     * @param user Commune à mettre à jour
+     */
     @Override
     public CommuneBase findByID(Long id) {
         throw new UnsupportedOperationException("Unimplemented method 'findByID'");
     }
 
+    /**
+     * Recherche une commune par son nom
+     * 
+     * @param user Commune à mettre à jour
+     */
     @Override
     public int create(CommuneBase user) {
         throw new UnsupportedOperationException(
                 "An other methode create with 2 parameters is implemented (int commune, int communeVoisine)");
     }
 
+    /**
+     * Met à jour une commune
+     * @param user Commune à mettre à jour
+     */
     @Override
     public int update(CommuneBase user) {
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
+    /**
+     * Supprime une commune
+     * @param user Commune à supprimer
+     */
     @Override
     public int delete(CommuneBase user) {
         throw new UnsupportedOperationException(
