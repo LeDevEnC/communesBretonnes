@@ -289,7 +289,7 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
     @Override
     protected void resize() {
         DoubleBinding fontSize = Bindings.createDoubleBinding(
-                () -> this.textFlowVBox.getWidth() / 50.0,
+                () -> this.textFlowVBox.getWidth() / 25.0,
                 this.textFlowVBox.widthProperty());
 
         for (Node node : this.aeroportLabel.getChildren()) {
