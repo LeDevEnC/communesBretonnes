@@ -62,7 +62,10 @@ public class ControllerEditInsert extends Edit implements ReceiveInfo<String> {
                 }
 
                 else if (this.table.equals("voisinage")) {
-                    // TODO : Ajouter la création de voisinage
+                    int idCommune = Integer.parseInt(data.get("commune"));
+                    int idCommuneVoisine = Integer.parseInt(data.get("communeVoisine"));
+
+                    result = super.getModel().getVoisinageDAO().create(idCommune, idCommuneVoisine);
                 }
 
                 else if (this.table.equals("commune")) {
@@ -99,8 +102,7 @@ public class ControllerEditInsert extends Edit implements ReceiveInfo<String> {
 
                     CommunesInfoParAnnee communesInfoParAnnee = new CommunesInfoParAnnee(communeBase, annee, nbMaisons,
                             nbAppartements, prixMoyen, prixM2Moyen, surfaceMoyenne, depensesCulturellesTotales,
-                            budgetTotal,
-                            population);
+                            budgetTotal, population);
 
                     result = super.getModel().getCommunesInfoParAnneeDAO().create(communesInfoParAnnee);
                 }

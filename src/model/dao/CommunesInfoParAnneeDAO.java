@@ -146,10 +146,9 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
      */
     @Override
     public int update(CommunesInfoParAnnee info) {
-        try {
-            Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE DonneesAnnuelles SET nbMaison = ?, nbAppart = ?, prixMoyen = ?, prixM2Moyen = ?, SurfaceMoy = ?, depensesCulturellesTotales = ?, budgetTotal = ?, population = ? WHERE laCommune = ? AND lAnnee = ?");
+        try (Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "UPDATE DonneesAnnuelles SET nbMaison = ?, nbAppart = ?, prixMoyen = ?, prixM2Moyen = ?, SurfaceMoy = ?, depensesCulturellesTotales = ?, budgetTotal = ?, population = ? WHERE laCommune = ? AND lAnnee = ?")) {
             statement.setInt(1, info.getNbMaison());
             statement.setInt(2, info.getNbAppart());
             statement.setDouble(3, info.getPrixMoyen());
@@ -160,9 +159,7 @@ public class CommunesInfoParAnneeDAO extends DAO<CommunesInfoParAnnee> {
             statement.setDouble(8, info.getPopulation());
             statement.setInt(9, info.getLaCommune().getIdCommune());
             statement.setInt(10, info.getLannee().getAnneeRepr());
-            int result = statement.executeUpdate();
-            connection.close();
-            return result;
+            return statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;

@@ -107,7 +107,7 @@ public abstract class Edit extends Controller {
         toInsert.add(new String[] { "Nombre Appartements", "nbAppart", "0" });
         toInsert.add(new String[] { "Prix Moyen", "prixMoyen", "105919" });
         toInsert.add(new String[] { "Prix M2 Moyen", "prixM2Moyen", "1312.37" });
-        toInsert.add(new String[] { "Surface Moyenne", "SurfaceMoy", "84" });
+        toInsert.add(new String[] { "Surface Moyenne", "surfaceMoy", "84" });
         toInsert.add(new String[] { "Dépenses Culturelle", "depensesCulturellesTotales", "827" });
         toInsert.add(new String[] { "Budget Total", "budgetTotal", "4800" });
         toInsert.add(new String[] { "Population", "population", "4808" });
@@ -152,6 +152,28 @@ public abstract class Edit extends Controller {
         }
 
         return data;
+    }
+
+    protected void setData(HashMap<String, String> data, VBox editVBox) {
+        ArrayList<TextField> textFields = new ArrayList<>();
+        ArrayList<Button> buttons = new ArrayList<>();
+
+        for (Node node : editVBox.getChildren()) {
+            if (node instanceof HBox) {
+                for (Node child : ((HBox) node).getChildren()) {
+                    if (child instanceof TextField) {
+                        textFields.add((TextField) child);
+                    }
+                    if (child instanceof Button) {
+                        buttons.add((Button) child);
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < textFields.size(); i++) {
+            textFields.get(i).setText(data.get(buttons.get(i).getId()));
+        }
     }
 
     /**
