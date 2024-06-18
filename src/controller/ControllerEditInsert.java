@@ -122,8 +122,8 @@ public class ControllerEditInsert extends Edit implements ReceiveInfo<String> {
                 Alert alert;
                 if (result == 1) {
                     alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Création réussi");
-                    alert.setHeaderText("Création réussi");
+                    alert.setTitle("Création réussie");
+                    alert.setHeaderText("Création réussie");
                     alert.setContentText("Les données ont été correctement insérées dans la base de données");
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);

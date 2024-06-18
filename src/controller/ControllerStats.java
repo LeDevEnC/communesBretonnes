@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.math3.stat.regression.SimpleRegression;
+import org.apache.commons.math4.legacy.stat.regression.SimpleRegression;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
@@ -159,7 +159,7 @@ public class ControllerStats extends Controller {
      * @param yVar     Le nom de la deuxième variable
      */
     public void displayStatistics(TextFlow textFlow, List<Double> xValues, List<Double> yValues, String xVar,
-            String yVar) { // TODO : ajouter utilité des variables xVar et yVar
+            String yVar) { 
         double meanX = GraphGenerator.calculateMean(xValues);
         double varianceX = GraphGenerator.calculateVariance(xValues, meanX);
         double meanY = GraphGenerator.calculateMean(yValues);
