@@ -14,6 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import model.data.Aeroport;
@@ -245,7 +247,11 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
      */
     private void updateLabels() {
         aeroportValue.setText(getPrimaryAeroportName());
+        aeroportValue.setFont(Font.font("System", FontWeight.BOLD, 12)); // Set the font to bold
+    
         villeVoisineValue.setText(this.villeVoisine.getNomCommune());
+        villeVoisineValue.setFont(Font.font("System", FontWeight.BOLD, 12)); // Set the font to bold
+    
         setColorizedValue(prixM2MoyenValue, prixM2Moyen, "prixM2Moyen");
         setColorizedValue(depCulturellesValue, depCulturellesTotales, "depCulturellesTotales");
         setColorizedValue(budgetTotalValue, budgetTotal, "budgetTotal");
@@ -284,6 +290,7 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
             textNode.setText(String.format("%.2f", value));
             textNode.setFill(color);
         }
+        textNode.setFont(Font.font("System", FontWeight.BOLD, 12)); // Set the font to bold
     }
 
     /**
