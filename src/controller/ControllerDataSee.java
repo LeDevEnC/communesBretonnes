@@ -159,6 +159,9 @@ public class ControllerDataSee extends Controller {
                 TableauModel tableauModel = new TableauModel(commune);
                 tableView.getItems().add(tableauModel);
             }
+            tableView.getSortOrder().add(colScore);
+            colScore.setSortType(TableColumn.SortType.DESCENDING);
+            tableView.sort();
             dataCharged = true;
         }
     }

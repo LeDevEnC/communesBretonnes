@@ -62,7 +62,7 @@
          <top>
             <VBox fx:id="titleVBox" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" minHeight="-Infinity" prefHeight="154.0" prefWidth="1922.0" text="" fx:id="titreDetails">
+                  <Label fx:id="titreDetails" alignment="CENTER" minHeight="-Infinity" prefHeight="154.0" prefWidth="1922.0" text="">
                      <font>
                         <Font name="System Bold" size="70.0" />
                      </font>
@@ -73,7 +73,7 @@
          <bottom>
             <HBox maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Hyperlink fx:id="googleMapsHyperlink" onMousePressed="#openInGoogleMaps" text="Ouvrir dans google maps">
+                  <Hyperlink fx:id="googleMapsHyperlink" onMousePressed="#openInGoogleMaps" text="Montrer la ville dans Google Maps">
                      <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </HBox.margin>
