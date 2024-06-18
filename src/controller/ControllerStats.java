@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.math4.legacy.stat.regression.SimpleRegression;
+import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;

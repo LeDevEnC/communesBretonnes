@@ -104,8 +104,13 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
     /**
      * PieChart représentant le score global.
      */
-    @FXML
     private PieChart pieChartScore;
+
+    /**
+     * StackPane contenant le PieChart.
+     */
+    @FXML
+    private StackPane pieChartStackPane;
 
     /**
      * Hyperlink pour ouvrir le lien vers Google Maps.
@@ -197,10 +202,22 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
 
             this.titreDetails.setText("Détails de " + this.currentCommunesInfoParAnnee.getLaCommune().getNomCommune()
                     + " en " + this.currentCommunesInfoParAnnee.getLannee().getAnneeRepr());
-
+            
+            resetPieChartStackPane();
             updateLabels();
             initPieChart();
         }
+    }
+
+    /**
+     * Réinitialise le PieChart.
+     */
+    private void resetPieChartStackPane() {
+        this.pieChartStackPane.getChildren().clear();
+
+        PieChart pieChart = new PieChart();
+        this.pieChartScore = pieChart;
+        this.pieChartStackPane.getChildren().add(pieChart);
     }
 
     /**

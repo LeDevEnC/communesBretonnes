@@ -82,7 +82,7 @@
             </HBox>
          </bottom>
          <right>
-            <PieChart fx:id="pieChartScore" maxHeight="1.7976931348623157E308" prefHeight="252.0" prefWidth="500.0" BorderPane.alignment="CENTER" />
+            <StackPane fx:id="pieChartStackPane" prefHeight="252.0" prefWidth="500.0" BorderPane.alignment="CENTER"/>
          </right>
       </BorderPane>
    </children>
