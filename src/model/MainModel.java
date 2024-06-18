@@ -234,9 +234,9 @@ public class MainModel {
             initData();
         } else {
             this.aeroportDAO = new AeroportDAO(this.username, this.password);
-            this.anneeDAO = new AnneeDAO();
+            this.anneeDAO = new AnneeDAO(this.username, this.password);
             this.departementDAO = new DepartementDAO(this.username, this.password, this.tousAeroport);
-            this.gareDAO = new GareDAO();
+            this.gareDAO = new GareDAO(this.username, this.password);
             this.communeBaseDAO = new CommuneBaseDAO(this.username,
                     this.password, this.tousLesDepartements, this.toutesLesGares);
             this.communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(this.username, this.password,
