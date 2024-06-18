@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -112,6 +113,9 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
     @FXML
     private Hyperlink googleMapsHyperlink;
 
+    @FXML
+    private Label titreDetails;
+
     /**
      * Liste des aéroports associés.
      */
@@ -190,6 +194,9 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
             this.budgetTotal = this.currentCommunesInfoParAnnee.getBudgetTotal();
             this.surfaceMoy = this.currentCommunesInfoParAnnee.getSurfaceMoy();
             this.depCulturellesTotales = this.currentCommunesInfoParAnnee.getDepCulturellesTotales();
+
+            this.titreDetails.setText("Détails de " + this.currentCommunesInfoParAnnee.getLaCommune().getNomCommune()
+                    + " en " + this.currentCommunesInfoParAnnee.getLannee().getAnneeRepr());
 
             updateLabels();
             initPieChart();
