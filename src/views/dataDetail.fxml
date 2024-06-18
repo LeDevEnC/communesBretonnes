@@ -60,9 +60,6 @@
                </BorderPane.margin>
             </VBox>
          </center>
-         <bottom>
-            <PieChart fx:id="pieChartScore" BorderPane.alignment="CENTER" />
-         </bottom>
          <top>
             <VBox fx:id="titleVBox" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
@@ -89,7 +86,7 @@
                   <!-- StackPane contenant le PieChart aligné à droite -->
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <PieChart fx:id="pieChart" prefHeight="252.0" prefWidth="500.0" />
+                        <PieChart fx:id="pieChartScore" prefHeight="252.0" prefWidth="500.0" />
                      </children>
                   </StackPane>
                </children>
