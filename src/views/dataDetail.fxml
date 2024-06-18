@@ -86,7 +86,7 @@
                   <!-- StackPane contenant le PieChart aligné à droite -->
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <PieChart fx:id="pieChart" prefHeight="252.0" prefWidth="500.0" />
+                        <PieChart fx:id="pieChartScore" prefHeight="252.0" prefWidth="500.0" />
                      </children>
                   </StackPane>
                </children>

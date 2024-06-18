@@ -4,8 +4,11 @@ import java.util.List;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -16,7 +19,7 @@ import model.data.Aeroport;
 import model.data.CommuneBase;
 import model.data.CommunesInfoParAnnee;
 
-public class ControllerDataDetail extends Controller implements ReceiveInfo<CommunesInfoParAnnee>{
+public class ControllerDataDetail extends Controller implements ReceiveInfo<CommunesInfoParAnnee> {
 
     /**
      * StackPane contenant la vue.
@@ -98,7 +101,13 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
     private Text surfaceMoyValue;
 
     /**
-     * Hyperlinl pour ouvrir le lien vers Google Maps.
+     * PieChart représentant le score global.
+     */
+    @FXML
+    private PieChart pieChartScore;
+
+    /**
+     * Hyperlink pour ouvrir le lien vers Google Maps.
      */
     @FXML
     private Hyperlink googleMapsHyperlink;
@@ -138,6 +147,9 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
      */
     private CommunesInfoParAnnee currentCommunesInfoParAnnee = null;
 
+    /**
+     * Ouvre le lien de la ville vers Google Maps.
+     */
     @FXML
     private void openInGoogleMaps() {
         super.openWebLink("https://www.google.com/maps/search/"
@@ -180,7 +192,28 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
             this.depCulturellesTotales = this.currentCommunesInfoParAnnee.getDepCulturellesTotales();
 
             updateLabels();
+            initPieChart();
         }
+    }
+
+    /**
+     * Initialise le PieChart avec les données courantes.
+     */
+    private void initPieChart() {
+        int scoreGlobal = this.currentCommunesInfoParAnnee.scoreCompute();
+        String nomCommune = this.currentCommunesInfoParAnnee.getLaCommune().getNomCommune();
+        int annee = this.currentCommunesInfoParAnnee.getLannee().getAnneeRepr();
+
+        // Ajouter deux segments au PieChart : un pour le score, un pour le reste
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data(scoreGlobal + " % en " + annee, scoreGlobal),
+                new PieChart.Data("", (100 - scoreGlobal)));
+        this.pieChartScore.setData(pieChartData);
+        this.pieChartScore.setTitle("% d'attractivité de " + nomCommune);
+        this.pieChartScore.setStartAngle(90);
+        this.pieChartScore.getData().get(0).getNode().setStyle("-fx-pie-color: #80caff;");
+        this.pieChartScore.getData().get(1).getNode().setStyle("-fx-pie-color: #85e0a3;");
+        this.pieChartScore.setLegendVisible(false);
     }
 
     /**
@@ -290,7 +323,5 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
         }
 
         googleMapsHyperlink.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), "px;"));
-        
-
     }
 }
