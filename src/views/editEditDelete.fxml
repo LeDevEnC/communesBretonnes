@@ -38,7 +38,7 @@
             </HBox>
          </bottom>
          <top>
-            <TextField alignment="CENTER" promptText="Rechercher données" BorderPane.alignment="CENTER">
+            <TextField fx:id="searchBar" alignment="CENTER" onKeyPressed="#searchHandle" promptText="Rechercher données" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="25.0" left="100.0" right="100.0" top="25.0" />
                </BorderPane.margin>

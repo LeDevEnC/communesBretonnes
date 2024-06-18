@@ -64,7 +64,7 @@ public class AnneeDAO extends DAO<Annee> {
     public Annee findByID(Long annee) {
         Annee anneeRet = null;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT  FROM Annee WHERE annee = ?")) {
+                PreparedStatement statement = connection.prepareStatement("SELECT annee, tauxInflation FROM Annee WHERE annee = ?")) {
             statement.setLong(1, annee);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

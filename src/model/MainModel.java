@@ -20,6 +20,7 @@ import model.dao.CommuneBaseDAO;
 import model.dao.CommunesInfoParAnneeDAO;
 import model.dao.DepartementDAO;
 import model.dao.GareDAO;
+import model.dao.VoisinageDAO;
 import model.data.Aeroport;
 import model.data.Annee;
 import model.data.CommuneBase;
@@ -52,6 +53,11 @@ public class MainModel {
      * Contient la DAO pour les informations des communes par année
      */
     CommunesInfoParAnneeDAO communesInfoParAnneeDAO;
+
+    /**
+     * Contient la DAO pour les voisinages
+     */
+    VoisinageDAO voisinageDAO;
 
     /**
      * Contient la DAO pour les départements
@@ -221,6 +227,8 @@ public class MainModel {
         this.communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(this.username,
                 this.password, this.toutesLesAnnees, this.toutesLesCommunesBase);
         this.toutesLesCommunesInfoParAnnee = this.communesInfoParAnneeDAO.findAll();
+
+        this.voisinageDAO = new VoisinageDAO(this.username, this.password);
     }
 
     /**
@@ -241,6 +249,7 @@ public class MainModel {
                     this.password, this.tousLesDepartements, this.toutesLesGares);
             this.communesInfoParAnneeDAO = new CommunesInfoParAnneeDAO(this.username, this.password,
                     this.toutesLesAnnees, this.toutesLesCommunesBase);
+            this.voisinageDAO = new VoisinageDAO(this.username, this.password);
         }
     }
 
@@ -540,5 +549,14 @@ public class MainModel {
      */
     public GareDAO getGareDAO() {
         return gareDAO;
+    }
+
+    /**
+     * Permet de récupérer la DAO pour les voisinages
+     * 
+     * @return La DAO pour les voisinages
+     */
+    public VoisinageDAO getVoisinageDAO() {
+        return voisinageDAO;
     }
 }

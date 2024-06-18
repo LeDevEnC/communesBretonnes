@@ -89,6 +89,34 @@ public class GareDAO extends DAO<Gare> {
     }
 
     /**
+     * Trouver une gare et sa commune par son identifiant
+     * 
+     * @param codeGare un code de gare
+     * @return la gare
+     */
+    public Map<Integer, Gare> findAll(Long codeGare) {
+        Map<Integer, Gare> gareMap = new HashMap<>();
+        Gare gareRet = null;
+        try (Connection connection = getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement("SELECT nomGare, estFret, estVoyageur, laCommune FROM Gare WHERE codeGare = ?")) {
+            statement.setLong(1, codeGare);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    gareRet = new Gare(Math.toIntExact(codeGare), resultSet.getString("nomGare"),
+                            resultSet.getBoolean("estFret"), resultSet.getBoolean("estVoyageur"));
+                    int laCommune = resultSet.getInt("laCommune");
+                    gareMap.put(laCommune, gareRet);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return gareMap;
+    }
+
+    /**
      * Trouver les gares d'une commune
      * 
      * @param idCommune un identifiant de commune
@@ -163,6 +191,29 @@ public class GareDAO extends DAO<Gare> {
     }
 
     /**
+     * Mettre à jour une gare avec sa commune
+     * 
+     * @param gare la gare
+     */
+    public int update(Gare gare, int idCommune) {
+        int result = 0;
+        try (Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "UPDATE Gare SET nomGare = ?, estFret = ?, estVoyageur = ? , estFret = ?, laCommune = ? WHERE codeGare = ?")) {
+            statement.setString(1, gare.getNomGare());
+            statement.setBoolean(2, gare.getEstFret());
+            statement.setBoolean(3, gare.getEstVoyageur());
+            statement.setBoolean(4, gare.getEstFret());
+            statement.setInt(5, idCommune);
+            statement.setInt(6, gare.getCodeGare());
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
      * Supprimer une gare
      * 
      * @param gare la gare
@@ -173,6 +224,24 @@ public class GareDAO extends DAO<Gare> {
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement("DELETE FROM Gare WHERE codeGare = ?")) {
             statement.setInt(1, gare.getCodeGare());
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * Supprimer une gare en prennant en compte sa commune
+     * 
+     * @param gare la gare
+     */
+    public int delete(Gare gare, int idCommune) {
+        int result = 0;
+        try (Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM Gare WHERE codeGare = ? AND laCommune = ?")) {
+            statement.setInt(1, gare.getCodeGare());
+            statement.setInt(2, idCommune);
             result = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

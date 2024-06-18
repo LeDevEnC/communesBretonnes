@@ -65,23 +65,27 @@ public class AeroportDAO extends DAO<Aeroport> {
      * @param name le nom de l'aéroport
      * @return l'aéroport
      */
-    public Aeroport findByName(String name) {
-        Aeroport aeroport = null;
+    public Map<Integer, Aeroport> findByName(String name) {
+        Aeroport aeroport;
+        Map<Integer, Aeroport> aeroports = new HashMap<>();
+
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection
-                        .prepareStatement("SELECT nom, adresse FROM Aeroport WHERE nom = ?")) {
+                        .prepareStatement("SELECT nom, adresse, leDepartement FROM Aeroport WHERE nom = ?")) {
             statement.setString(1, name);
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
                     String nom = rs.getString("nom");
                     String adresse = rs.getString("adresse");
                     aeroport = new Aeroport(nom, adresse);
+                    Integer dep = rs.getInt("leDepartement");
+                    aeroports.put(dep, aeroport);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return aeroport;
+        return aeroports;
     }
 
     /**
@@ -90,19 +94,23 @@ public class AeroportDAO extends DAO<Aeroport> {
      * @param aeroport un aéroport
      * @return le nombre de lignes modifiées
      */
-    @Override
-    public int update(Aeroport aeroport) { 
+    public int update(Aeroport aeroport, int id) {
         int rowsUpdated = 0;
         try (Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("UPDATE Aeroport SET adresse = ? WHERE nom = ?")) {
-            statement.setString(1, aeroport.getNom());
-            statement.setString(2, aeroport.getAdresse());
-
+                PreparedStatement statement = connection.prepareStatement("UPDATE Aeroport SET adresse = ?, leDepartement = ? WHERE nom = ?")) {
+            statement.setString(1, aeroport.getAdresse());
+            statement.setInt(2, id);
+            statement.setString(3, aeroport.getNom());
+            System.out.println(statement);
             rowsUpdated = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return rowsUpdated;
+    }
+
+    public int update(Aeroport aeroport) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /**
@@ -118,6 +126,26 @@ public class AeroportDAO extends DAO<Aeroport> {
                 PreparedStatement statement = connection
                         .prepareStatement("DELETE FROM Aeroport WHERE nom = ?")) {
             statement.setString(1, aeroport.getNom());
+            rowsDeleted = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowsDeleted;
+    }
+
+    /**
+     * Supprimer un aéroport en prennant en compte la commune
+     * 
+     * @param aeroport un aéroport
+     * @return le nombre de lignes supprimées
+     */
+    public int delete(Aeroport aeroport, int idDep) {
+        int rowsDeleted = 0;
+        try (Connection connection = getConnection();
+                PreparedStatement statement = connection
+                        .prepareStatement("DELETE FROM Aeroport WHERE nom = ? AND leDepartement = ?")) {
+            statement.setString(1, aeroport.getNom());
+            statement.setInt(2, idDep);
             rowsDeleted = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
