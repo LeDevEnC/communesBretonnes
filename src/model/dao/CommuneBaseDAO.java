@@ -83,7 +83,8 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
         // First pass: create all CommuneBase objects without setting their neighbors
         try (Connection connection = getConnection();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT idCommune, nomCommune, leDepartement FROM Commune")) {
+                ResultSet resultSet = statement
+                        .executeQuery("SELECT idCommune, nomCommune, leDepartement FROM Commune")) {
             while (resultSet.next()) {
                 Long idCommune = resultSet.getLong("idCommune");
                 String nomCommune = resultSet.getString("nomCommune");
@@ -124,7 +125,7 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
     /**
      * Trouver une commune par son ID
      * 
-     * @param idCommune l'ID de la commune
+     * @param idCommune     l'ID de la commune
      * @param loadNeighbors si les voisins doivent être chargés
      * @return la commune
      */

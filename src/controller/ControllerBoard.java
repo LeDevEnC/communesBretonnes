@@ -16,16 +16,15 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import model.Calculator;
 import model.data.CommunesInfoParAnnee;
 
+/**
+ * Permet de gérer la vue de board.fxml
+ */
 public class ControllerBoard extends Controller {
-    /**
-     * Score global de l'attractivité de la Bretagne
-     */
-    private int scoreGlobal;
 
     /**
      * Texte contenant le titre "Conseil"
@@ -57,9 +56,16 @@ public class ControllerBoard extends Controller {
     @FXML
     private BarChart<String, Number> barChartBretagneAtt;
 
+    /**
+     * LineChart représentant l'évolution du score moyen de l'attractivité de la
+     * Bretagne par année
+     */
     @FXML
     private LineChart<Number, Number> lineChartBretagneAtt;
 
+    /**
+     * Tableau de booléens indiquant si les graphes ont été chargés
+     */
     private boolean[] graphCharged = new boolean[3];
 
     /**
@@ -67,10 +73,6 @@ public class ControllerBoard extends Controller {
      */
     @Override
     public void initialize() {
-        // TODO : Implémenter le conseilText
-        setConseilText(new String[] { "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                "Aenean gravida justo vitae consequat venenatis.",
-                "Aenean euismod nibh sit amet ullamcorper varius." });
         resize();
     }
 
@@ -78,7 +80,7 @@ public class ControllerBoard extends Controller {
      * Méthode appelée lors de l'ouverture de la vue
      */
     public void onViewOpened() {
-        resize();
+        setConseilText(super.getModel().generateConseil());
         this.pieChartBretagneAtt.setVisible(true);
         if (!graphCharged[0]) {
             initPieChart();
@@ -89,7 +91,7 @@ public class ControllerBoard extends Controller {
         if (!graphCharged[2]) {
             initLineChart();
         }
-
+        resize();
     }
 
     /**
@@ -112,6 +114,16 @@ public class ControllerBoard extends Controller {
             barChartBretagneAtt.lookup(TITRE_LOOKUP).setStyle(TITRE_STYLE);
             lineChartBretagneAtt.lookup(TITRE_LOOKUP).setStyle(TITRE_STYLE);
         });
+
+        // Change la taille de la police du conseil
+        this.conseilText.styleProperty()
+                .bind(Bindings.concat("-fx-font-size: ", fontSize.add(8).asString(), "px;", "-fx-font-weight: bold;"));
+
+        for (Node node : this.conseilTextFlow.getChildren()) {
+            if (node instanceof Text) {
+                ((Text) node).styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), "px;"));
+            }
+        }
     }
 
     /**
@@ -121,21 +133,20 @@ public class ControllerBoard extends Controller {
 
         Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee = super.getModel()
                 .getToutesLesCommunesInfoParAnnee();
-
-
+        int scoreGlobal;
         int scoreGlobalTotal = 0;
         for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
             scoreGlobalTotal += communesInfoParAnnee.scoreCompute();
         }
         if (toutesLesCommunesInfoParAnnee.size() == 0) {
-            this.scoreGlobal = 0;
+            scoreGlobal = 0;
         } else {
-            this.scoreGlobal = scoreGlobalTotal / toutesLesCommunesInfoParAnnee.size();
+            scoreGlobal = scoreGlobalTotal / toutesLesCommunesInfoParAnnee.size();
         }
         // Ajouter deux segments au PieChart : un pour le score, un pour le reste
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Bretagne : " + this.scoreGlobal + " %", this.scoreGlobal),
-                new PieChart.Data("", (100 - this.scoreGlobal)));
+                new PieChart.Data("Bretagne : " + scoreGlobal + " %", scoreGlobal),
+                new PieChart.Data("", (100 - scoreGlobal)));
         this.pieChartBretagneAtt.setData(pieChartData);
         this.pieChartBretagneAtt.setTitle("% d'attractivité de la Bretagne");
         this.pieChartBretagneAtt.setStartAngle(90);
@@ -152,100 +163,14 @@ public class ControllerBoard extends Controller {
         int[] scores = new int[4];
         int[] nb = new int[4];
 
-        computeScoresAndNb(toutesLesCommunesInfoParAnnee, scores, nb);
+        Calculator.computeScoresAndNb(toutesLesCommunesInfoParAnnee, scores, nb);
 
-        normalizeScores(scores, nb);
+        Calculator.normalizeScores(scores, nb);
 
         setupBarChart();
 
         addDataToChart(scores);
         graphCharged[1] = true;
-    }
-
-
-    /**
-     * Permet de calculer les scores moyens par département
-     * 
-     * @param toutesLesCommunesInfoParAnnee Les communes
-     * @param scores                        Les scores totaux par département
-     * @param nb                            Le nombre de communes par département
-     */
-    private void computeScoresAndNb(Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee, int[] scores,
-            int[] nb) {
-        for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
-            int idDep = communesInfoParAnnee.getLaCommune().getLeDepartement().getIdDep();
-            int annee = communesInfoParAnnee.getLannee().getAnneeRepr();
-
-            if (annee == 2021) {
-                switch (idDep) {
-                    case 29:
-                        scores[0] += communesInfoParAnnee.scoreCompute();
-                        nb[0]++;
-                        break;
-                    case 22:
-                        scores[1] += communesInfoParAnnee.scoreCompute();
-                        nb[1]++;
-                        break;
-                    case 56:
-                        scores[2] += communesInfoParAnnee.scoreCompute();
-                        nb[2]++;
-                        break;
-                    case 35:
-                        scores[3] += communesInfoParAnnee.scoreCompute();
-                        nb[3]++;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
-
-    /**
-     * Permet de calculer le score moyen de toute les communes par année
-     * 
-     * @param toutesLesCommunesInfoParAnnee Les communes
-     * @param scores                        Les scores totaux par année
-     * @param nb                            Le nombre d'années
-     */
-    private void computeScoresAndNbByYear(Map<String, CommunesInfoParAnnee> toutesLesCommunesInfoParAnnee, int[] scores,
-            int[] nb) {
-        for (CommunesInfoParAnnee communesInfoParAnnee : toutesLesCommunesInfoParAnnee.values()) {
-            int annee = communesInfoParAnnee.getLannee().getAnneeRepr();
-
-            switch (annee) {
-                case 2019:
-                    scores[0] += communesInfoParAnnee.scoreCompute();
-                    nb[0]++;
-                    break;
-                case 2020:
-                    scores[1] += communesInfoParAnnee.scoreCompute();
-                    nb[1]++;
-                    break;
-                case 2021:
-                    scores[2] += communesInfoParAnnee.scoreCompute();
-                    nb[2]++;
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    /**
-     * Permet de normaliser les scores
-     * 
-     * @param scores Les scores totaux
-     * @param nb     Le nombre de communes
-     */
-    private void normalizeScores(int[] scores, int[] nb) {
-        for (int i = 0; i < 4; i++) {
-            if (nb[i] == 0) {
-                scores[i] = 0;
-            } else {
-                scores[i] = scores[i] / nb[i];
-            }
-        }
     }
 
     /**
@@ -318,22 +243,6 @@ public class ControllerBoard extends Controller {
     }
 
     /**
-     * Permet de normaliser les scores pour le lineChart
-     * 
-     * @param scores Les scores totaux
-     * @param nb     Le nombre de communes
-     */
-    private void normalizeScoresLineChart(int[] scores, int[] nb) {
-        for (int i = 0; i < 3; i++) {
-            if (nb[i] == 0) {
-                scores[i] = 0;
-            } else {
-                scores[i] = scores[i] / nb[i];
-            }
-        }
-    }
-
-    /**
      * Ajouter les données au LineChart
      * 
      * @param scores Les scores par année
@@ -367,9 +276,9 @@ public class ControllerBoard extends Controller {
         int[] scores = new int[3];
         int[] nb = new int[3];
 
-        computeScoresAndNbByYear(toutesLesCommunesInfoParAnnee, scores, nb);
+        Calculator.computeScoresAndNbByYear(toutesLesCommunesInfoParAnnee, scores, nb);
 
-        normalizeScoresLineChart(scores, nb);
+        Calculator.normalizeScoresLineChart(scores, nb);
 
         setupLineChart();
 
@@ -384,10 +293,8 @@ public class ControllerBoard extends Controller {
      */
     private void setConseilText(String[] conseils) {
         this.conseilTextFlow.getChildren().clear();
-        Font font = new Font(20);
         for (int i = 0; i < conseils.length; i++) {
             Text text = new Text("➤ " + conseils[i] + "\n");
-            text.setFont(font);
             this.conseilTextFlow.getChildren().add(text);
         }
     }

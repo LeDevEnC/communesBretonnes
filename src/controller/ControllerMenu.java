@@ -12,68 +12,89 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Permet de gérer la vue de menu.fxml
+ */
 public class ControllerMenu extends Controller {
-    // /**
-    //  * Stocke le menu actuellement affiché
-    //  */
-    private String currentMenu = "board";
 
+    /**
+     * Style du bouton lorsqu'il est cliqué
+     */
     private static final String CLICKED_BUTTON_STYLE = "-fx-background-color: #d3d3d3;";
 
+    /** VBox principal contenant les éléments de l'interface du menu. */
     @FXML
     private VBox mainVBox;
 
+    /** Bouton pour accéder aux paramètres de l'application. */
     @FXML
     private Button mainButtonSettings;
 
+    /** Label du bouton pour accéder aux paramètres de l'application. */
     @FXML
     private Label mainButtonSettingsLabel;
 
+    /** Image du bouton pour accéder aux paramètres de l'application. */
     @FXML
     private ImageView mainButtonSettingsImg;
 
+    /** Bouton pour accéder à l'édition des données. */
     @FXML
     private Button mainButtonEdit;
 
+    /** Label du bouton pour accéder à l'édition des données. */
     @FXML
     private Label mainButtonEditLabel;
 
+    /** Image du bouton pour accéder à l'édition des données. */
     @FXML
     private ImageView mainButtonEditImg;
 
+    /** Bouton pour accéder aux statistiques. */
     @FXML
     private Button mainButtonStats;
 
+    /** Label du bouton pour accéder aux statistiques. */
     @FXML
     private Label mainButtonStatsLabel;
 
+    /** Image du bouton pour accéder aux statistiques. */
     @FXML
     private ImageView mainButtonStatsImg;
 
+    /** Bouton pour voir les données. */
     @FXML
     private Button mainButtonDataSee;
 
+    /** Label du bouton pour voir les données. */
     @FXML
     private Label mainButtonDataSeeLabel;
 
+    /** Image du bouton pour voir les données. */
     @FXML
     private ImageView mainButtonDataSeeImg;
 
+    /** Bouton pour accéder au tableau de bord. */
     @FXML
     private Button mainButtonBoard;
 
+    /** Label du bouton pour accéder au tableau de bord. */
     @FXML
     private Label mainButtonBoardLabel;
 
+    /** Image du bouton pour accéder au tableau de bord. */
     @FXML
     private ImageView mainButtonBoardImg;
 
+    /** Image représentant le logo ou un élément graphique de la région Bretagne. */
     @FXML
     private ImageView mainBzhImg;
 
+    /** SplitPane principal de la fenêtre de l'application. */
     @FXML
     private SplitPane window;
 
+    /** StackPane utilisé pour afficher les différentes vues de l'application. */
     @FXML
     private StackPane appView;
 
@@ -167,7 +188,6 @@ public class ControllerMenu extends Controller {
      */
     @FXML
     private void buttonSettingsPressed() {
-        this.currentMenu = "settings";
         this.resetButtonColor();
         this.mainButtonSettings.setStyle(CLICKED_BUTTON_STYLE);
         try {
@@ -185,7 +205,6 @@ public class ControllerMenu extends Controller {
      */
     @FXML
     private void buttonEditPressed() {
-        this.currentMenu = "edit";
         this.resetButtonColor();
         this.mainButtonEdit.setStyle(CLICKED_BUTTON_STYLE);
         try {
@@ -204,7 +223,6 @@ public class ControllerMenu extends Controller {
      */
     @FXML
     private void buttonStatsPressed() {
-        this.currentMenu = "stats";
         this.resetButtonColor();
         this.mainButtonStats.setStyle(CLICKED_BUTTON_STYLE);
 
@@ -223,7 +241,6 @@ public class ControllerMenu extends Controller {
      */
     @FXML
     private void buttonDataSeePressed() {
-        this.currentMenu = "dataSee";
         this.resetButtonColor();
         this.mainButtonDataSee.setStyle(CLICKED_BUTTON_STYLE);
 
@@ -241,7 +258,6 @@ public class ControllerMenu extends Controller {
      */
     @FXML
     public void buttonBoardPressed() { // Note : public pour pouvoir appeler la vue par défaut
-        this.currentMenu = "board";
         this.resetButtonColor();
         this.mainButtonBoard.setStyle(CLICKED_BUTTON_STYLE);
         try {
@@ -250,15 +266,6 @@ public class ControllerMenu extends Controller {
             e.printStackTrace();
         }
         resize();
-    }
-
-    /**
-     * Retourne le menu actuellement affiché
-     * 
-     * @return Le menu actuellement affiché
-     */
-    public String getCurrentMenu() {
-        return this.currentMenu;
     }
 
     /**

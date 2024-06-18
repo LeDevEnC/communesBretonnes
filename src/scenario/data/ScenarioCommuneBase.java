@@ -32,6 +32,9 @@ public class ScenarioCommuneBase {
      */
     private CommuneBase commune;
 
+    /**
+     * Initialisation des objets pour les tests.
+     */
     @Before
     public void setUp() {
         List<Aeroport> lesAeroports = new ArrayList<>();

@@ -15,6 +15,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 
+/**
+ * Classe GraphGenerator
+ * Utilisée pour générer des graphiques à partir de données
+ */
 public class GraphGenerator {
 
     /**
@@ -25,13 +29,15 @@ public class GraphGenerator {
 
     /**
      * Génère un graphique en nuage de points à partir des valeurs x et y fournies.
+     * 
      * @param xValues les valeurs de l'axe x
      * @param yValues les valeurs de l'axe y
-     * @param xLabel le label de l'axe x
-     * @param yLabel le label de l'axe y
+     * @param xLabel  le label de l'axe x
+     * @param yLabel  le label de l'axe y
      * @return le graphique en nuage de points généré
      */
-    public static ScatterChart<Number, Number> generateScatterChart(List<Double> xValues, List<Double> yValues, String xLabel, String yLabel) {
+    public static ScatterChart<Number, Number> generateScatterChart(List<Double> xValues, List<Double> yValues,
+            String xLabel, String yLabel) {
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel(xLabel);
@@ -57,6 +63,7 @@ public class GraphGenerator {
 
     /**
      * Génère un graphique en barres à partir des valeurs fournies.
+     * 
      * @param values les valeurs à afficher
      * @param xLabel le label de l'axe x
      * @param yLabel le label de l'axe y
@@ -103,15 +110,16 @@ public class GraphGenerator {
 
     /**
      * Génère un graphique en ligne à partir des valeurs x et y fournies.
+     * 
      * @param xValues les valeurs de l'axe x
      * @param yValues les valeurs de l'axe y
-     * @param xLabel le label de l'axe x
-     * @param yLabel le label de l'axe y
+     * @param xLabel  le label de l'axe x
+     * @param yLabel  le label de l'axe y
      * @return le graphique en ligne généré
      */
     public static LineChart<Number, Number> generateLineChart(List<Double> xValues,
             List<Double> yValues, String xLabel, String yLabel) {
-                
+
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel(xLabel);
@@ -144,6 +152,7 @@ public class GraphGenerator {
 
     /**
      * Calcule la taille de l'intervalle dynamique pour un graphique en barres.
+     * 
      * @param valueRange la plage de valeurs
      * @return la taille de l'intervalle dynamique
      */
@@ -154,7 +163,8 @@ public class GraphGenerator {
 
     /**
      * Trouve l'intervalle dans lequel se trouve une valeur donnée.
-     * @param xValue la valeur à chercher
+     * 
+     * @param xValue       la valeur à chercher
      * @param intervalSize la taille de l'intervalle
      * @return l'intervalle dans lequel se trouve la valeur
      */
@@ -166,7 +176,8 @@ public class GraphGenerator {
 
     /**
      * Définit la taille de l'unité de graduation de l'axe dynamiquement.
-     * @param axis l'axe pour lequel définir la taille de l'unité de graduation
+     * 
+     * @param axis   l'axe pour lequel définir la taille de l'unité de graduation
      * @param values les valeurs de l'axe
      */
     private static void setDynamicTickUnit(NumberAxis axis, List<Double> values) {
@@ -182,6 +193,7 @@ public class GraphGenerator {
 
     /**
      * Calcule la taille optimale de l'unité de graduation pour un axe.
+     * 
      * @param valueRange la plage de valeurs
      * @return la taille optimale de l'unité
      */
@@ -198,6 +210,7 @@ public class GraphGenerator {
 
     /**
      * Calculate the mean of a list of values.
+     * 
      * @param values the list of values
      * @return the mean of the values
      */
@@ -211,8 +224,9 @@ public class GraphGenerator {
 
     /**
      * Calculate the variance of a list of values.
+     * 
      * @param values the list of values
-     * @param mean the mean of the values
+     * @param mean   the mean of the values
      * @return the variance of the values
      */
     public static double calculateVariance(List<Double> values, double mean) {

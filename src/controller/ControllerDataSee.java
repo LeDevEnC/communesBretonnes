@@ -17,41 +17,81 @@ import javafx.util.Callback;
 import model.TableauModel;
 import model.data.CommunesInfoParAnnee;
 
+/**
+ * Permet de gérer la vue de dataSee.fxml
+ */
 public class ControllerDataSee extends Controller {
-    
+
+    /**
+     * Stocke la barre de recherche
+     */
     @FXML
     private TextField searchBar;
 
+    /**
+     * Stocke le tableau
+     */
     @FXML
     private TableView<TableauModel> tableView;
 
+    /**
+     * Stocke tous les scores des communes pour le tableau
+     */
     @FXML
     private TableColumn<TableauModel, String> colScore;
 
+    /**
+     * Stocke le nom de la commune pour le tableau
+     */
     @FXML
     private TableColumn<TableauModel, String> colVille;
 
+    /**
+     * Stocke le code INSEE pour le tableau
+     */
     @FXML
     private TableColumn<TableauModel, String> colCodeInsee;
 
+    /**
+     * Stocke le département pour le tableau
+     */
     @FXML
     private TableColumn<TableauModel, String> colDepartement;
 
+    /**
+     * Stocke l'année pour le tableau
+     */
     @FXML
     private TableColumn<TableauModel, String> colAnnee;
 
+    /**
+     * Stocke le score culturel pour le tableau
+     */
     @FXML
     private TableColumn<TableauModel, String> depCulturel;
 
+    /**
+     * Stocke le nombre de communes pour le tableau
+     */
     @FXML
     private TableColumn<TableauModel, Integer> colNb;
 
+    /**
+     * Stocke le BorderPane de la vue contenant le tableau et la barre de recherche
+     */
     @FXML
     private BorderPane viewBorderPane;
 
+    /**
+     * Stocke le StackPane de la vue contenant les détails de la commune (fichier
+     * dataDetail.fxml)
+     */
     @FXML
     private StackPane viewReplace;
 
+    /**
+     * Stocke si les données ont déjà été chargées
+     */
     private boolean dataCharged = false;
 
     /**
@@ -74,10 +114,10 @@ public class ControllerDataSee extends Controller {
         resize();
     }
 
-    
     /**
      * Affiche les informations de la commune sélectionnée
-     * @param commune
+     * 
+     * @param commune Les informations de la commune sélectionnée
      */
     @SuppressWarnings("unchecked")
     public void lineClicked(CommunesInfoParAnnee commune) {

@@ -141,7 +141,8 @@ public class ScenarioCommunesInfoParAnnee {
     }
 
     /**
-     * Teste la réaction du système lors de la définition d'un nombre de maisons négatif
+     * Teste la réaction du système lors de la définition d'un nombre de maisons
+     * négatif
      */
     @Test(expected = IllegalArgumentException.class)
     public void testSetNbMaisonNegative() {
@@ -183,7 +184,8 @@ public class ScenarioCommunesInfoParAnnee {
     }
 
     /**
-     * Teste la réaction du système lors de la définition d'un prix au mètre carré moyen
+     * Teste la réaction du système lors de la définition d'un prix au mètre carré
+     * moyen
      */
     @Test
     public void testSetPrixMCarreMoyen() {
@@ -192,7 +194,8 @@ public class ScenarioCommunesInfoParAnnee {
     }
 
     /**
-     * Teste la réaction du système lors de la définition d'un prix au mètre carré moyen négatif
+     * Teste la réaction du système lors de la définition d'un prix au mètre carré
+     * moyen négatif
      */
     @Test(expected = IllegalArgumentException.class)
     public void testSetPrixMCarreMoyenNegative() {
@@ -209,7 +212,8 @@ public class ScenarioCommunesInfoParAnnee {
     }
 
     /**
-     * Teste la réaction du système lors de la définition d'une surface moyenne négative
+     * Teste la réaction du système lors de la définition d'une surface moyenne
+     * négative
      */
     @Test(expected = IllegalArgumentException.class)
     public void testSetSurfaceMoyNegative() {
@@ -217,7 +221,8 @@ public class ScenarioCommunesInfoParAnnee {
     }
 
     /**
-     * Teste la réaction du système lors de la définition des dépenses culturelles totales
+     * Teste la réaction du système lors de la définition des dépenses culturelles
+     * totales
      */
     @Test
     public void testSetDepCulturellesTotales() {
@@ -226,7 +231,8 @@ public class ScenarioCommunesInfoParAnnee {
     }
 
     /**
-     * Teste la réaction du système lors de la définition des dépenses culturelles totales avec une valeur négative
+     * Teste la réaction du système lors de la définition des dépenses culturelles
+     * totales avec une valeur négative
      */
     @Test(expected = IllegalArgumentException.class)
     public void testSetDepCulturellesTotalesNegative() {
@@ -243,7 +249,8 @@ public class ScenarioCommunesInfoParAnnee {
     }
 
     /**
-     * Teste la réaction du système lors de la définition du budget total avec une valeur négative
+     * Teste la réaction du système lors de la définition du budget total avec une
+     * valeur négative
      */
     @Test(expected = IllegalArgumentException.class)
     public void testSetBudgetTotalNegative() {
@@ -260,7 +267,8 @@ public class ScenarioCommunesInfoParAnnee {
     }
 
     /**
-     * Teste la réaction du système lors de la définition de la population avec une valeur négative
+     * Teste la réaction du système lors de la définition de la population avec une
+     * valeur négative
      */
     @Test(expected = IllegalArgumentException.class)
     public void testSetPopulationNegative() {

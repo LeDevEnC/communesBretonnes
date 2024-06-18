@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -36,6 +37,13 @@
                </children>
             </HBox>
          </bottom>
+         <top>
+            <TextField alignment="CENTER" promptText="Rechercher données" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="25.0" left="100.0" right="100.0" top="25.0" />
+               </BorderPane.margin>
+            </TextField>
+         </top>
       </BorderPane>
    </children>
 </StackPane>

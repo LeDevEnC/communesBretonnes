@@ -14,6 +14,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+/**
+ * Classe abstraite permettant de gérer les vues de editEditDelete.fxml et
+ * editInsert.fxml
+ */
 public abstract class Edit extends Controller {
     /**
      * HashMap contenant les champs à remplir
@@ -49,8 +53,9 @@ public abstract class Edit extends Controller {
 
     /**
      * Initialise la HashMap contenant les champs à remplir
-     * Contenu du hashMap : <Nom du champ, <Nom du champ, Identifiant du champ,
-     * Placeholder>>
+     * Contenu du hashMap : &lt;Nom du champ, &lt;Nom du champ, Identifiant du
+     * champ,
+     * Placeholder&gt;&gt;
      * Clé du hashMap disponible : aeroprt, annee, commune, departement, gare,
      * donneesannuelles, voisinage
      */
@@ -152,8 +157,8 @@ public abstract class Edit extends Controller {
     /**
      * Crée un HBox contenant un bouton et un champ de saisie
      *
-     * @param nom        Nom du champ
-     * @param idButton   Identifiant du bouton
+     * @param nom         Nom du champ
+     * @param idButton    Identifiant du bouton
      * @param placeHolder Placeholder du champ de saisie
      * @return HBox contenant un bouton et un champ de saisie
      */
@@ -189,6 +194,7 @@ public abstract class Edit extends Controller {
      *
      * @param data HashMap contenant le nom de la donnée et un identifiant pour le
      *             bouton
+     * @param editVBox VBox contenant les champs à remplir
      */
     protected void createField(ArrayList<String[]> data, VBox editVBox) {
         for (String[] entry : data) {
@@ -200,4 +206,3 @@ public abstract class Edit extends Controller {
         }
     }
 }
-

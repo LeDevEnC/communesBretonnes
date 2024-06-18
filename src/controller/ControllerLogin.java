@@ -12,23 +12,44 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
+/**
+ * Permet de gérer la vue de login.fxml
+ */
 public class ControllerLogin extends Controller {
 
+    /**
+     * Le panneau principal qui peut être remplacé par d'autres contenus.
+     */
     @FXML
     StackPane toReplace;
 
+    /**
+     * Le panneau de grille contenant les champs de formulaire pour la connexion.
+     */
     @FXML
     GridPane loginGridPane;
 
+    /**
+     * Le champ de texte pour saisir l'adresse e-mail de l'utilisateur.
+     */
     @FXML
     TextField emailTextField;
 
+    /**
+     * Le champ de mot de passe pour saisir le mot de passe de l'utilisateur.
+     */
     @FXML
     PasswordField passwordTextField;
 
+    /**
+     * Le texte affichant les messages d'erreur lors de la tentative de connexion.
+     */
     @FXML
     Text errorLabel;
 
+    /**
+     * La case à cocher permettant à l'utilisateur de rester connecté.
+     */
     @FXML
     CheckBox keepLoginCheckBox;
 
@@ -100,6 +121,10 @@ public class ControllerLogin extends Controller {
     public void onViewOpened() {
         this.errorLabel.setVisible(false);
         super.getModel().isLoggedProperty().addListener((observable, oldValue, newValue) -> {
+            if (keepLoginCheckBox.isSelected()) {
+                keepLoginCheckBox.setSelected(false);
+                super.getModel().saveLogin();
+            }
             this.errorLabel.setVisible(false);
             changeViewIfLogged();
         });
