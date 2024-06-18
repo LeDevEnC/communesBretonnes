@@ -610,7 +610,7 @@ public class CommunesInfoParAnnee {
         } else if (score >= 80) {
             return Color.rgb(146, 208, 80); // Vert clair pour les scores élevés
         } else if (score >= 70) {
-            return Color.rgb(255, 255, 0); // Jaune pour les scores moyens élevés
+            return Color.rgb(199, 189, 4); // Jaune pour les scores moyens élevés
         } else if (score >= 60) {
             return Color.rgb(255, 192, 0); // Orange pour les scores moyens
         } else if (score >= 50) {
