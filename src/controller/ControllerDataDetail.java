@@ -1,8 +1,12 @@
 package controller;
 
 import java.util.List;
+import java.util.Map;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -39,6 +43,9 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
     @FXML
     private Text surfaceMoyValue;
 
+    @FXML
+    private PieChart pieChartScore;
+
     private List<Aeroport> aeroports;
     private CommuneBase villeVoisine;
     private double prixM2Moyen;
@@ -47,6 +54,7 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
     private double depCulturellesTotales;
 
     private CommunesInfoParAnnee currentCommunesInfoParAnnee = null;
+
 
     @Override
     public void receiveInfo(CommunesInfoParAnnee communeAnnee) {
@@ -73,7 +81,28 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
             this.depCulturellesTotales = this.currentCommunesInfoParAnnee.getDepCulturellesTotales();
 
             updateLabels();
+            initPieChart();
+            
         }
+    }
+
+
+    private void initPieChart() {
+
+        int scoreGlobal = this.currentCommunesInfoParAnnee.scoreCompute();
+        String nomCommune = this.currentCommunesInfoParAnnee.getLaCommune().getNomCommune();
+        int annee = this.currentCommunesInfoParAnnee.getLannee().getAnneeRepr();
+
+        // Ajouter deux segments au PieChart : un pour le score, un pour le reste
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data(scoreGlobal + " % en " + annee, scoreGlobal),
+                new PieChart.Data("", (100 - scoreGlobal)));
+        this.pieChartScore.setData(pieChartData);
+        this.pieChartScore.setTitle("% d'attractivité de " + nomCommune);
+        this.pieChartScore.setStartAngle(90);
+        this.pieChartScore.getData().get(0).getNode().setStyle("-fx-pie-color: #80caff;");
+        this.pieChartScore.getData().get(1).getNode().setStyle("-fx-pie-color: #85e0a3;");
+        this.pieChartScore.setLegendVisible(false);
     }
 
     private void updateLabels() {

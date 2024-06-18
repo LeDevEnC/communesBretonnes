@@ -61,7 +61,7 @@
             </VBox>
          </center>
          <bottom>
-            <PieChart fx:id="pieChart" BorderPane.alignment="CENTER" />
+            <PieChart fx:id="pieChartScore" BorderPane.alignment="CENTER" />
          </bottom>
          <top>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
