@@ -90,11 +90,11 @@ public class ControllerEditInsert extends Edit implements ReceiveInfo<String> {
                     String idCommune = data.get("laCommune");
                     int nbMaisons = Integer.parseInt(data.get("nbMaison"));
                     int nbAppartements = Integer.parseInt(data.get("nbAppart"));
-                    int prixMoyen = Integer.parseInt(data.get("prixMoyen"));
+                    double prixMoyen = Double.parseDouble(data.get("prixMoyen"));
                     double prixM2Moyen = Double.parseDouble(data.get("prixM2Moyen"));
-                    int surfaceMoyenne = Integer.parseInt(data.get("SurfaceMoy"));
-                    int depensesCulturellesTotales = Integer.parseInt(data.get("depensesCulturellesTotales"));
-                    int budgetTotal = Integer.parseInt(data.get("budgetTotal"));
+                    double surfaceMoyenne = Double.parseDouble(data.get("surfaceMoy"));
+                    double depensesCulturellesTotales = Double.parseDouble(data.get("depensesCulturellesTotales"));
+                    double budgetTotal = Double.parseDouble(data.get("budgetTotal"));
                     int population = Integer.parseInt(data.get("population"));
 
                     CommuneBase communeBase = super.getModel().getToutesLesCommunesBase().get(idCommune);
