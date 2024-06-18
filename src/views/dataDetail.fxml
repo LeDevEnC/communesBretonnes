@@ -2,20 +2,22 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<StackPane fx:id="appView" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerDataDetail">
+<StackPane fx:id="window" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerDataDetail">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="textFlowVBox" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
                   <TextFlow fx:id="aeroportLabel" prefHeight="103.0" prefWidth="592.0">
                      <children>
@@ -58,21 +60,38 @@
                </BorderPane.margin>
             </VBox>
          </center>
-         <bottom>
-            <PieChart fx:id="pieChart" BorderPane.alignment="CENTER" />
-         </bottom>
          <top>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="titleVBox" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" prefHeight="154.0" prefWidth="1922.0" text="Données Détails">
+                  <Label alignment="CENTER" minHeight="-Infinity" prefHeight="154.0" prefWidth="1922.0" text="Données Détails">
                      <font>
                         <Font name="System Bold" size="70.0" />
                      </font>
                   </Label>
-                  <Line endX="100.0" startX="-100.0" />
                </children>
             </VBox>
          </top>
+         <bottom>
+            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Hyperlink fx:id="googleMapsHyperlink" onMousePressed="#openInGoogleMaps" text="Ouvrir dans google maps">
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Hyperlink>
+
+                  <!-- Espace flexible -->
+                  <Region HBox.hgrow="ALWAYS" />
+
+                  <!-- StackPane contenant le PieChart aligné à droite -->
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <PieChart fx:id="pieChart" prefHeight="252.0" prefWidth="500.0" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+         </bottom>
       </BorderPane>
    </children>
 </StackPane>
