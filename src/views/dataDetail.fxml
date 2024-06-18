@@ -19,7 +19,7 @@
          <center>
             <VBox fx:id="textFlowVBox" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextFlow fx:id="aeroportLabel" prefHeight="103.0" prefWidth="592.0">
+                  <TextFlow fx:id="aeroportLabel" prefHeight="100" prefWidth="592.0">
                      <children>
                         <Text text="Aéroport : " />
                         <Text fx:id="aeroportValue" />
@@ -28,19 +28,19 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </TextFlow>
-                  <TextFlow fx:id="villeVoisineLabel" prefHeight="86.0" prefWidth="472.0">
+                  <TextFlow fx:id="villeVoisineLabel" prefHeight="100" prefWidth="472.0">
                      <children>
                         <Text text="Ville voisine principale : " />
                         <Text fx:id="villeVoisineValue" />
                      </children>
                   </TextFlow>
-                  <TextFlow fx:id="prixM2MoyenLabel" prefHeight="98.0" prefWidth="366.0">
+                  <TextFlow fx:id="prixM2MoyenLabel" prefHeight="100" prefWidth="366.0">
                      <children>
                         <Text text="Prix moyen du m² : " />
                         <Text fx:id="prixM2MoyenValue" />
                      </children>
                   </TextFlow>
-                  <TextFlow fx:id="budgetDepCulRatioLabel" prefHeight="84.0" prefWidth="854.0">
+                  <TextFlow fx:id="budgetDepCulRatioLabel" prefHeight="100" prefWidth="854.0">
                      <children>
                         <Text text="Dépenses culturelles / Budget : " />
                         <Text fx:id="depCulturellesValue" />
@@ -48,7 +48,7 @@
                         <Text fx:id="budgetTotalValue" />
                      </children>
                   </TextFlow>
-                  <TextFlow fx:id="surfaceMoyLabel" prefHeight="101.0" prefWidth="438.0">
+                  <TextFlow fx:id="surfaceMoyLabel" prefHeight="100" prefWidth="438.0">
                      <children>
                         <Text text="Surface moyenne des logements : " />
                         <Text fx:id="surfaceMoyValue" />
@@ -63,7 +63,7 @@
          <top>
             <VBox fx:id="titleVBox" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" minHeight="-Infinity" prefHeight="154.0" prefWidth="1922.0" text="Données Détails">
+                  <Label alignment="CENTER" minHeight="-Infinity" prefHeight="154.0" prefWidth="1922.0" text="" fx:id="titreDetails">
                      <font>
                         <Font name="System Bold" size="70.0" />
                      </font>
