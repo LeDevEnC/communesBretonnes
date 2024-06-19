@@ -80,7 +80,7 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
     public Map<String, CommuneBase> findAll() {
         Map<String, CommuneBase> communes = new HashMap<>();
 
-        // First pass: create all CommuneBase objects without setting their neighbors
+        // Premier passage : créer tous les objets CommuneBase sans définir leurs voisins
         try (Connection connection = getConnection();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement
@@ -100,7 +100,7 @@ public class CommuneBaseDAO extends DAO<CommuneBase> {
             e.printStackTrace();
         }
 
-        // Second pass: set the neighbors for each CommuneBase
+        // Deuxième passage : définir les voisins de chaque CommuneBase
         try (Connection connection = getConnection();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT commune, communeVoisine FROM Voisinage")) {

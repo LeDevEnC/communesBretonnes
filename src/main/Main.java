@@ -73,6 +73,7 @@ public class Main extends Application {
 
         Image applicationIcon = new Image(getClass().getResourceAsStream("/ressources/appIcon.png"));
         primaryStage.getIcons().add(applicationIcon);
+        primaryStage.setTitle("Commune Bretonne");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

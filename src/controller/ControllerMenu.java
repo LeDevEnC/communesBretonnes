@@ -82,6 +82,18 @@ public class ControllerMenu extends Controller {
     @FXML
     private Label mainButtonBoardLabel;
 
+    /** Bouton pour accéder à la carte. */
+    @FXML
+    private Button mainButtonMap;
+
+    /** Bouton pour accéder à la carte. */
+    @FXML
+    private Label mainButtonMapLabel;
+
+    /** Image du bouton pour accéder à la carte. */
+    @FXML
+    private ImageView mainButtonMapImg;
+
     /** Image du bouton pour accéder au tableau de bord. */
     @FXML
     private ImageView mainButtonBoardImg;
@@ -115,7 +127,7 @@ public class ControllerMenu extends Controller {
 
         DoubleBinding autoResizeLogo = scale.multiply(300);
         DoubleBinding fontSize = scale.multiply(30);
-        DoubleBinding autoResizeIcon = scale.multiply(80);
+        DoubleBinding autoResizeIcon = scale.multiply(50);
 
         this.mainBzhImg.fitWidthProperty().bind(autoResizeLogo);
         this.mainBzhImg.fitHeightProperty().bind(autoResizeLogo);
@@ -136,6 +148,8 @@ public class ControllerMenu extends Controller {
                 .bind(Bindings.format(buttonLabelStyle, fontSize));
         this.mainButtonDataSeeLabel.styleProperty()
                 .bind(Bindings.format(buttonLabelStyle, fontSize));
+        this.mainButtonMapLabel.styleProperty()
+                .bind(Bindings.format(buttonLabelStyle, fontSize));
         this.mainButtonBoardLabel.styleProperty()
                 .bind(Bindings.format(buttonLabelStyle, fontSize));
         this.mainButtonSettingsLabel.styleProperty()
@@ -148,6 +162,10 @@ public class ControllerMenu extends Controller {
         this.mainButtonDataSeeImg.fitWidthProperty().bind(autoResizeIcon);
         this.mainButtonDataSeeImg.fitHeightProperty().bind(autoResizeIcon);
         this.mainButtonDataSeeImg.setPreserveRatio(true);
+
+        this.mainButtonMapImg.fitWidthProperty().bind(autoResizeIcon);
+        this.mainButtonMapImg.fitHeightProperty().bind(autoResizeIcon);
+        this.mainButtonMapImg.setPreserveRatio(true);
 
         this.mainButtonStatsImg.fitWidthProperty().bind(autoResizeIcon);
         this.mainButtonStatsImg.fitHeightProperty().bind(autoResizeIcon);
@@ -171,7 +189,7 @@ public class ControllerMenu extends Controller {
         this.mainButtonStats.setStyle("");
         this.mainButtonEdit.setStyle("");
         this.mainButtonSettings.setStyle("");
-
+        this.mainButtonMap.setStyle("");
     }
 
     /**
@@ -209,6 +227,23 @@ public class ControllerMenu extends Controller {
         this.mainButtonEdit.setStyle(CLICKED_BUTTON_STYLE);
         try {
             changeView(appView, "/views/login.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        resize();
+    }
+
+    /**
+     * Ouvre la vue d'édition lorsque l'on clique sur le bouton "Carte" dans le
+     * menu principal.
+     * Permet de changer la vue principale de l'application et la couleur du bouton.
+     */
+    @FXML
+    private void buttonMapPressed() {
+        this.resetButtonColor();
+        this.mainButtonMap.setStyle(CLICKED_BUTTON_STYLE);
+        try {
+            changeView(appView, "/views/map.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

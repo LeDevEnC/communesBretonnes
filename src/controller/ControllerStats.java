@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.math4.legacy.stat.regression.SimpleRegression;
+import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
@@ -165,10 +165,10 @@ public class ControllerStats extends Controller {
         double meanY = GraphGenerator.calculateMean(yValues);
         double varianceY = GraphGenerator.calculateVariance(yValues, meanY);
 
-        Text meanXLabel = new Text("Moyenne de : " + String.format("%.1f", meanX) + "\n");
-        Text varianceXLabel = new Text("Variance de : " + String.format("%.1f", varianceX) + "\n");
-        Text meanYLabel = new Text("Moyenne de : " + String.format("%.1f", meanY) + "\n");
-        Text varianceYLabel = new Text("Variance de : " + String.format("%.1f", varianceY) + "\n");
+        Text meanXLabel = new Text("Moyenne de X : " + String.format("%.1f", meanX) + "\n");
+        Text varianceXLabel = new Text("Variance de X : " + String.format("%.1f", varianceX) + "\n");
+        Text meanYLabel = new Text("Moyenne de Y : " + String.format("%.1f", meanY) + "\n");
+        Text varianceYLabel = new Text("Variance de Y : " + String.format("%.1f", varianceY) + "\n");
 
         textFlow.getChildren().clear(); // Réinitialise le contenu du TextFlow
         textFlow.getChildren().addAll(meanXLabel, varianceXLabel, meanYLabel, varianceYLabel);

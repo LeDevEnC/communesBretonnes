@@ -125,13 +125,12 @@ public class GraphGenerator {
         xAxis.setLabel(xLabel);
         yAxis.setLabel(yLabel);
 
-        // Set tick unit dynamically
         setDynamicTickUnit(xAxis, xValues);
         setDynamicTickUnit(yAxis, yValues);
 
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setLegendVisible(false);
-        lineChart.setCreateSymbols(false); // Désactiver les symboles de données
+        lineChart.setCreateSymbols(false);
 
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         series.setName("Line Chart");

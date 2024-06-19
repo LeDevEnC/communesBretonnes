@@ -22,6 +22,10 @@ import model.data.Aeroport;
 import model.data.CommuneBase;
 import model.data.CommunesInfoParAnnee;
 
+/**
+ * Contrôleur de dataDetail.fxml
+ * Gère l'affichage des détails d'une commune.
+ */
 public class ControllerDataDetail extends Controller implements ReceiveInfo<CommunesInfoParAnnee> {
 
     /**
@@ -247,10 +251,10 @@ public class ControllerDataDetail extends Controller implements ReceiveInfo<Comm
      */
     private void updateLabels() {
         aeroportValue.setText(getPrimaryAeroportName());
-        aeroportValue.setFont(Font.font("System", FontWeight.BOLD, 12)); // Set the font to bold
+        aeroportValue.setFont(Font.font("System", FontWeight.BOLD, 12));
     
         villeVoisineValue.setText(this.villeVoisine.getNomCommune());
-        villeVoisineValue.setFont(Font.font("System", FontWeight.BOLD, 12)); // Set the font to bold
+        villeVoisineValue.setFont(Font.font("System", FontWeight.BOLD, 12));
     
         setColorizedValue(prixM2MoyenValue, prixM2Moyen, "prixM2Moyen");
         setColorizedValue(depCulturellesValue, depCulturellesTotales, "depCulturellesTotales");
