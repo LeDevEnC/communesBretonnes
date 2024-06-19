@@ -385,9 +385,9 @@ public class MainModel {
 
         int tailleNbAnnee = nbAnnee.length;
         if (scoresAnnee[tailleNbAnnee - 1] > scoresAnnee[tailleNbAnnee - 2]) {
-            conseil[2] = "L'année possède un meilleur score que l'année précédente";
+            conseil[2] = "L'année actuelle possède un meilleur score que l'année précédente";
         } else {
-            conseil[2] = "L'année possède un moins bon score que l'année précédente";
+            conseil[2] = "L'année actuelle possède un moins bon score que l'année précédente";
         }
 
         return conseil;

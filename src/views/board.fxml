@@ -60,7 +60,7 @@
                   <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                </GridPane.margin>
                <top>
-                  <Text fx:id="conseilText" strokeType="OUTSIDE" strokeWidth="0.0" text="Conseil" BorderPane.alignment="TOP_LEFT">
+                  <Text fx:id="conseilText" strokeType="OUTSIDE" strokeWidth="0.0" text="Conseils" BorderPane.alignment="TOP_LEFT">
                      <font>
                         <Font size="30.0" />
                      </font>

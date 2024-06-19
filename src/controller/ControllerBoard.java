@@ -223,7 +223,7 @@ public class ControllerBoard extends Controller {
     private void setupLineChart() {
         NumberAxis xAxis = (NumberAxis) this.lineChartBretagneAtt.getXAxis();
         NumberAxis yAxis = (NumberAxis) this.lineChartBretagneAtt.getYAxis();
-        this.lineChartBretagneAtt.setTitle("Score d'Attractivité moyen par Années");
+        this.lineChartBretagneAtt.setTitle("Score d'Attractivité moyen par Année");
 
         xAxis.setAutoRanging(false);
         xAxis.setLowerBound(2018);

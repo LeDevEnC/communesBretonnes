@@ -73,7 +73,7 @@
             </VBox>
             <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: B9B9B9;" GridPane.rowIndex="1">
                <top>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Donnée" BorderPane.alignment="TOP_LEFT">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Données" BorderPane.alignment="TOP_LEFT">
                      <font>
                         <Font size="30.0" />
                      </font>

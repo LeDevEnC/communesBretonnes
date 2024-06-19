@@ -45,7 +45,7 @@
                         <PropertyValueFactory property="annee" />
                      </cellValueFactory>
                   </TableColumn>
-                  <TableColumn fx:id="depCulturel" text="Dépense Culturel">
+                  <TableColumn fx:id="depCulturel" text="Dépenses Culturelles">
                      <cellValueFactory>
                         <PropertyValueFactory property="culturel" />
                      </cellValueFactory>
