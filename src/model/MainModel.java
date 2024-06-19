@@ -133,7 +133,6 @@ public class MainModel {
      */
     private String password;
 
-
     /**
      * Permet de connecter l'utilisateur à la bdd
      * 
@@ -141,16 +140,17 @@ public class MainModel {
      * @param password Mot de passe
      */
     public void login(String username, String password) {
-        // Replace with your database url, username, and password
-        String url = "jdbc:mysql://localhost:3306/bdsae";
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            // If connection is successful
-            this.username = username;
-            this.password = password;
-            this.isLogged.set(true);
-            reCreateDAO();
-        } catch (SQLException e) {
-            System.out.println("Connection failed : " + e.getMessage());
+        if (!username.equals("visitor")) {
+            String url = "jdbc:mysql://localhost:3306/bdsae";
+            try (Connection connection = DriverManager.getConnection(url, username, password)) {
+                // Si la connexion est réussie=
+                this.username = username;
+                this.password = password;
+                this.isLogged.set(true);
+                reCreateDAO();
+            } catch (SQLException e) {
+                System.out.println("Connection failed : " + e.getMessage());
+            }
         }
     }
 
@@ -193,7 +193,6 @@ public class MainModel {
     public BooleanProperty isLoggedProperty() {
         return isLogged;
     }
-
 
     /**
      * Permet de récupérer le nom d'utilisateur
