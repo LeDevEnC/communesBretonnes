@@ -393,14 +393,14 @@ public class ControllerEditEditDelete extends Edit implements ReceiveInfo<String
                 Alert alert;
                 if (result == 1) {
                     alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Suppression réussi");
-                    alert.setHeaderText("Suppression  réussi");
-                    alert.setContentText("Les données ont été correctement supprimé dans la base de données");
+                    alert.setTitle("Suppression réussie");
+                    alert.setHeaderText("Suppression  réussie");
+                    alert.setContentText("Les données ont été correctement supprimées dans la base de données");
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Erreur lors de la suppression");
                     alert.setHeaderText("Erreur lors de la suppression");
-                    alert.setContentText("Les données n'ont pas pu être supprimé dans la base de données");
+                    alert.setContentText("Les données n'ont pas pu être supprimées dans la base de données");
                 }
                 alert.show();
             }
